@@ -14,7 +14,6 @@ public enum PluginLists {
 	ClearChat("ClearChat", new ClearChat("ClearChat")), 
 	ItemTag("ItemTag", new ItemTag("ItemTag")), 
 	Warning("Warning", new Warning("Warning")), 
-	Prefix("Prefix", new Prefix("Prefix")), 
 	BroadCast("BroadCast", new BroadCast("BroadCast")),
 	Hungry("Hungry", new Hungry("Hungry")),
 	NoBlock("NoBlock", new com.mirsv.moonshine.noblock.NoBlock("NoBlock")),
