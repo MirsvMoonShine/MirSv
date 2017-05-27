@@ -1,0 +1,24 @@
+name: Mirsv
+main: com.mirsv.Mirsv
+version: 1.7.1
+softdepend: [Vault]
+
+commands:
+  mirsv:
+    description: Mirsv main command
+  gmute:
+    description: Global Mute Plugin
+  clearchat:
+    description: Clear Chat Plugin
+  itemtag:
+    description: ItemTag Plugin
+  warning:
+    description: Warning Plugin
+  prefix:
+    description: Prefix Plugin
+  bc:
+    description: BroadCast Plugin
+  호출:
+    description: CallPlayer Plugin
+  dm:
+    description: ControlDeathMessage Plugin
