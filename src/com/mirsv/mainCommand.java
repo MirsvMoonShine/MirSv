@@ -57,7 +57,7 @@ public class mainCommand
           }
           else if ((args[0].equalsIgnoreCase("enable")) && 
             (args.length == 2) && (this.plugin.plugins.contains(ChatColor.RED+args[1])) && 
-            (!this.plugin.getConfig().getBoolean(args[1], false))) {
+            (!this.plugin.getConfig().getBoolean(args[1], true) == false)) {
             this.plugin.plugins.set(this.plugin.plugins.indexOf(ChatColor.RED+args[1]), ChatColor.GREEN+args[1]);
             this.plugin.getConfig().set(args[1], Boolean.valueOf(true));
             this.plugin.saveConfig();
