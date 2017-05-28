@@ -26,7 +26,7 @@ public class ClearEntity extends TimerTask {
 	    for (Entity entity : myEntityList) {
 	      boolean isRemoved = false;
 	      for (Entity oldentity : OldEntityList) {
-	        if (entity.getEntityId() == oldentity.getEntityId()) {
+	        if (entity.getLocation().getX() == oldentity.getLocation().getX() && entity.getLocation().getY() == oldentity.getLocation().getY() && entity.getLocation().getZ() == oldentity.getLocation().getZ()) {
 	          entity.remove();
 	          isRemoved = true;
 	          break;

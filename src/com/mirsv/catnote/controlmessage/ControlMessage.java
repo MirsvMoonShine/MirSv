@@ -15,43 +15,44 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.mirsv.MirPlugin;
 
-public class ControlMessage extends MirPlugin
-implements Listener,CommandExecutor
-{
-public ControlMessage(String pluginname) {
-		super(pluginname);
-		getCommand("dm", this);
-		getListener(this);
-	}
-
-List<String> messagesOff = new ArrayList<String>();
-String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
-
-public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-  if (getConfig().getBoolean("enable.ControlDeathMessage") && 
-    ((sender instanceof Player))) {
-    Player player = (Player)sender;
-    String name = player.getName();
-    if (this.messagesOff.contains(name)) {
-      this.messagesOff.remove(name);
-      player.sendMessage(this.prefix + ChatColor.AQUA + "이제 죽을 때 메시지가 보입니다.");
+public class ControlMessage extends MirPlugin implements Listener, CommandExecutor {
+    public ControlMessage(String pluginname) {
+        super(pluginname);
+        getCommand("dm", this);
+        getListener(this);
     }
-    else {
-      this.messagesOff.add(name);
-      player.sendMessage(this.prefix + ChatColor.AQUA + "이제 죽을 때 메시지가 보이지 않습니다.");
+
+    List < String > messagesOff = new ArrayList < String > ();
+    String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
+
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if ((getConfig().getBoolean("enable.ControlDeathMessage")) && ((sender instanceof Player))) {
+            Player player = (Player) sender;
+            String name = player.getName();
+            if (this.messagesOff.contains(name)) {
+                this.messagesOff.remove(name);
+                player.sendMessage(this.prefix + ChatColor.AQUA + "이제 죽을 때 메시지가 보입니다.");
+            } else {
+                this.messagesOff.add(name);
+                player.sendMessage(this.prefix + ChatColor.AQUA + "이제 죽을 때 메시지가 보이지 않습니다.");
+            }
+        }
+
+        return false;
     }
-  }
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        String message = event.getDeathMessage();
+        event.setDeathMessage(null);
+        for (Player p: Bukkit.getOnlinePlayers()) {
+            if (this.messagesOff.indexOf(p.getName()) != -1) continue;
+            p.sendMessage(message);
+        }
+    }
 
-  return false;
-}
-@EventHandler
-public void onDeath(PlayerDeathEvent event) { String message = event.getDeathMessage();
-  event.setDeathMessage(null);
-  for (Player p : Bukkit.getOnlinePlayers()) { if (this.messagesOff.indexOf(p.getName()) != -1) continue; p.sendMessage(message); }  }
-
-@EventHandler
-public void onLeave(PlayerQuitEvent event) {
-  if (this.messagesOff.remove(event.getPlayer().getName())) this.messagesOff.remove(event.getPlayer().getName());
-}
+    @EventHandler
+    public void onLeave(PlayerQuitEvent event) {
+        if (this.messagesOff.remove(event.getPlayer().getName())) this.messagesOff.remove(event.getPlayer().getName());
+    }
 
 }

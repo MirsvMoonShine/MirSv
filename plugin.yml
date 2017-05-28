@@ -18,7 +18,9 @@ commands:
     description: Prefix Plugin
   bc:
     description: BroadCast Plugin
-  호출:
+  cl:
     description: CallPlayer Plugin
   dm:
     description: ControlDeathMessage Plugin
+  wc:
+    description: WhistleChat Plugin

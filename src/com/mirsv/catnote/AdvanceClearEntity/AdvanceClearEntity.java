@@ -8,19 +8,10 @@ import java.util.Timer;
 
 public class AdvanceClearEntity extends MirPlugin{
 	private static List<Entity> OldEntityList = new ArrayList<Entity>();
-	public int sec;
-
 	public AdvanceClearEntity(String pluginname) {
 		super(pluginname);
-		
-		int sec = getConfig().getInt("AdvanceClearEntity.Second");
-	    if (sec == 0) {
-	      sec = 600;
-	      getConfig().set("AdvanceClearEntity.Second", Integer.valueOf(600));
-	      saveConfig();
-	    }
 	    Timer timer = new Timer();
-	    timer.schedule(new ClearEntity(), 0L, sec * 1000);
+	    timer.schedule(new ClearEntity(), 10000, 120000);
 	}
 	
 	public static List<Entity> getOldEntityList(){
