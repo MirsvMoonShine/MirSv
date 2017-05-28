@@ -1,12 +1,17 @@
 package com.mirsv;
 
 import com.mirsv.catnote.controlmessage.ControlMessage;
+import com.mirsv.catnote.CallPlayer.CallPlayer;
+import com.mirsv.catnote.AdvanceClearEntity.AdvanceClearEntity;
+import com.mirsv.catnote.WhistleChat.WhistleChat;
 import com.mirsv.moonshine.BroadCast.BroadCast;
 import com.mirsv.moonshine.ClearChat.ClearChat;
 import com.mirsv.moonshine.GlobalMute.GlobalMute;
 import com.mirsv.moonshine.ItemTag.ItemTag;
 import com.mirsv.moonshine.Waring.Warning;
 import com.mirsv.moonshine.hungry.Hungry;
+import com.mirsv.moonshine.Welcome.Welcome;
+import com.mirsv.moonshine.noblock.NoBlock;
 
 public enum PluginLists {	
 	GlobalMute("GlobalMute", new GlobalMute("GlobalMute")), 
@@ -15,12 +20,12 @@ public enum PluginLists {
 	Warning("Warning", new Warning("Warning")), 
 	BroadCast("BroadCast", new BroadCast("BroadCast")),
 	Hungry("Hungry", new Hungry("Hungry")),
-	Welcome("Welcome", new com.mirsv.moonshine.Welcome.Welcome("Welcome")),
-	NoBlock("NoBlock", new com.mirsv.moonshine.noblock.NoBlock("NoBlock")),
-	CallPlayer("CallPlayer",new com.mirsv.catnote.CallPlayer.CallPlayer("CallPlayer")),
+	Welcome("Welcome", new Welcome("Welcome")),
+	NoBlock("NoBlock", new NoBlock("NoBlock")),
+	CallPlayer("CallPlayer",new CallPlayer("CallPlayer")),
 	ControlDeathMessage("ControlDeathMessage", new ControlMessage("ControlDeathMessage")),
-	AdvanceClearEntity("AdvanceClearEntity", new com.mirsv.catnote.AdvanceClearEntity.AdvanceClearEntity("AdvanceClearEntity")),
-	WhistleChat("WhistleChat", new com.mirsv.catnote.WhistleChat.WhistleChat("WhistleChat"));
+	AdvanceClearEntity("AdvanceClearEntity", new AdvanceClearEntity("AdvanceClearEntity")),
+	WhistleChat("WhistleChat", new WhistleChat("WhistleChat"));
 	
 	private String PluginName;
 	private MirPlugin plugin;
