@@ -40,7 +40,6 @@ public class mainCommand
           p.sendMessage(ChatColor.BLUE + "미르서버 종합 플러그인");
           p.sendMessage(ChatColor.BLUE + "버전: " + this.profile.getVersion());
           p.sendMessage(ChatColor.BLUE + "가동중인 플러그인: " + plugin);
-          p.sendMessage(ChatColor.BLUE + "개발자: ___MoonShine___, CatNote");
           p.sendMessage(ChatColor.BLUE + "---명령어---");
           p.sendMessage(ChatColor.BLUE + "/mirsv enable <plugin> - 플러그인을 활성화합니다.");
           p.sendMessage(ChatColor.BLUE + "/mirsv disable <plugin> - 플러그인을 비활성화합니다.");
