@@ -39,7 +39,7 @@ public class Mirsv extends JavaPlugin
 		
 		PluginLists[] plugin = PluginLists.values();
 		for (PluginLists plu : plugin){
-			if (getConfig().getBoolean(plu.getPluginName(), true)) {
+			if (getConfig().getBoolean("enable."+plu.getPluginName(), true)) {
 				plugins.add(ChatColor.GREEN+plu.getPluginName());
 				plu.getPlugin();
 				getConfig().set("enable."+plu.getPluginName(),true);
