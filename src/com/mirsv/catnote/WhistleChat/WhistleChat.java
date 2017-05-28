@@ -2,6 +2,8 @@ package com.mirsv.catnote.WhistleChat;
 
 import com.mirsv.MirPlugin;
 import java.util.HashMap;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -56,8 +58,8 @@ public class WhistleChat extends MirPlugin implements Listener, CommandExecutor
   @EventHandler
   public void onChat(AsyncPlayerChatEvent event) { if (Target.containsKey(event.getPlayer().getName())) {
       event.setCancelled(true);
-      String Message = "w " + (String)Target.get(event.getPlayer().getName()) + " " + event.getMessage();
-      pm.getServer().dispatchCommand((CommandSender) event.getPlayer(), Message);
-    }
+      Bukkit.getPlayer(Target.get(event.getPlayer().getName())).sendMessage(ChatColor.GOLD + "[" + ChatColor.WHITE + event.getPlayer().getName() + ChatColor.GOLD + " -> " + ChatColor.RED + "³ª" + ChatColor.GOLD + "]" + ChatColor.WHITE + " " + event.getMessage());
+      event.getPlayer().sendMessage(ChatColor.GOLD + "[" + ChatColor.RED + "³ª" + ChatColor.GOLD + " -> " + ChatColor.WHITE + Target.get(event.getPlayer().getName()) + ChatColor.GOLD + "]" + ChatColor.WHITE + " " + event.getMessage());
+  	}
   }
 }
