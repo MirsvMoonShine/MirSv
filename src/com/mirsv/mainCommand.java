@@ -48,9 +48,9 @@ implements CommandExecutor
 					if (args[0].equalsIgnoreCase("disable")) {
 						if ((args.length == 2)) {
 							if (this.plugin.plugins.contains(ChatColor.GREEN+args[1])){
-								if (this.plugin.getConfig().getBoolean(args[1], true)) {
+								if (this.plugin.getConfig().getBoolean("enable."+args[1], true)) {
 									this.plugin.plugins.set(this.plugin.plugins.indexOf(ChatColor.GREEN+args[1]), ChatColor.RED+args[1]);
-									this.plugin.getConfig().set(args[1], false);
+									this.plugin.getConfig().set("enable."+args[1], false);
 									this.plugin.saveConfig();
 									p.sendMessage(ChatColor.BLUE + "[미르서버] " + args[1] + " 플러그인을 비활성화했습니다.");
 								}
@@ -59,9 +59,9 @@ implements CommandExecutor
 					}
 					else if ((args[0].equalsIgnoreCase("enable")) && 
 							(args.length == 2) && (this.plugin.plugins.contains(ChatColor.RED+args[1])) && 
-							(!this.plugin.getConfig().getBoolean(args[1], true) == false)) {
+							(this.plugin.getConfig().getBoolean("enable."+args[1], true) == false)) {
 						this.plugin.plugins.set(this.plugin.plugins.indexOf(ChatColor.RED+args[1]), ChatColor.GREEN+args[1]);
-						this.plugin.getConfig().set(args[1], Boolean.valueOf(true));
+						this.plugin.getConfig().set("enable."+args[1], Boolean.valueOf(true));
 						this.plugin.saveConfig();
 						p.sendMessage(ChatColor.BLUE + "[미르서버] " + args[1] + " 플러그인을 활성화했습니다.");
 					}
