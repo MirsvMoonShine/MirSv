@@ -59,7 +59,7 @@ public class WhistleChat extends MirPlugin implements Listener, CommandExecutor
   public void onChat(AsyncPlayerChatEvent event) { if (Target.containsKey(event.getPlayer().getName())) {
       event.setCancelled(true);
       Bukkit.getPlayer(Target.get(event.getPlayer().getName())).sendMessage(ChatColor.GOLD + "[" + ChatColor.WHITE + event.getPlayer().getName() + ChatColor.GOLD + " -> " + ChatColor.RED + "³ª" + ChatColor.GOLD + "]" + ChatColor.WHITE + " " + event.getMessage());
-      event.getPlayer().sendMessage(ChatColor.GOLD + "[" + ChatColor.RED + "³ª" + ChatColor.GOLD + " -> " + ChatColor.WHITE + event.getPlayer().getName() + ChatColor.GOLD + "]" + ChatColor.WHITE + " " + event.getMessage());
+      event.getPlayer().sendMessage(ChatColor.GOLD + "[" + ChatColor.RED + "³ª" + ChatColor.GOLD + " -> " + ChatColor.WHITE + Target.get(event.getPlayer().getName()) + ChatColor.GOLD + "]" + ChatColor.WHITE + " " + event.getMessage());
   	}
   }
 }
