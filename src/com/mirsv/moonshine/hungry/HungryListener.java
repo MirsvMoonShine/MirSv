@@ -1,6 +1,5 @@
 package com.mirsv.moonshine.hungry;
 
-
 import java.util.*;
 
 import org.bukkit.configuration.file.FileConfiguration;

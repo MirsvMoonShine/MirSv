@@ -14,7 +14,7 @@ public class GlobalMute extends MirPlugin implements Listener{
 		getCommand("gmute", new MuteCommand(getConfig()));
 		getListener(this);
 	}
-	
+
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
 		if ((!MuteCommand.chat) && (getConfig().getBoolean("enable.GlobalMute", true))) {
