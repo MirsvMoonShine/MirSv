@@ -1,4 +1,4 @@
-package com.mirsv.moonshine.Waring;
+package com.mirsv.moonshine.Warning;
 
 import java.io.File;
 import java.util.HashMap;

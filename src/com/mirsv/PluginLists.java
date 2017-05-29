@@ -2,13 +2,12 @@ package com.mirsv;
 
 import com.mirsv.catnote.controlmessage.ControlMessage;
 import com.mirsv.catnote.CallPlayer.CallPlayer;
-import com.mirsv.catnote.AdvanceClearEntity.AdvanceClearEntity;
 import com.mirsv.catnote.WhistleChat.WhistleChat;
 import com.mirsv.moonshine.BroadCast.BroadCast;
 import com.mirsv.moonshine.ClearChat.ClearChat;
 import com.mirsv.moonshine.GlobalMute.GlobalMute;
 import com.mirsv.moonshine.ItemTag.ItemTag;
-import com.mirsv.moonshine.Waring.Warning;
+import com.mirsv.moonshine.Warning.Warning;
 import com.mirsv.moonshine.hungry.Hungry;
 import com.mirsv.moonshine.Welcome.Welcome;
 import com.mirsv.moonshine.noblock.NoBlock;
@@ -24,7 +23,6 @@ public enum PluginLists {
 	NoBlock("NoBlock", new NoBlock("NoBlock")),
 	CallPlayer("CallPlayer",new CallPlayer("CallPlayer")),
 	ControlDeathMessage("ControlDeathMessage", new ControlMessage("ControlDeathMessage")),
-	AdvanceClearEntity("AdvanceClearEntity", new AdvanceClearEntity("AdvanceClearEntity")),
 	WhistleChat("WhistleChat", new WhistleChat("WhistleChat"));
 	
 	private String PluginName;
