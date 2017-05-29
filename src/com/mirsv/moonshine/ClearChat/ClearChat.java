@@ -10,9 +10,7 @@ import com.mirsv.MirPlugin;
 
 public class ClearChat extends MirPlugin implements CommandExecutor{
 
-	public ClearChat(String pluginname) {
-		super(pluginname);
-
+	public ClearChat() {
 		getCommand("clearchat", this);
 	}
 	

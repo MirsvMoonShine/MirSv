@@ -12,8 +12,7 @@ public class Warning extends MirPlugin {
 	static FileConfiguration warning;
 	static HashMap < String, Boolean > loadboolean = new HashMap < String, Boolean > ();
 
-	public Warning(String pluginname) {
-		super(pluginname);
+	public Warning() {
 		config();
 
 		File prefixListFile = new File("plugins/" + pm.getDescription().getName() + "/Warning/Warning.yml");

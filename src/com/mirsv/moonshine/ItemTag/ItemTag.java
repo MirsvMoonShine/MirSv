@@ -12,9 +12,7 @@ import com.mirsv.MirPlugin;
 
 public class ItemTag extends MirPlugin implements CommandExecutor{
 
-	public ItemTag(String pluginname) {
-		super(pluginname);
-
+	public ItemTag() {
 		getCommand("ItemTag", this);
 	}
 	

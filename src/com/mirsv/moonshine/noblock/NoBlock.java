@@ -13,18 +13,16 @@ import com.mirsv.MirPlugin;
 public class NoBlock extends MirPlugin implements Listener{
 	public static List < Integer > blocks = new ArrayList < Integer > ();
 
-	@SuppressWarnings("unchecked")
-	public NoBlock(String pluginname) {
-		super(pluginname);
+	public NoBlock() {
+		blocks = getConfig().getIntegerList("NoBlock.list");
+		
+		if (blocks.size() < 1){
+			blocks.add(52);
 
-		blocks.add(52);
-
-		getConfig().addDefault("NoBlock.list", blocks);
-		getConfig().options().copyDefaults(true);
-		saveConfig();
-
-		blocks.clear();
-		blocks = (List < Integer > ) getConfig().getList("NoBlock.list");
+			getConfig().addDefault("NoBlock.list", blocks);
+			getConfig().options().copyDefaults(true);
+			saveConfig();
+		}
 
 		getListener(this);
 	}

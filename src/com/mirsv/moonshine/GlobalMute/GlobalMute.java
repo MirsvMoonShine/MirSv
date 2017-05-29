@@ -8,9 +8,7 @@ import com.mirsv.MirPlugin;
 
 public class GlobalMute extends MirPlugin implements Listener{
 
-	public GlobalMute(String pluginname) {
-		super(pluginname);
-
+	public GlobalMute() {
 		getCommand("gmute", new MuteCommand(getConfig()));
 		getListener(this);
 	}

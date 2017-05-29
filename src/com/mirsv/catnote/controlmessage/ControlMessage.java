@@ -16,8 +16,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import com.mirsv.MirPlugin;
 
 public class ControlMessage extends MirPlugin implements Listener, CommandExecutor {
-	public ControlMessage(String pluginname) {
-		super(pluginname);
+	
+	public ControlMessage() {
 		getCommand("dm", this);
 		getListener(this);
 	}

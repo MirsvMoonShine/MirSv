@@ -104,8 +104,7 @@ public class CallPlayer extends MirPlugin implements CommandExecutor {
 		return false;
 	}
 
-	public CallPlayer(String pluginname) {
-		super(pluginname);
+	public CallPlayer() {
 		getCommand("cl", this);
 	}
 

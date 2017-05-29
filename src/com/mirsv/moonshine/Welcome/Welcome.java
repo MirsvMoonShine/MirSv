@@ -13,9 +13,7 @@ import net.milkbowl.vault.permission.Permission;
 public class Welcome extends MirPlugin implements Listener{
 	public static Permission per = null;
 
-	public Welcome(String pluginname) {
-		super(pluginname);
-
+	public Welcome() {
 		setupPermission();
 
 		getConfig().addDefault("Welcome.defaultWelcomeMessage", "{player}님 서버에 오신 것을 환영합니다!");

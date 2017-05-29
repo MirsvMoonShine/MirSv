@@ -7,12 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
 public class MirPlugin {
-	private final String plugin;
 	protected static Plugin pm;
 	public static FileConfiguration config;
 
-	public MirPlugin(String pluginname) {
-		this.plugin = pluginname;
+	public MirPlugin() {
 		pm = Bukkit.getPluginManager().getPlugin("Mirsv");
 		config = pm.getConfig();
 	}
@@ -23,10 +21,6 @@ public class MirPlugin {
 
 	public static void saveConfig() {
 		pm.saveConfig();
-	}
-
-	public String getPluginName() {
-		return plugin;
 	}
 
 	public void getListener(Listener lis) {
