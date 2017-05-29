@@ -23,4 +23,4 @@ commands:
   dm:
     description: ControlDeathMessage Plugin
   wc:
-    description: WhistleChat Plugin
+    description: WhisperChat Plugin

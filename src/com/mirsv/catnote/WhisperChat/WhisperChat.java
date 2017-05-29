@@ -1,4 +1,4 @@
-package com.mirsv.catnote.WhistleChat;
+package com.mirsv.catnote.WhisperChat;
 
 import com.mirsv.MirPlugin;
 import java.util.HashMap;
@@ -13,8 +13,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class WhistleChat extends MirPlugin implements Listener, CommandExecutor {
-	public WhistleChat(String pluginname) {
+public class WhisperChat extends MirPlugin implements Listener, CommandExecutor {
+	public WhisperChat(String pluginname) {
 		super(pluginname);
 		getCommand("wc", this);
 		getListener(this);

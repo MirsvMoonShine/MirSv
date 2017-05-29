@@ -2,7 +2,7 @@ package com.mirsv;
 
 import com.mirsv.catnote.controlmessage.ControlMessage;
 import com.mirsv.catnote.CallPlayer.CallPlayer;
-import com.mirsv.catnote.WhistleChat.WhistleChat;
+import com.mirsv.catnote.WhisperChat.WhisperChat;
 import com.mirsv.moonshine.BroadCast.BroadCast;
 import com.mirsv.moonshine.ClearChat.ClearChat;
 import com.mirsv.moonshine.GlobalMute.GlobalMute;
@@ -23,7 +23,7 @@ public enum PluginLists {
 		NoBlock("NoBlock", new NoBlock("NoBlock")),
 		CallPlayer("CallPlayer", new CallPlayer("CallPlayer")),
 		ControlDeathMessage("ControlDeathMessage", new ControlMessage("ControlDeathMessage")),
-		WhistleChat("WhistleChat", new WhistleChat("WhistleChat"));
+		WhisperChat("WhisperChat", new WhisperChat("WhisperChat"));
 
 	private String PluginName;
 	private MirPlugin plugin;
