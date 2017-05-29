@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.mirsv.MirPlugin;
 
-public class BroadCast extends MirPlugin{
-	public static ArrayList<String> BCadmins = new ArrayList<String>();
+public class BroadCast extends MirPlugin {
+	public static ArrayList < String > BCadmins = new ArrayList < String > ();
 
 	public BroadCast(String pluginname) {
 		super(pluginname);
@@ -13,7 +13,7 @@ public class BroadCast extends MirPlugin{
 		getConfig().addDefault("BroadCast.ChatColor", "&a");
 		getConfig().options().copyDefaults(true);
 		saveConfig();
-		
+
 		getCommand("bc", new BroadCastCommand(getConfig()));
 		getListener(new BroadCastListener(getConfig()));
 	}

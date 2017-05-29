@@ -12,31 +12,31 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
-public class UpdateListener implements Listener{
+public class UpdateListener implements Listener {
 	final Plugin pm;
-	
-	public UpdateListener(Mirsv p){
+
+	public UpdateListener(Mirsv p) {
 		this.pm = p;
 	}
 
-	public String getLastPluginVersion(){
+	public String getLastPluginVersion() {
 		try {
-			HttpURLConnection con = (HttpURLConnection)new URL("http://www.mirsv.com/mirsvplugin/version.txt").openConnection();
+			HttpURLConnection con = (HttpURLConnection) new URL("http://www.mirsv.com/mirsvplugin/version.txt").openConnection();
 			return new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
 		} catch (Exception e) {
 			System.out.println("[미르서버] 최신버전 체크 실패.");
 		}
 		return null;
 	}
-	
+
 	@EventHandler
 	public void join(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		if (p.hasPermission("mirsv.admin")){
+		if (p.hasPermission("mirsv.admin")) {
 			String lastversion = this.getLastPluginVersion();
 			String version = pm.getDescription().getVersion();
-			if (!lastversion.equals(version)){
-				p.sendMessage(ChatColor.BLUE + "[미르서버] 종합 플러그인 최신버전 발견 (현버전: "+version+",최신버전: "+lastversion+")");
+			if (!lastversion.equals(version)) {
+				p.sendMessage(ChatColor.BLUE + "[미르서버] 종합 플러그인 최신버전 발견 (현버전: " + version + ",최신버전: " + lastversion + ")");
 				p.sendMessage(ChatColor.BLUE + "[미르서버] 바로 다운받기: http://www.mirsv.com/mirsvplugin/Mirsv.jar");
 			}
 		}
