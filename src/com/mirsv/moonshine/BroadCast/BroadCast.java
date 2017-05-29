@@ -14,7 +14,7 @@ public class BroadCast extends MirPlugin {
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 
-		getCommand("bc", new BroadCastCommand(getConfig()));
+		getCommand("bc", new BroadCastListener(getConfig()));
 		getListener(new BroadCastListener(getConfig()));
 	}
 }
