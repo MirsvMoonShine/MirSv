@@ -1,16 +1,8 @@
 package com.mirsv;
 
-import com.mirsv.catnote.controlmessage.ControlMessage;
-import com.mirsv.catnote.CallPlayer.CallPlayer;
-import com.mirsv.catnote.WhisperChat.WhisperChat;
-import com.mirsv.moonshine.BroadCast.BroadCast;
-import com.mirsv.moonshine.ClearChat.ClearChat;
-import com.mirsv.moonshine.GlobalMute.GlobalMute;
-import com.mirsv.moonshine.ItemTag.ItemTag;
+import com.mirsv.catnote.*;
+import com.mirsv.moonshine.*;
 import com.mirsv.moonshine.Warning.Warning;
-import com.mirsv.moonshine.hungry.Hungry;
-import com.mirsv.moonshine.Welcome.Welcome;
-import com.mirsv.moonshine.noblock.NoBlock;
 
 public enum PluginLists {
 	GlobalMute("GlobalMute", new GlobalMute()),

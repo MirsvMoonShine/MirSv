@@ -1,4 +1,4 @@
-package com.mirsv.moonshine.Welcome;
+package com.mirsv.moonshine;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

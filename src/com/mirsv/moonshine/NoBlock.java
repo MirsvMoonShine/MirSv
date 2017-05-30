@@ -1,4 +1,4 @@
-package com.mirsv.moonshine.noblock;
+package com.mirsv.moonshine;
 
 import java.util.ArrayList;
 import java.util.List;

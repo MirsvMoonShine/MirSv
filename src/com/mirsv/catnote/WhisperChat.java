@@ -1,4 +1,4 @@
-package com.mirsv.catnote.WhisperChat;
+package com.mirsv.catnote;
 
 import com.mirsv.MirPlugin;
 import java.util.HashMap;

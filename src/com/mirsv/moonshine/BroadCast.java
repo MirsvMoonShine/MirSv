@@ -1,4 +1,4 @@
-package com.mirsv.moonshine.BroadCast;
+package com.mirsv.moonshine;
 
 import java.util.ArrayList;
 
