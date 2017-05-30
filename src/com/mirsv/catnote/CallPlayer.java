@@ -1,4 +1,4 @@
-package com.mirsv.catnote.CallPlayer;
+package com.mirsv.catnote;
 
 import org.bukkit.command.CommandExecutor;
 

@@ -1,4 +1,4 @@
-package com.mirsv.moonshine.ClearChat;
+package com.mirsv.moonshine;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

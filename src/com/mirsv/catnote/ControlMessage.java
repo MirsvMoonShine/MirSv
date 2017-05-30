@@ -1,4 +1,4 @@
-package com.mirsv.catnote.controlmessage;
+package com.mirsv.catnote;
 
 import java.util.ArrayList;
 import java.util.List;

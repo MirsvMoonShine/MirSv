@@ -1,4 +1,4 @@
-package com.mirsv.moonshine.ItemTag;
+package com.mirsv.moonshine;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;

@@ -1,4 +1,4 @@
-package com.mirsv.moonshine.Welcome;
+package com.mirsv.moonshine;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +25,7 @@ public class Welcome extends MirPlugin implements Listener{
 	}
 
 	public boolean setupPermission() {
-		RegisteredServiceProvider < Permission > chatProvider = MirPlugin.pm.getServer().getServicesManager().getRegistration(Permission.class);
+		RegisteredServiceProvider < Permission > chatProvider = pm.getServer().getServicesManager().getRegistration(Permission.class);
 		if (chatProvider != null) {
 			per = (Permission) chatProvider.getProvider();
 		}

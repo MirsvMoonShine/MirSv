@@ -1,4 +1,4 @@
-package com.mirsv.moonshine.hungry;
+package com.mirsv.moonshine;
 
 import java.util.HashMap;
 import java.util.Timer;
