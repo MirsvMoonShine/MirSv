@@ -24,10 +24,7 @@ implements CommandExecutor {
 		this.plugin = war.getConfig();
 	}
 
-	@SuppressWarnings({
-		"deprecation",
-		"static-access"
-	})
+	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		Player player = (Player) sender;
 
@@ -235,7 +232,6 @@ implements CommandExecutor {
 
 				}
 	}
-	@SuppressWarnings("static-access")
 	public void warnCommand(OfflinePlayer player, boolean bool) {
 		warning.loadboolean.put(player.getName(), bool);
 	}

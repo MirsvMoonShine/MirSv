@@ -15,8 +15,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import com.mirsv.MirPlugin;
 
 public class Warning extends MirPlugin implements Listener {
-	static FileConfiguration warning;
-	static HashMap < String, Boolean > loadboolean = new HashMap < String, Boolean > ();
+	FileConfiguration warning;
+	HashMap < String, Boolean > loadboolean = new HashMap < String, Boolean > ();
 
 	public Warning() {
 		config();
@@ -53,12 +53,12 @@ public class Warning extends MirPlugin implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		if (getConfig().getBoolean("enable.Warning", true)) {
 			Player player = e.getPlayer();
-			int warn = Warning.warning.getInt(player.getName());
+			int warn = warning.getInt(player.getName());
 			if (warn > 0)
 				player.sendMessage(ChatColor.GREEN + "[미르서버] 당신의 경고 횟수: " + warn);
-			if (Warning.loadboolean.getOrDefault(player.getName(), false)) {
+			if (loadboolean.getOrDefault(player.getName(), false)) {
 				warnCommand(player, warn);
-				Warning.loadboolean.put(player.getName(), false);
+				loadboolean.put(player.getName(), false);
 			}
 		}
 	}
