@@ -6,16 +6,16 @@ import com.mirsv.moonshine.Warning.Warning;
 
 public enum PluginLists {
 	GlobalMute("GlobalMute", new GlobalMute()),
-		ClearChat("ClearChat", new ClearChat()),
-		ItemTag("ItemTag", new ItemTag()),
-		Warning("Warning", new Warning()),
-		BroadCast("BroadCast", new BroadCast()),
-		Hungry("Hungry", new Hungry()),
-		Welcome("Welcome", new Welcome()),
-		NoBlock("NoBlock", new NoBlock()),
-		CallPlayer("CallPlayer", new CallPlayer()),
-		ControlDeathMessage("ControlDeathMessage", new ControlMessage()),
-		WhisperChat("WhisperChat", new WhisperChat());
+	ClearChat("ClearChat", new ClearChat()),
+	ItemTag("ItemTag", new ItemTag()),
+	Warning("Warning", new Warning()),
+	BroadCast("BroadCast", new BroadCast()),
+	Hungry("Hungry", new Hungry()),
+	Welcome("Welcome", new Welcome()),
+	NoBlock("NoBlock", new NoBlock()),
+	CallPlayer("CallPlayer", new CallPlayer()),
+	ControlDeathMessage("ControlDeathMessage", new ControlMessage()),
+	WhisperChat("WhisperChat", new WhisperChat());
 
 	private String PluginName;
 	private MirPlugin plugin;

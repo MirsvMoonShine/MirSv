@@ -23,7 +23,7 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if ((getConfig().getBoolean("enable.WhistleChat")) && ((sender instanceof Player))) {
+		if ((getConfig().getBoolean("enable.WhisperChat")) && ((sender instanceof Player))) {
 			Player player = (Player) sender;
 			if (args.length == 0) {
 				if (Target.containsKey(player.getName())) {
