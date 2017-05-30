@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 
 public class MirPlugin {
 	protected Mirsv pm;
-	public static FileConfiguration config;
+	public FileConfiguration config;
 
 	public MirPlugin() {
 		pm = (Mirsv) Bukkit.getPluginManager().getPlugin("Mirsv");
