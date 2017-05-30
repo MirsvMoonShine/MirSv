@@ -220,7 +220,6 @@ implements CommandExecutor {
 		return result;
 	}
 
-	@SuppressWarnings("static-access")
 	public void warnCommand(Player player, int warn) {
 		List < String > command = warning.config.getStringList("Warning.warnCommand" + warn);
 		if (!command.isEmpty())
