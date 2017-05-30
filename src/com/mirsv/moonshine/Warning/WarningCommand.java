@@ -19,9 +19,9 @@ implements CommandExecutor {
 	Plugin pm = Bukkit.getPluginManager().getPlugin("Mirsv");
 	File prefixListFile = new File("plugins/" + pm.getDescription().getName() + "/Warning/Warning.yml");
 
-	public WarningCommand(Warning war, FileConfiguration fileConfiguration) {
+	public WarningCommand(Warning war) {
 		this.warning = war;
-		this.plugin = fileConfiguration;
+		this.plugin = war.getConfig();
 	}
 
 	@SuppressWarnings({

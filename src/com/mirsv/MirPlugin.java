@@ -4,22 +4,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 
 public class MirPlugin {
-	protected static Plugin pm;
+	protected Mirsv pm;
 	public static FileConfiguration config;
 
 	public MirPlugin() {
-		pm = Bukkit.getPluginManager().getPlugin("Mirsv");
+		pm = (Mirsv) Bukkit.getPluginManager().getPlugin("Mirsv");
 		config = pm.getConfig();
 	}
 
-	public static FileConfiguration getConfig() {
+	public FileConfiguration getConfig() {
 		return config;
 	}
 
-	public static void saveConfig() {
+	public void saveConfig() {
 		pm.saveConfig();
 	}
 
