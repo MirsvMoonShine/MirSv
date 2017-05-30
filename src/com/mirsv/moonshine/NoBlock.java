@@ -3,6 +3,7 @@ package com.mirsv.moonshine;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,7 +12,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import com.mirsv.MirPlugin;
 
 public class NoBlock extends MirPlugin implements Listener{
-	public static List < Integer > blocks = new ArrayList < Integer > ();
+	public List < Integer > blocks = new ArrayList < Integer > ();
+	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public NoBlock() {
 		blocks = getConfig().getIntegerList("NoBlock.list");
@@ -35,7 +37,7 @@ public class NoBlock extends MirPlugin implements Listener{
 			for (int block: blocks) {
 				if (e.getBlock().getTypeId() == block) {
 					e.setCancelled(true);
-					p.sendMessage("§c[미르서버] 이 아이템은 놓을 수 없습니다.");
+					p.sendMessage(prefix+"§c이 아이템은 놓을 수 없습니다.");
 				}
 			}
 		}

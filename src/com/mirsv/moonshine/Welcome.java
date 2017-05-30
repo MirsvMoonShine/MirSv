@@ -11,7 +11,7 @@ import com.mirsv.MirPlugin;
 import net.milkbowl.vault.permission.Permission;
 
 public class Welcome extends MirPlugin implements Listener{
-	public static Permission per = null;
+	Permission per = null;
 
 	public Welcome() {
 		setupPermission();

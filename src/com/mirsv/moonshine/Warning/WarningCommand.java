@@ -18,6 +18,7 @@ implements CommandExecutor {
 	private final Warning warning;
 	Plugin pm = Bukkit.getPluginManager().getPlugin("Mirsv");
 	File prefixListFile = new File("plugins/" + pm.getDescription().getName() + "/Warning/Warning.yml");
+	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public WarningCommand(Warning war) {
 		this.warning = war;
@@ -46,8 +47,8 @@ implements CommandExecutor {
 									warning.warning.save(prefixListFile);
 								} catch (Exception localException) {}
 
-								player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고가 " + args[2] + "만큼 늘어났습니다.");
-								player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고 횟수:  " + warn);
+								player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고가 " + args[2] + "만큼 늘어났습니다.");
+								player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고 횟수:  " + warn);
 
 								warnCommand(target, warn);
 							}
@@ -62,8 +63,8 @@ implements CommandExecutor {
 							try {
 								warning.warning.save(prefixListFile);
 							} catch (Exception localException1) {}
-							player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고가 1만큼 늘어났습니다.");
-							player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고 횟수:  " + warn);
+							player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고가 1만큼 늘어났습니다.");
+							player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고 횟수:  " + warn);
 
 							warnCommand(target, warn);
 						}
@@ -80,7 +81,7 @@ implements CommandExecutor {
 								try {
 									warning.warning.save(prefixListFile);
 								} catch (Exception localException) {}
-								player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고가 " + args[2] + "만큼 늘어났습니다.");
+								player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고가 " + args[2] + "만큼 늘어났습니다.");
 
 								warnCommand(target, true);
 							}
@@ -95,8 +96,8 @@ implements CommandExecutor {
 							try {
 								warning.warning.save(prefixListFile);
 							} catch (Exception localException1) {}
-							player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고가 1만큼 늘어났습니다.");
-							player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고 횟수:  " + warn);
+							player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고가 1만큼 늘어났습니다.");
+							player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고 횟수:  " + warn);
 
 							warnCommand(target, true);
 						}
@@ -116,8 +117,8 @@ implements CommandExecutor {
 								try {
 									warning.warning.save(prefixListFile);
 								} catch (Exception localException2) {}
-								player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고가 " + args[2] + "만큼 제거됬습니다.");
-								player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고 횟수:  " + warn);
+								player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고가 " + args[2] + "만큼 제거됬습니다.");
+								player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고 횟수:  " + warn);
 
 								warnCommand(target, warn);
 							}
@@ -132,8 +133,8 @@ implements CommandExecutor {
 							try {
 								warning.warning.save(prefixListFile);
 							} catch (Exception localException3) {}
-							player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고가 1만큼 제거됬습니다.");
-							player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고 횟수:  " + warn);
+							player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고가 1만큼 제거됬습니다.");
+							player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고 횟수:  " + warn);
 
 							warnCommand(target, warn);
 						}
@@ -150,7 +151,7 @@ implements CommandExecutor {
 								try {
 									warning.warning.save(prefixListFile);
 								} catch (Exception localException) {}
-								player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고가 " + args[2] + "만큼 제거됬습니다.");
+								player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고가 " + args[2] + "만큼 제거됬습니다.");
 
 								warnCommand(target, true);
 							}
@@ -165,8 +166,8 @@ implements CommandExecutor {
 							try {
 								warning.warning.save(prefixListFile);
 							} catch (Exception localException3) {}
-							player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고가 1만큼 제거됬습니다.");
-							player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고 횟수:  " + warn);
+							player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고가 1만큼 제거됬습니다.");
+							player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고 횟수:  " + warn);
 
 							warnCommand(target, true);
 						}
@@ -176,26 +177,26 @@ implements CommandExecutor {
 						warning.warning.save(prefixListFile);
 						warning.warning.load(prefixListFile);
 					} catch (Exception localException4) {}
-					player.sendMessage(ChatColor.GREEN + "[미르서버] 리로드 되었당");
+					player.sendMessage(prefix+ChatColor.GREEN+"리로드 되었당");
 				} else if ((args[0].equalsIgnoreCase("show"))) {
 					if (Bukkit.getPlayer(args[1]) != null) {
 						Player target = Bukkit.getPlayer(args[1]);
 						int warn = warning.warning.getInt(target.getName());
 
-						player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고 횟수:  " + warn);
+						player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고 횟수:  " + warn);
 					} else if (Bukkit.getOfflinePlayer(args[1]) != null) {
 						OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 						int warn = warning.warning.getInt(target.getName());
 
-						player.sendMessage(ChatColor.GREEN + "[미르서버] " + target.getName() + "님의 경고 횟수:  " + warn);
+						player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고 횟수:  " + warn);
 					}
 				}
 			} else {
-				player.sendMessage(ChatColor.GREEN + "[미르서버] /warning add [playername] [int] - 경고 횟수를 [int]만큼 증가");
-				player.sendMessage(ChatColor.GREEN + "[미르서버] /warning del [playername] [int] - 경고 횟수를 [int]만큼 감소");
-				player.sendMessage(ChatColor.GREEN + "[미르서버] [int]를 적지 않을 시 1회로 간주.");
-				player.sendMessage(ChatColor.GREEN + "[미르서버] /warning show [playername] - 경고 횟수를를 보여줌");
-				player.sendMessage(ChatColor.GREEN + "[미르서버] /warning reload - 리로드합니다.");
+				player.sendMessage(prefix+ChatColor.GREEN+"/warning add [playername] [int] - 경고 횟수를 [int]만큼 증가");
+				player.sendMessage(prefix+ChatColor.GREEN+"/warning del [playername] [int] - 경고 횟수를 [int]만큼 감소");
+				player.sendMessage(prefix+ChatColor.GREEN+"[int]를 적지 않을 시 1회로 간주.");
+				player.sendMessage(prefix+ChatColor.GREEN+"/warning show [playername] - 경고 횟수를를 보여줌");
+				player.sendMessage(prefix+ChatColor.GREEN+"/warning reload - 리로드합니다.");
 			}
 		}
 

@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import com.mirsv.MirPlugin;
 
 public class Hungry extends MirPlugin implements Listener {
-	public static HashMap < Player, Integer > hungry = new HashMap < Player, Integer > ();
+	HashMap < Player, Integer > hungry = new HashMap < Player, Integer > ();
 
 	public Hungry() {
 		getListener(this);

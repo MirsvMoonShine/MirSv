@@ -1,6 +1,7 @@
 package com.mirsv.moonshine;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +13,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import com.mirsv.MirPlugin;
 
 public class GlobalMute extends MirPlugin implements Listener, CommandExecutor {
-	public static boolean chat = true;
+	boolean chat = true;
+	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public GlobalMute() {
 		getCommand("gmute", this);
@@ -34,23 +36,23 @@ public class GlobalMute extends MirPlugin implements Listener, CommandExecutor {
 			if (!(sender instanceof Player)) {
 				if (chat) {
 					chat = false;
-					Bukkit.broadcastMessage("§a[미르서버] 전체 뮤트.");
+					Bukkit.broadcastMessage(prefix+"§a전체 뮤트.");
 				} else {
 					chat = true;
-					Bukkit.broadcastMessage("§a[미르서버] 전체 뮤트 해제.");
+					Bukkit.broadcastMessage(prefix+"§a전체 뮤트 해제.");
 				}
 			} else {
 				Player p = (Player) sender;
 
 				if (!p.hasPermission("mirsv.admin")) {
-					p.sendMessage("§a[미르서버] §c펄미션 미 보유");
+					p.sendMessage(prefix+"§c펄미션 미 보유");
 				} else {
 					if (chat) {
 						chat = false;
-						Bukkit.broadcastMessage("§a[미르서버] 전체 뮤트.");
+						Bukkit.broadcastMessage(prefix+"§a전체 뮤트.");
 					} else {
 						chat = true;
-						Bukkit.broadcastMessage("§a[미르서버] 전체 뮤트 해제.");
+						Bukkit.broadcastMessage(prefix+"§a전체 뮤트 해제.");
 					}
 				}
 			}

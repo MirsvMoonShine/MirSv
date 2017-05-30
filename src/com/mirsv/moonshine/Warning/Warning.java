@@ -17,6 +17,7 @@ import com.mirsv.MirPlugin;
 public class Warning extends MirPlugin implements Listener {
 	FileConfiguration warning;
 	HashMap < String, Boolean > loadboolean = new HashMap < String, Boolean > ();
+	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public Warning() {
 		config();
@@ -55,7 +56,7 @@ public class Warning extends MirPlugin implements Listener {
 			Player player = e.getPlayer();
 			int warn = warning.getInt(player.getName());
 			if (warn > 0)
-				player.sendMessage(ChatColor.GREEN + "[미르서버] 당신의 경고 횟수: " + warn);
+				player.sendMessage(prefix+"당신의 경고 횟수: " + warn);
 			if (loadboolean.getOrDefault(player.getName(), false)) {
 				warnCommand(player, warn);
 				loadboolean.put(player.getName(), false);

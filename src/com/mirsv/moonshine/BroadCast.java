@@ -14,7 +14,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import com.mirsv.MirPlugin;
 
 public class BroadCast extends MirPlugin implements CommandExecutor,Listener {
-	public ArrayList < String > BCadmins = new ArrayList < String > ();
+	ArrayList < String > BCadmins = new ArrayList < String > ();
 
 	public BroadCast() {
 		if (getConfig().getString("BroadCast.Prefix") == null)
