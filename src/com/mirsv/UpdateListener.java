@@ -14,6 +14,7 @@ import org.bukkit.plugin.Plugin;
 
 public class UpdateListener implements Listener {
 	final Plugin pm;
+	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public UpdateListener(Mirsv p) {
 		this.pm = p;
@@ -24,7 +25,7 @@ public class UpdateListener implements Listener {
 			HttpURLConnection con = (HttpURLConnection) new URL("http://www.mirsv.com/mirsvplugin/version.txt").openConnection();
 			return new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
 		} catch (Exception e) {
-			System.out.println("[미르서버] 최신버전 체크 실패.");
+			System.out.println(prefix+ChatColor.AQUA+"최신버전 체크 실패.");
 		}
 		return null;
 	}
@@ -36,8 +37,8 @@ public class UpdateListener implements Listener {
 			String lastversion = this.getLastPluginVersion();
 			String version = pm.getDescription().getVersion();
 			if (!lastversion.equals(version)) {
-				p.sendMessage(ChatColor.BLUE + "[미르서버] 종합 플러그인 최신버전 발견 (현버전: " + version + ",최신버전: " + lastversion + ")");
-				p.sendMessage(ChatColor.BLUE + "[미르서버] 바로 다운받기: http://www.mirsv.com/mirsvplugin/Mirsv.jar");
+				p.sendMessage(prefix+ChatColor.AQUA+"종합 플러그인 최신버전 발견 (현버전: " + version + ",최신버전: " + lastversion + ")");
+				p.sendMessage(prefix+ChatColor.AQUA+"바로 다운받기: http://www.mirsv.com/mirsvplugin/Mirsv.jar");
 			}
 		}
 	}
