@@ -27,10 +27,6 @@ public class Mirsv extends JavaPlugin {
 			}
 		}
 		System.out.println("[미르서버] 가동 된 플러그인들: " + plugin);
-
-		if (getConfig().getBoolean("Update", true)) {
-			pm.registerEvents(new UpdateListener(this), this);
-		}
 	}
 
 	public void InstallPlugins() {
