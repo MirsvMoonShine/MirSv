@@ -3,6 +3,7 @@ package com.mirsv.moonshine;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +16,7 @@ import com.mirsv.MirPlugin;
 
 public class BroadCast extends MirPlugin implements CommandExecutor,Listener {
 	ArrayList < String > BCadmins = new ArrayList < String > ();
+	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public BroadCast() {
 		if (getConfig().getString("BroadCast.Prefix") == null)
@@ -34,10 +36,10 @@ public class BroadCast extends MirPlugin implements CommandExecutor,Listener {
 				if (p.hasPermission("mirsv.admin") || p.isOp()) {
 					if (!BCadmins.contains(p.getName())) {
 						BCadmins.add(p.getName());
-						p.sendMessage("공지채팅이 활성화되었습니다.");
+						p.sendMessage(prefix+"공지채팅이 활성화되었습니다.");
 					} else {
 						BCadmins.remove(p.getName());
-						p.sendMessage("공지채팅이 비활성화되었습니다.");
+						p.sendMessage(prefix+"공지채팅이 비활성화되었습니다.");
 					}
 				}
 			}
