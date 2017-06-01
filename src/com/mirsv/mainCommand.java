@@ -1,10 +1,5 @@
 package com.mirsv;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -62,20 +57,6 @@ implements CommandExecutor {
 						this.plugin.getConfig().set("enable." + args[1], Boolean.valueOf(true));
 						this.plugin.saveConfig();
 						p.sendMessage(prefix+ChatColor.AQUA + args[1] + " 플러그인을 활성화했습니다.");
-					} else if (args[0].equalsIgnoreCase("update")) {
-						try {
-							HttpURLConnection con = (HttpURLConnection) new URL("http://www.mirsv.com/mirsvplugin/version.txt").openConnection();
-							String lastver = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-							String version = plugin.getDescription().getVersion();
-							if (!lastver.equals(version)) {
-								p.sendMessage(prefix+ChatColor.AQUA + "종합 플러그인 최신버전 발견 (현버전: " + version + ",최신버전: " + lastver + ")");
-								p.sendMessage(prefix+ChatColor.AQUA + "바로 다운받기: http://www.mirsv.com/mirsvplugin/Mirsv.jar");
-							} else {
-								p.sendMessage(prefix+ChatColor.AQUA + "현재 최신버전을 보유하고 있습니다.");
-							}
-						} catch (Exception e) {
-							p.sendMessage(prefix+ChatColor.AQUA + "최신버전 체크 실패.");
-						}
 					}
 				}
 			}
