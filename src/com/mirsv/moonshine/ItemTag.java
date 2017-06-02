@@ -1,5 +1,6 @@
 package com.mirsv.moonshine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -38,9 +39,16 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 							p.sendMessage(prefix+"§a손에 들고 있는 아이템의 이름을 바꾸었습니다.");
 						} else if (args[0].equalsIgnoreCase("lore")){
 							if (args[1].equalsIgnoreCase("add")){
-								if (args.length == 3){
-									String lore = args[2].replaceAll("&", "§");
+								if (args.length > 2){
+									String lore = args[2];
+									for (int a = 3; a < args.length;a++){
+										lore += " "+args[a];
+									}
+									lore = lore.replaceAll("&", "§");
 									List<String> lores = item.getLore();
+									if (lores == null){
+										lores = new ArrayList<String>();
+									}
 									lores.add(lore);
 									item.setLore(lores);
 									i.setItemMeta(item);
@@ -48,8 +56,31 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 								}
 							} else if (args[1].equalsIgnoreCase("show")){
 								List<String> lores = item.getLore();
-								for (int j = 0;j < lores.size(); j++){
-									p.sendMessage(prefix+"§a"+j+". "+lores.get(j));
+								if (lores != null){
+									for (int j = 0;j < lores.size(); j++){
+										p.sendMessage(prefix+"§a"+j+". "+lores.get(j));
+									}
+								}
+							} else if (args[1].equalsIgnoreCase("remove")){
+								List<String> lores = item.getLore();
+								if (lores != null){
+									if (args.length == 2){
+										int size = lores.size() -1;
+										lores.remove(size);
+										item.setLore(lores);
+										i.setItemMeta(item);
+										p.sendMessage(prefix+"§a손에 들고 있는 아이템의 마지막 설명을 제거하였습니다.");
+									} else if (args.length == 3){
+										if (isNumber(args[2])){
+											int index = Integer.parseInt(args[2]);
+											if (index > -1 && index < lores.size()){
+												lores.remove(index);
+												item.setLore(lores);
+												i.setItemMeta(item);
+												p.sendMessage(prefix+"§a손에 들고 있는 아이템의 "+index+"번째 설명을 제거하였습니다.");
+											}
+										}
+									}
 								}
 							}
 						}
@@ -58,6 +89,7 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 						p.sendMessage(prefix+"§a/itemtag name [name]: 손에 들고 있는 아이템의 이름을 바꿉니다.");
 						p.sendMessage(prefix+"§a/itemtag lore add [string]: 손에 들고 있는 아이템의 설명을 추가합니다.");
 						p.sendMessage(prefix+"§a/itemtag lore show: 손에 들고 있는 아이템의 설명을 봅니다.");
+						p.sendMessage(prefix+"§a/itemtag lore remove (index): 손에 들고 있는 아이템의 설명을 제거합니다.");
 					}
 				} else {
 					p.sendMessage(prefix+"§c아이템을 들고 있지 않습니다.");
@@ -66,5 +98,20 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 		}
 
 		return true;
+	}
+	
+	private boolean isNumber(String str) {
+		boolean result = true;
+		if (str.equals("")) {
+			result = false;
+		}
+		for (int i = 0; i < str.length(); i++) {
+			int c = str.charAt(i);
+			if ((c < 48) || (c > 59)) {
+				result = false;
+				break;
+			}
+		}
+		return result;
 	}
 }
