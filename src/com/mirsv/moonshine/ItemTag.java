@@ -1,5 +1,7 @@
 package com.mirsv.moonshine;
 
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -34,10 +36,28 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 							item.setDisplayName(name);
 							i.setItemMeta(item);
 							p.sendMessage(prefix+"§a손에 들고 있는 아이템의 이름을 바꾸었습니다.");
+						} else if (args[0].equalsIgnoreCase("lore")){
+							if (args[1].equalsIgnoreCase("add")){
+								if (args.length == 3){
+									String lore = args[2].replaceAll("&", "§");
+									List<String> lores = item.getLore();
+									lores.add(lore);
+									item.setLore(lores);
+									i.setItemMeta(item);
+									p.sendMessage(prefix+"§a손에 들고 있는 아이템의 설명을 추가하였습니다.");
+								}
+							} else if (args[1].equalsIgnoreCase("show")){
+								List<String> lores = item.getLore();
+								for (int j = 0;j < lores.size(); j++){
+									p.sendMessage(prefix+"§a"+j+". "+lores.get(j));
+								}
+							}
 						}
 					} else {
 						p.sendMessage(prefix+"§a아이템 테그 명령어");
 						p.sendMessage(prefix+"§a/itemtag name [name]: 손에 들고 있는 아이템의 이름을 바꿉니다.");
+						p.sendMessage(prefix+"§a/itemtag lore add [string]: 손에 들고 있는 아이템의 설명을 추가합니다.");
+						p.sendMessage(prefix+"§a/itemtag lore show: 손에 들고 있는 아이템의 설명을 봅니다.");
 					}
 				} else {
 					p.sendMessage(prefix+"§c아이템을 들고 있지 않습니다.");
