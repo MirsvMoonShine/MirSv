@@ -22,6 +22,7 @@ public enum PluginLists {
 
 	PluginLists(String Name, MirPlugin mir) {
 		this.PluginName = Name;
+		this.plugin = mir;
 	}
 
 	public String getPluginName() {
