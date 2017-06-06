@@ -36,7 +36,7 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 			if (args.length == 0) {
 				if (Target.containsKey(player.getName())) {
 					Target.remove(player.getName());
-					player.sendMessage(prefix + ChatColor.AQUA + "귓속말 채팅을 종료합니다.");
+					Bukkit.dispatchCommand((CommandSender) player, "g");
 				} else {
 					player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.AQUA + "/wc [닉네임] : [닉네임]과 자동으로 귓속말 채팅");
 				}
