@@ -1,6 +1,6 @@
 name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.8.2
+version: 1.9
 softdepend: [Vault]
 
 commands:
@@ -24,3 +24,5 @@ commands:
     description: ControlDeathMessage Plugin
   wc:
     description: WhisperChat Plugin
+  party:
+    description: Party Plugin
