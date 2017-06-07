@@ -167,10 +167,9 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	}
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		Party party = getParty(event.getPlayer());
-		if(party != null) {
-			party.player.remove(event.getPlayer());
-			for(Player pl: party.player) {
+		if(getParty(event.getPlayer()) != null) {
+			getParty(event.getPlayer()).player.remove(event.getPlayer());
+			for(Player pl: getParty(event.getPlayer()).player) {
 				pl.sendMessage(prefix+ChatColor.YELLOW+event.getPlayer().getName()+" ´ÔÀÌ ÆÄÆ¼¸¦ ¶°³µ½À´Ï´Ù.");
 			}
 		}
