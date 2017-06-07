@@ -14,11 +14,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.mirsv.MirPlugin;
 
 public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
-	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
+	String prefix = ChatColor.GOLD+"["+ChatColor.GREEN+"미르서버"+ChatColor.GOLD+"] "+ChatColor.RESET;
 	List<Party> partys = new ArrayList<>();
 	HashMap<Player, Boolean> chat = new HashMap<>();
 	
@@ -41,6 +42,13 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 							partys.add(party);
 							Bukkit.broadcastMessage(prefix+ChatColor.YELLOW+p.getName()+"님이 파티 \'"+args[1]+"\'을(를) 만들었습니다.");
 						}
+					}
+				} else if(args[0].equalsIgnoreCase("disband")) {
+					if(getParty(p).getOwner().equals(p)) {
+						for(Player pl : getParty(p).getPlayers()) {
+							pl.sendMessage(prefix+ChatColor.YELLOW+"파티가 해체되었습니다.");
+						}
+						partys.remove(getParty(p));
 					}
 				} else if (args[0].equalsIgnoreCase("add")){
 					if (args.length == 2){
@@ -104,10 +112,13 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 					if (getParty(p) != null){
 						if (chat.getOrDefault(p, false) == false){
 							chat.put(p, true);
-							p.sendMessage(prefix+ChatColor.YELLOW+"파티 채팅을 시작하였습니다.");
+							p.sendMessage(ChatColor.GOLD+"[Towny] "+ChatColor.DARK_GREEN+"모드 설정: party");
+							p.sendMessage(ChatColor.GOLD+"[Towny] "+ChatColor.DARK_GREEN+"[TownyChat] You are now talking in "+ChatColor.WHITE+"party");
+
 						} else {
 							chat.put(p, false);
-							p.sendMessage(prefix+ChatColor.YELLOW+"파티 채팅을 끝냈습니다.");
+							p.sendMessage(ChatColor.GOLD+"[Towny] "+ChatColor.DARK_GREEN+"모드 설정: global");
+							p.sendMessage(ChatColor.GOLD+"[Towny] "+ChatColor.DARK_GREEN+"[TownyChat] You are now talking in "+ChatColor.WHITE+"global");
 						}
 					}
 				} else if (args[0].equalsIgnoreCase("info")){
@@ -124,6 +135,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 					}
 				} else if (args[0].equalsIgnoreCase("?")){
 					p.sendMessage(prefix+ChatColor.YELLOW+"/party create <이름>: 파티를 만듭니다.");
+					p.sendMessage(prefix+ChatColor.YELLOW+"/party disband: 파티를 해체합니다.");
 					p.sendMessage(prefix+ChatColor.YELLOW+"/party add <닉네임>: 파티원을 추가합니다.");
 					p.sendMessage(prefix+ChatColor.YELLOW+"/party kick <닉네임>: 파티원을 추방합니다.");
 					p.sendMessage(prefix+ChatColor.YELLOW+"/party info: 파티 정보를 불러옵니다.");
@@ -141,9 +153,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 		Player p = event.getPlayer();
 		if (chat.getOrDefault(p, false) == true){
 			event.getRecipients().clear();
-			event.getRecipients().add(p);
-			String prefix = ChatColor.YELLOW + "[Party] ";
-			event.setFormat(prefix + p.getName()+": "+ event.getMessage());
+			event.setFormat("[" + ChatColor.DARK_AQUA + "PC" + ChatColor.WHITE + "] " + event.getPlayer().getName() + ": " + ChatColor.GOLD + event.getMessage());
 			if (getParty(p) != null){
 				for (Player t : getParty(p).player){
 					event.getRecipients().add(t);
@@ -151,7 +161,16 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 			}
 		}
 	}
-	
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		Party party = getParty(event.getPlayer());
+		if(party != null) {
+			party.player.remove(event.getPlayer());
+			for(Player pl: party.player) {
+				pl.sendMessage(prefix+ChatColor.YELLOW+event.getPlayer().getName()+" 님이 파티를 떠났습니다.");
+			}
+		}
+	}
 	public Party getParty(Player p){
 		Party result = null;
 		for (Party party : partys){
