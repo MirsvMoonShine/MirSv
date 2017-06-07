@@ -23,8 +23,9 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 	HashMap < String, String > Target = new HashMap < String, String > ();
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onCommand(PlayerCommandPreprocessEvent event) {
-		String s = event.getMessage().substring(1);
-		if(s.equalsIgnoreCase("tc") || s.equalsIgnoreCase("nc") || s.equalsIgnoreCase("lc") || s.equalsIgnoreCase("g")) Target.remove(event.getPlayer().getName());
+		String string = event.getMessage().substring(1);
+		String[] s = string.split(" ");
+		if(s[0].equalsIgnoreCase("tc") || s[0].equalsIgnoreCase("nc") || s[0].equalsIgnoreCase("lc") || s[0].equalsIgnoreCase("pc") || (s[0].equalsIgnoreCase("party") && s[1].equalsIgnoreCase("chat")) || s[0].equalsIgnoreCase("g")) Target.remove(event.getPlayer().getName());
 	}
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if((getConfig().getBoolean("enable.WhisperChat")) && ((sender instanceof Player))) {

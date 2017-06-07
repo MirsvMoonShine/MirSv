@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.mirsv.MirPlugin;
@@ -27,7 +28,11 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 		getCommand("party", this);
 		getListener(this);
 	}
-
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onCommand(PlayerCommandPreprocessEvent event) {
+		String s = event.getMessage().split(" ")[0].substring(1);
+		if(s.equalsIgnoreCase("tc") || s.equalsIgnoreCase("nc") || s.equalsIgnoreCase("lc") || s.equalsIgnoreCase("wc") || s.equalsIgnoreCase("g")) chat.put(event.getPlayer(), false);
+	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
 		if (sender instanceof Player){
@@ -147,7 +152,6 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 		}
 		return false;
 	}
-	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onChat(AsyncPlayerChatEvent event) {
 		Player p = event.getPlayer();
