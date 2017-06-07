@@ -25,7 +25,8 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 	public void onCommand(PlayerCommandPreprocessEvent event) {
 		String string = event.getMessage().substring(1);
 		String[] s = string.split(" ");
-		if(s[0].equalsIgnoreCase("tc") || s[0].equalsIgnoreCase("nc") || s[0].equalsIgnoreCase("lc") || s[0].equalsIgnoreCase("pc") || (s[0].equalsIgnoreCase("party") && s[1].equalsIgnoreCase("chat")) || s[0].equalsIgnoreCase("g")) Target.remove(event.getPlayer().getName());
+		if(s[0].equalsIgnoreCase("tc") || s[0].equalsIgnoreCase("nc") || s[0].equalsIgnoreCase("lc") || s[0].equalsIgnoreCase("pc") || s[0].equalsIgnoreCase("g")) Target.remove(event.getPlayer().getName());
+		if(s.length > 1 && s[0].equalsIgnoreCase("party") && s[1].equalsIgnoreCase("chat")) Target.remove(event.getPlayer().getName());
 	}
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if((getConfig().getBoolean("enable.WhisperChat")) && ((sender instanceof Player))) {
@@ -67,10 +68,11 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent event) {
 		if(Target.containsKey(event.getPlayer().getName())) {
-			event.setCancelled(true);
+			event.getRecipients().clear();
 			if(Bukkit.getPlayer(Target.get(event.getPlayer().getName())).isOnline()) {
-				Bukkit.getPlayer(Target.get(event.getPlayer().getName())).sendMessage("[" + ChatColor.DARK_AQUA + "WC" + ChatColor.WHITE + "] " + event.getPlayer().getName() + ": " + ChatColor.GOLD + event.getMessage());
-				event.getPlayer().sendMessage("[" + ChatColor.DARK_AQUA + "WC" + ChatColor.WHITE + "] " + event.getPlayer().getName() + ": " + ChatColor.GOLD + event.getMessage());
+				event.setFormat("[" + ChatColor.DARK_AQUA + "WC" + ChatColor.WHITE + "] " + event.getPlayer().getName() + ": " + ChatColor.BLUE + event.getMessage());
+				event.getRecipients().add(Bukkit.getPlayer(event.getPlayer().getName()));
+				event.getRecipients().add(Bukkit.getPlayer(Target.get(event.getPlayer().getName())));
 			}
 			else event.getPlayer().sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.RED + "귓속말을 보낸 상대가 오프라인입니다. \'/g\'를 입력해주세요.");
 		}

@@ -51,6 +51,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 				} else if(args[0].equalsIgnoreCase("disband")) {
 					if(getParty(p).getOwner().equals(p)) {
 						for(Player pl : getParty(p).getPlayers()) {
+							chat.put(pl, false);
 							pl.sendMessage(prefix+ChatColor.YELLOW+"파티가 해체되었습니다.");
 						}
 						partys.remove(getParty(p));
@@ -133,7 +134,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 						p.sendMessage(prefix+ChatColor.YELLOW+"파티장: "+party.getOwner().getName());
 						p.sendMessage(prefix+ChatColor.YELLOW+"파티원들 정보");
 						for (Player t : party.getPlayers()){
-							p.sendMessage(prefix+ChatColor.YELLOW+t.getName()+" 체력: "+t.getHealth()+" 배고픔: "+t.getFoodLevel());
+							p.sendMessage(prefix+ChatColor.YELLOW+t.getName()+" - 체력: "+t.getHealth()+"/20.0 배고픔: "+t.getFoodLevel()+".0/20.0");
 						}
 					} else {
 						p.sendMessage(prefix+ChatColor.YELLOW+"당신은 파티에 소속되어있지 않습니다.");
@@ -168,9 +169,26 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		if(getParty(event.getPlayer()) != null) {
-			getParty(event.getPlayer()).player.remove(event.getPlayer());
-			for(Player pl: getParty(event.getPlayer()).player) {
-				pl.sendMessage(prefix+ChatColor.YELLOW+event.getPlayer().getName()+" 님이 파티를 떠났습니다.");
+			for(Party p: partys) {
+				if(p.isPlayerJoin(event.getPlayer())) {
+					if(p.getOwner().getName().equalsIgnoreCase(event.getPlayer().getName())) {
+						chat.put(event.getPlayer(), false);
+						p.player.remove(event.getPlayer());
+						for(Player pl : p.getPlayers()) {
+							chat.put(pl, false);
+							pl.sendMessage(prefix+ChatColor.YELLOW+"파티장이 서버에서 퇴장하여 파티가 해체되었습니다.");
+						}
+						partys.remove(p);
+					}
+					else {
+						chat.put(event.getPlayer(), false);
+						p.player.remove(event.getPlayer());
+						for(Player pl: p.player) {
+							pl.sendMessage(prefix+ChatColor.YELLOW+event.getPlayer().getName()+"님이 서버에서 퇴장하여 파티를 떠났습니다.");
+						}
+					}
+					break;
+				}
 			}
 		}
 	}
