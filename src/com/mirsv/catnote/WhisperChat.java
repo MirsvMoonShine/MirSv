@@ -34,8 +34,8 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 			if(args.length == 0) {
 				if(Target.containsKey(player.getName())) {
 					Target.remove(player.getName());
-					player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "모드 설정: global");
-					player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "[TownyChat] You are now talking in " + ChatColor.WHITE + "global");
+					player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "모드 설정: general");
+					player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "[TownyChat] You are now talking in " + ChatColor.WHITE + "general");
 				}
 				else {
 					player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.AQUA + "/wc [닉네임] : [닉네임]과 자동으로 귓속말 채팅");
