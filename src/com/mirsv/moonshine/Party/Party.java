@@ -3,21 +3,19 @@ package com.mirsv.moonshine.Party;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.entity.Player;
-
 public class Party {
-	List<Player> player;
+	List<String> player;
 	String PartyName;
-	Player owner;
+	String owner;
 	
-	public Party(Player owner, String Name){
+	public Party(String owner, String Name){
 		this.PartyName = Name;
 		this.player = new ArrayList<>();
 		player.add(owner);
 		this.owner = owner;
 	}
 	
-	public boolean isPlayerJoin(Player p){
+	public boolean isPlayerJoin(String p){
 		if (player.contains(p)){
 			return true;
 		} else {
@@ -25,7 +23,7 @@ public class Party {
 		}
 	}
 	
-	public List<Player> getPlayers(){
+	public List<String> getPlayers(){
 		return player;
 	}
 	
@@ -33,7 +31,7 @@ public class Party {
 		return PartyName;
 	}
 	
-	public Player getOwner(){
+	public String getOwner(){
 		return owner;
 	}
 }
