@@ -152,12 +152,12 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 						else {
 							for (String pl : party.getPlayers()) {
 								if (pl.equalsIgnoreCase(p.getName())) {
-									party.getPlayers().remove(pl);
 									for (String pm : party.getPlayers()) {
 										if (Bukkit.getOfflinePlayer(pm).isOnline()) {
 											Bukkit.getPlayer(pm).sendMessage(prefix+ChatColor.YELLOW+p.getName()+"´ÔÀÌ ÆÄÆ¼¸¦ ¶°³µ½À´Ï´Ù.");
 										}
 									}
+									party.getPlayers().remove(pl);
 									break;
 								}
 							}
