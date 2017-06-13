@@ -16,7 +16,7 @@ public class CallPlayer extends MirPlugin implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
-		if (getConfig().getBoolean("enable.CallPlayer")) {
+		if (getConfig().getBoolean("enable.CallPlayer", true)) {
 			Player player = null;
 			if ((sender instanceof Player)) player = (Player) sender;
 			if (args.length == 0) {

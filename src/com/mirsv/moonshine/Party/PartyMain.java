@@ -36,7 +36,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args){
-		if (sender instanceof Player){
+		if (getConfig().getBoolean("enable.Party", true) && sender instanceof Player){
 			Player p = (Player) sender;
 			if (args.length > 0){
 				if (args[0].equalsIgnoreCase("create")){
@@ -231,7 +231,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onChat(AsyncPlayerChatEvent event){
 		Player p = event.getPlayer();
-		if (chat.contains(p.getName())){
+		if (getConfig().getBoolean("enable.Party", true) && chat.contains(p.getName())){
 			event.getRecipients().clear();
 			event.setFormat("["+ChatColor.DARK_AQUA+"PC"+ChatColor.WHITE+"] "+event.getPlayer().getName()+": "+ChatColor.LIGHT_PURPLE+event.getMessage());
 			if (getParty(p.getName()) != null){
@@ -247,7 +247,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player p = event.getPlayer();
-		if (getParty(p.getName()) != null) {
+		if (getConfig().getBoolean("enable.Party", true) && getParty(p.getName()) != null) {
 			for (String pl : getParty(p.getName()).getPlayers()) {
 				if (Bukkit.getOfflinePlayer(pl).isOnline() && !pl.equalsIgnoreCase(p.getName())) {
 					Bukkit.getPlayer(pl).sendMessage(ChatColor.YELLOW+"파티원 "+p.getName()+"님이 서버에서 퇴장하셨습니다.");
@@ -259,7 +259,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
-		if (getParty(p.getName()) != null) {
+		if (getConfig().getBoolean("enable.Party", true) && getParty(p.getName()) != null) {
 			for (String pl : getParty(p.getName()).getPlayers()) {
 				if (Bukkit.getOfflinePlayer(pl).isOnline() && !pl.equalsIgnoreCase(p.getName())) {
 					Bukkit.getPlayer(pl).sendMessage(ChatColor.YELLOW+"파티원 "+p.getName()+"님이 서버에 입장하셨습니다.");

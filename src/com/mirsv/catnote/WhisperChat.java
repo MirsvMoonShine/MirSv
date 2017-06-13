@@ -23,13 +23,15 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 	HashMap < String, String > Target = new HashMap < String, String > ();
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onCommand(PlayerCommandPreprocessEvent event) {
-		String string = event.getMessage().substring(1);
-		String[] s = string.split(" ");
-		if(s[0].equalsIgnoreCase("tc") || s[0].equalsIgnoreCase("nc") || s[0].equalsIgnoreCase("lc") || s[0].equalsIgnoreCase("pc") || s[0].equalsIgnoreCase("g")) Target.remove(event.getPlayer().getName());
-		if(s.length > 1 && s[0].equalsIgnoreCase("party") && s[1].equalsIgnoreCase("chat")) Target.remove(event.getPlayer().getName());
+		if(getConfig().getBoolean("enable.BroadCast", true)) {
+			String string = event.getMessage().substring(1);
+			String[] s = string.split(" ");
+			if(s[0].equalsIgnoreCase("tc") || s[0].equalsIgnoreCase("nc") || s[0].equalsIgnoreCase("lc") || s[0].equalsIgnoreCase("pc") || s[0].equalsIgnoreCase("g")) Target.remove(event.getPlayer().getName());
+			if(s.length > 1 && s[0].equalsIgnoreCase("party") && s[1].equalsIgnoreCase("chat")) Target.remove(event.getPlayer().getName());
+		}
 	}
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if((getConfig().getBoolean("enable.WhisperChat")) && ((sender instanceof Player))) {
+		if((getConfig().getBoolean("enable.WhisperChat", true)) && ((sender instanceof Player))) {
 			Player player = (Player) sender;
 			if(args.length == 0) {
 				if(Target.containsKey(player.getName())) {
@@ -67,7 +69,7 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 	}
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent event) {
-		if(Target.containsKey(event.getPlayer().getName())) {
+		if(getConfig().getBoolean("enable.WhisperChat", true) && Target.containsKey(event.getPlayer().getName())) {
 			event.getRecipients().clear();
 			if(Bukkit.getPlayer(Target.get(event.getPlayer().getName())).isOnline()) {
 				event.setFormat("[" + ChatColor.DARK_AQUA + "WC" + ChatColor.WHITE + "] " + event.getPlayer().getName() + ": " + ChatColor.BLUE + event.getMessage());

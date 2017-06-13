@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.mirsv.MirPlugin;
 
@@ -42,17 +41,13 @@ public class ControlMessage extends MirPlugin implements Listener, CommandExecut
 	}
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
-		String message = event.getDeathMessage();
-		event.setDeathMessage(null);
-		for (Player p: Bukkit.getOnlinePlayers()) {
-			if (this.messagesOff.indexOf(p.getName()) != -1) continue;
-			p.sendMessage(message);
+		if(getConfig().getBoolean("enable.ControlDeathMessage", true)){
+			String message = event.getDeathMessage();
+			event.setDeathMessage(null);
+			for (Player p: Bukkit.getOnlinePlayers()) {
+				if (messagesOff.contains(p.getName())) continue;
+				p.sendMessage(message);
+			}
 		}
 	}
-
-	@EventHandler
-	public void onLeave(PlayerQuitEvent event) {
-		if (this.messagesOff.remove(event.getPlayer().getName())) this.messagesOff.remove(event.getPlayer().getName());
-	}
-
 }
