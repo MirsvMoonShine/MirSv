@@ -17,7 +17,8 @@ public enum PluginLists {
 	CallPlayer("CallPlayer", new CallPlayer()),
 	ControlDeathMessage("ControlDeathMessage", new ControlMessage()),
 	WhisperChat("WhisperChat", new WhisperChat()),
-	Party("Party", new PartyMain());
+	Party("Party", new PartyMain()),
+	BlockSpawner("BlockSpawner", new BlockSpawner());
 
 	private String PluginName;
 	private MirPlugin plugin;

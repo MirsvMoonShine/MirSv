@@ -1,6 +1,6 @@
 name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.9.2
+version: 1.9.3
 softdepend: [Vault]
 
 commands:
