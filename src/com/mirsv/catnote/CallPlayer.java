@@ -54,14 +54,17 @@ public class CallPlayer extends MirPlugin implements CommandExecutor {
 								String Message = "Console이 당신을 호출하셨습니다!";
 								String Command = "title " + p.getName() + " title {\"text\":\"" + Message + "\"}";
 								pm.getServer().dispatchCommand((CommandSender) pm.getServer().getConsoleSender(), Command);
+								p.sendMessage(prefix + "Console이 당신을 호출하셨습니다!");
 							} else {
 								String Message = player.getName() + "님이 당신을 호출하셨습니다!";
 								String Command = "title " + p.getName() + " title {\"text\":\"" + Message + "\"}";
 								pm.getServer().dispatchCommand((CommandSender) pm.getServer().getConsoleSender(), Command);
+								p.sendMessage(prefix + player.getName() + "님이 당신을 호출하셨습니다!");
 							}
 							String Message = "누군가가 이 명령어로 도배를 하면 신고해주세요!";
 							String Command = "title " + p.getName() + " subtitle {\"text\":\"" + Message + "\", \"color\":\"red\"}";
 							pm.getServer().dispatchCommand((CommandSender) pm.getServer().getConsoleSender(), Command);
+							p.sendMessage(prefix + ChatColor.RED + "누군가가 이 명령어로 도배를 하면 신고해주세요!");
 							break;
 						}
 					}
