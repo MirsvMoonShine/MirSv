@@ -2,20 +2,21 @@ package com.mirsv.moonshine.Party;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Party {
-	List<String> player;
+	List<UUID> player;
 	String PartyName;
-	String owner;
+	UUID owner;
 	
-	public Party(String owner, String Name){
+	public Party(UUID owner, String Name){
 		this.PartyName = Name;
-		this.player = new ArrayList<>();
+		this.player = new ArrayList<UUID>();
 		player.add(owner);
 		this.owner = owner;
 	}
 	
-	public boolean isPlayerJoin(String p){
+	public boolean isPlayerJoin(UUID p){
 		if (player.contains(p)){
 			return true;
 		} else {
@@ -23,7 +24,7 @@ public class Party {
 		}
 	}
 	
-	public List<String> getPlayers(){
+	public List<UUID> getPlayers(){
 		return player;
 	}
 	
@@ -31,7 +32,7 @@ public class Party {
 		return PartyName;
 	}
 	
-	public String getOwner(){
+	public UUID getOwner(){
 		return owner;
 	}
 }

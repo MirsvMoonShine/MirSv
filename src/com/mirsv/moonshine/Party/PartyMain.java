@@ -2,6 +2,7 @@ package com.mirsv.moonshine.Party;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,9 +22,8 @@ import com.mirsv.MirPlugin;
 
 public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	String prefix = ChatColor.GOLD+"["+ChatColor.GREEN+"미르서버"+ChatColor.GOLD+"] "+ChatColor.RESET;
-	List<Party> partys = new ArrayList<>();
-	ArrayList<String> chat = new ArrayList<String>();
-	
+	ArrayList<UUID> chat = new ArrayList<UUID>();
+	static List<Party> partys = com.mirsv.Mirsv.getPartys();
 	public PartyMain(){
 		getCommand("party", this);
 		getListener(this);
@@ -31,7 +31,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onCommand(PlayerCommandPreprocessEvent event){
 		String s = event.getMessage().split(" ")[0].substring(1);
-		if (s.equalsIgnoreCase("tc") || s.equalsIgnoreCase("nc") || s.equalsIgnoreCase("lc") || s.equalsIgnoreCase("wc") || s.equalsIgnoreCase("g")) chat.remove(event.getPlayer().getName());
+		if (s.equalsIgnoreCase("tc") || s.equalsIgnoreCase("nc") || s.equalsIgnoreCase("lc") || s.equalsIgnoreCase("wc") || s.equalsIgnoreCase("g")) chat.remove(event.getPlayer().getUniqueId());
 	}
 	@SuppressWarnings("deprecation")
 	@Override
@@ -41,10 +41,10 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 			if (args.length > 0){
 				if (args[0].equalsIgnoreCase("create")){
 					if (args.length == 2){
-						if (getParty(p.getName()) != null)
+						if (getParty(p.getUniqueId()) != null)
 							p.sendMessage(prefix+ChatColor.YELLOW+"이미 파티에 가입되어 있습니다.");
 						else {
-							Party party = new Party(p.getName(),args[1]);
+							Party party = new Party(p.getUniqueId(),args[1]);
 							partys.add(party);
 							Bukkit.broadcastMessage(prefix+ChatColor.YELLOW+p.getName()+"님이 파티 \'"+args[1]+"\'을(를) 만들었습니다.");
 						}
@@ -52,18 +52,18 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 						p.sendMessage(prefix+ChatColor.YELLOW+"사용법: /party create <닉네임>");
 					}
 				} else if (args[0].equalsIgnoreCase("disband")){
-					if (getParty(p.getName()) == null) {
+					if (getParty(p.getUniqueId()) == null) {
 						p.sendMessage(prefix+ChatColor.YELLOW+"당신은 권한이 없습니다.");
 						return false;
 					}
-					if (getParty(p.getName()).getOwner().equalsIgnoreCase(p.getName())){
-						for (String pl : getParty(p.getName()).getPlayers()){
+					if (getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())){
+						for (UUID pl : getParty(p.getUniqueId()).getPlayers()){
 							chat.remove(pl);
 							if (Bukkit.getOfflinePlayer(pl).isOnline()) {
 								Bukkit.getPlayer(pl).sendMessage(prefix+ChatColor.YELLOW+"파티가 해체되었습니다.");
 							}
 						}
-						partys.remove(getParty(p.getName()));
+						partys.remove(getParty(p.getUniqueId()));
 					}
 					else {
 						p.sendMessage(prefix+ChatColor.YELLOW+"당신은 권한이 없습니다.");
@@ -71,7 +71,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 				} else if (args[0].equalsIgnoreCase("add")){
 					if (args.length == 2){
 						for (Party party : partys){
-							if (party.getOwner().equalsIgnoreCase(p.getName())){
+							if (party.getOwner().equals(p.getUniqueId())){
 								boolean isExist = false;
 								for (Player pl : Bukkit.getOnlinePlayers()){
 									if (pl.getName().equalsIgnoreCase(args[1])){
@@ -85,7 +85,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 								}
 								Player target = Bukkit.getPlayer(args[1]);
 								for (Party p2 : partys){
-									if (p2.isPlayerJoin(target.getName())){
+									if (p2.isPlayerJoin(target.getUniqueId())){
 										if (party.equals(p2)){
 											p.sendMessage(prefix+ChatColor.YELLOW+"이미 당신의 파티원입니다.");
 										} else {
@@ -94,11 +94,11 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 										return false;
 									}
 								}
-								party.getPlayers().add(target.getName());
+								party.getPlayers().add(target.getUniqueId());
 								target.sendMessage(prefix+ChatColor.YELLOW+p.getName()+"님이 당신을 "+party.getPartyName()+" 파티에 추가했습니다.");
-								for (String pl : party.getPlayers()){
-									if (Bukkit.getOfflinePlayer(pl).isOnline()){
-										Bukkit.getPlayer(pl).sendMessage(prefix+ChatColor.YELLOW+target.getName()+"님을 파티에 추가했습니다.");
+								for (UUID u : party.getPlayers()){
+									if (Bukkit.getOfflinePlayer(u).isOnline()){
+										Bukkit.getPlayer(u).sendMessage(prefix+ChatColor.YELLOW+target.getName()+"님을 파티에 추가했습니다.");
 									}
 								}
 								return false;
@@ -110,22 +110,26 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 					}
 				} else if (args[0].equalsIgnoreCase("kick")){
 					if (args.length == 2){
-						if (getParty(p.getName()) != null){
-							if (getParty(p.getName()).getOwner().equalsIgnoreCase(p.getName())){
+						if(!Bukkit.getOfflinePlayer(args[1]).hasPlayedBefore()) {
+							p.sendMessage(prefix+ChatColor.YELLOW+"파티에 존재하지 않는 플레이어입니다.");
+							return false;
+						}
+						if (getParty(p.getUniqueId()) != null){
+							if (getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())){
 								if (p.getName().equalsIgnoreCase(args[1])) {
 									p.sendMessage(prefix+ChatColor.YELLOW+"자기 자신은 추방할 수 없습니다.");
 									return false;
 								}
-								Party party = getParty(p.getName());
-								for (String pl : party.getPlayers()){
-									if (pl.equalsIgnoreCase(args[1])){
-										party.getPlayers().remove(pl);
-										if (Bukkit.getOfflinePlayer(pl).isOnline()) {
-											Bukkit.getPlayer(pl).sendMessage(prefix+ChatColor.YELLOW+"파티로부터 추방당하셨습니다.");
+								Party party = getParty(p.getUniqueId());
+								for (UUID u : party.getPlayers()){
+									if (u.equals(Bukkit.getOfflinePlayer(args[1]).getUniqueId())){
+										party.getPlayers().remove(u);
+										if (Bukkit.getOfflinePlayer(u).isOnline()) {
+											Bukkit.getPlayer(u).sendMessage(prefix+ChatColor.YELLOW+"파티로부터 추방당하셨습니다.");
 										}
-										for (String pm : party.getPlayers()){
-											if (Bukkit.getOfflinePlayer(pm).isOnline()) {
-												Bukkit.getPlayer(pm).sendMessage(prefix+ChatColor.YELLOW+pl+"님을 파티에서 추방시켰습니다.");
+										for (UUID um : party.getPlayers()){
+											if (Bukkit.getOfflinePlayer(um).isOnline()) {
+												Bukkit.getPlayer(um).sendMessage(prefix+ChatColor.YELLOW+Bukkit.getOfflinePlayer(args[1]).getName()+"님을 파티에서 추방시켰습니다.");
 											}
 										}
 										return false;
@@ -144,20 +148,20 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 						p.sendMessage(prefix+ChatColor.YELLOW+"사용법: /party kick <닉네임>");
 					}
 				} else if (args[0].equalsIgnoreCase("leave")) {
-					if (getParty(p.getName()) != null) {
-						Party party = getParty(p.getName());
-						if (getParty(p.getName()).getOwner().equalsIgnoreCase(p.getName())) {
+					if (getParty(p.getUniqueId()) != null) {
+						Party party = getParty(p.getUniqueId());
+						if (getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())) {
 							p.sendMessage(prefix+ChatColor.YELLOW+"파티장은 파티를 나갈 수 없습니다.");
 						}
 						else {
-							for (String pl : party.getPlayers()) {
-								if (pl.equalsIgnoreCase(p.getName())) {
-									for (String pm : party.getPlayers()) {
-										if (Bukkit.getOfflinePlayer(pm).isOnline()) {
-											Bukkit.getPlayer(pm).sendMessage(prefix+ChatColor.YELLOW+p.getName()+"님이 파티를 떠났습니다.");
+							for (UUID u : party.getPlayers()) {
+								if (u.equals(p.getUniqueId())) {
+									party.getPlayers().remove(u);
+									for (UUID um : party.getPlayers()) {
+										if (Bukkit.getOfflinePlayer(um).isOnline()) {
+											Bukkit.getPlayer(um).sendMessage(prefix+ChatColor.YELLOW+p.getName()+"님이 파티를 떠났습니다.");
 										}
 									}
-									party.getPlayers().remove(pl);
 									break;
 								}
 							}
@@ -167,14 +171,14 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 						p.sendMessage(prefix+ChatColor.YELLOW+"당신은 파티에 소속되어있지 않습니다.");
 					}
 				} else if (args[0].equalsIgnoreCase("chat")){
-					if (getParty(p.getName()) != null){
-						if (!chat.contains(p.getName())){
-							chat.add(p.getName());
+					if (getParty(p.getUniqueId()) != null){
+						if (!chat.contains(p.getUniqueId())){
+							chat.add(p.getUniqueId());
 							p.sendMessage(ChatColor.GOLD+"[Towny] "+ChatColor.DARK_GREEN+"모드 설정: party");
 							p.sendMessage(ChatColor.GOLD+"[Towny] "+ChatColor.DARK_GREEN+"[TownyChat] You are now talking in "+ChatColor.WHITE+"party");
 
 						} else {
-							chat.remove(p.getName());
+							chat.remove(p.getUniqueId());
 							p.sendMessage(ChatColor.GOLD+"[Towny] "+ChatColor.DARK_GREEN+"모드 설정: general");
 							p.sendMessage(ChatColor.GOLD+"[Towny] "+ChatColor.DARK_GREEN+"[TownyChat] You are now talking in "+ChatColor.WHITE+"general");
 						}
@@ -183,17 +187,17 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 						p.sendMessage(prefix+ChatColor.YELLOW+"당신은 파티에 소속되어있지 않습니다.");
 					}
 				} else if (args[0].equalsIgnoreCase("info")){
-					if (getParty(p.getName()) != null){
-						Party party = getParty(p.getName());
-						p.sendMessage(prefix+ChatColor.GOLD+party.getPartyName()+ChatColor.YELLOW+" 파티 정보 - 파티장: "+ChatColor.WHITE+party.getOwner());
-						for (String t : party.getPlayers()){
-							if (Bukkit.getOfflinePlayer(t).isOnline()) {
-								p.sendMessage(prefix+ChatColor.WHITE+t+ChatColor.YELLOW+" - 체력: "+((int)(Bukkit.getPlayer(t).getHealth()))+"/20, 배고픔: "+((int)(Bukkit.getPlayer(t).getFoodLevel()))+"/20 "+ChatColor.GREEN+"(온라인)");
+					if (getParty(p.getUniqueId()) != null){
+						Party party = getParty(p.getUniqueId());
+						p.sendMessage(prefix+ChatColor.GOLD+party.getPartyName()+ChatColor.YELLOW+" 파티 정보 - 파티장: "+ChatColor.WHITE+Bukkit.getOfflinePlayer(party.getOwner()).getName());
+						for (UUID u : party.getPlayers()){
+							if (Bukkit.getOfflinePlayer(u).isOnline()) {
+								p.sendMessage(ChatColor.WHITE+" ◇ "+Bukkit.getOfflinePlayer(u).getName()+ChatColor.YELLOW+" - 체력: "+((int)(Bukkit.getPlayer(u).getHealth()))+"/20, 배고픔: "+((int)(Bukkit.getPlayer(u).getFoodLevel()))+"/20 "+ChatColor.GREEN+"(온라인)");
 							}
 						}
-						for (String t : party.getPlayers()){
-							if (!Bukkit.getOfflinePlayer(t).isOnline()) {
-								p.sendMessage(prefix+ChatColor.WHITE+t+ChatColor.YELLOW+" - "+ChatColor.RED+"(오프라인)");
+						for (UUID u : party.getPlayers()){
+							if (!Bukkit.getOfflinePlayer(u).isOnline()) {
+								p.sendMessage(ChatColor.WHITE+" ◇ "+Bukkit.getOfflinePlayer(u).getName()+ChatColor.YELLOW+" - "+ChatColor.RED+"(오프라인)");
 							}
 						}
 					} else {
@@ -206,7 +210,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 					else {
 						p.sendMessage(prefix+ChatColor.YELLOW+"========== 파티 목록 ==========");
 						for (Party party : partys) {
-							p.sendMessage(prefix+ChatColor.YELLOW+party.getPartyName()+" - 파티장: "+party.getOwner()+", 파티원 "+party.getPlayers().size());
+							p.sendMessage(prefix+ChatColor.YELLOW+party.getPartyName()+" - 파티장: "+Bukkit.getOfflinePlayer(party.getOwner()).getName()+", 파티원 "+party.getPlayers().size());
 						}
 					}
 				} else if (args[0].equalsIgnoreCase("?")){
@@ -227,55 +231,55 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 		}
 		return false;
 	}
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onChat(AsyncPlayerChatEvent event){
 		Player p = event.getPlayer();
-		if (getConfig().getBoolean("enable.Party", true) && chat.contains(p.getName())){
+		if (getConfig().getBoolean("enable.Party", true) && chat.contains(p.getUniqueId())){
 			event.getRecipients().clear();
 			event.setFormat("["+ChatColor.DARK_AQUA+"PC"+ChatColor.WHITE+"] "+event.getPlayer().getName()+": "+ChatColor.LIGHT_PURPLE+event.getMessage());
-			if (getParty(p.getName()) != null){
-				for (String t : getParty(p.getName()).getPlayers()){
-					if (Bukkit.getOfflinePlayer(t).isOnline()) {
-						event.getRecipients().add(Bukkit.getPlayer(t));
+			if (getParty(p.getUniqueId()) != null){
+				for (UUID u : getParty(p.getUniqueId()).getPlayers()){
+					if (Bukkit.getOfflinePlayer(u).isOnline()) {
+						event.getRecipients().add(Bukkit.getPlayer(u));
 					}
 				}
 			}
 		}
 	}
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player p = event.getPlayer();
-		if (getConfig().getBoolean("enable.Party", true) && getParty(p.getName()) != null) {
-			for (String pl : getParty(p.getName()).getPlayers()) {
-				if (Bukkit.getOfflinePlayer(pl).isOnline() && !pl.equalsIgnoreCase(p.getName())) {
-					Bukkit.getPlayer(pl).sendMessage(ChatColor.YELLOW+"파티원 "+p.getName()+"님이 서버에서 퇴장하셨습니다.");
+		if (getConfig().getBoolean("enable.Party", true) && getParty(p.getUniqueId()) != null) {
+			for (UUID u: getParty(p.getUniqueId()).getPlayers()) {
+				if (Bukkit.getOfflinePlayer(u).isOnline() && !u.equals(p.getName())) {
+					Bukkit.getPlayer(u).sendMessage(ChatColor.YELLOW+"파티원 "+p.getName()+"님이 서버에서 퇴장하셨습니다.");
 				}
 			}
 		}
 	}
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
-		if (getConfig().getBoolean("enable.Party", true) && getParty(p.getName()) != null) {
-			for (String pl : getParty(p.getName()).getPlayers()) {
-				if (Bukkit.getOfflinePlayer(pl).isOnline() && !pl.equalsIgnoreCase(p.getName())) {
-					Bukkit.getPlayer(pl).sendMessage(ChatColor.YELLOW+"파티원 "+p.getName()+"님이 서버에 입장하셨습니다.");
+		if (getConfig().getBoolean("enable.Party", true) && getParty(p.getUniqueId()) != null) {
+			for (UUID u : getParty(p.getUniqueId()).getPlayers()) {
+				if (Bukkit.getOfflinePlayer(u).isOnline() && !u.equals(p.getUniqueId())) {
+					Bukkit.getPlayer(u).sendMessage(ChatColor.YELLOW+"파티원 "+p.getName()+"님이 서버에 입장하셨습니다.");
 				}
 			}
 		}
 	}
-	public Party getParty(String s){
+	public Party getParty(UUID uuid){
 		Party result = null;
 		for (Party party : partys){
-			for (String p : party.getPlayers()) {
-				if (p.equalsIgnoreCase(s)) {
+			for (UUID u : party.getPlayers()) {
+				if (u.equals(uuid)) {
 					result = party;
 				}
 			}
 		}
 		return result;
+	}
+	public static List<Party> getPartys() {
+		return partys;
 	}
 }

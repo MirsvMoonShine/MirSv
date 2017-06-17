@@ -1,15 +1,27 @@
 package com.mirsv;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.mirsv.moonshine.Party.Party;
 
 public class Mirsv extends JavaPlugin {
 	PluginManager pm = getServer().getPluginManager();
 	ArrayList < String > plugins = new ArrayList < String > ();
 	public PluginLists lists;
-
+	public static List<Party> partys = new ArrayList<>();
+	@Override
 	public void onEnable() {
 		getConfig().options().copyDefaults(true);
 		saveConfig();
@@ -26,9 +38,41 @@ public class Mirsv extends JavaPlugin {
 				plugin = plugin + ", " + plu[i];
 			}
 		}
+		try {
+			BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Party.dat"));
+			String s;
+			while((s = in.readLine()) != null) {
+				String[] Array = s.split(" ");
+				Party party = new Party(UUID.fromString(Array[1]), Array[0]);
+				for(int i = 2; i < Array.length; i++) party.getPlayers().add(UUID.fromString(Array[i]));
+				partys.add(party);
+			}
+			in.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 		System.out.println("[미르서버] 가동 된 플러그인들: " + plugin);
 	}
-
+	@Override
+	public void onDisable() {
+		List<Party> Save = com.mirsv.moonshine.Party.PartyMain.getPartys();
+		try {
+			File f = new File("plugins/Mirsv/Party.dat");
+			f.delete();
+            BufferedWriter bw = new BufferedWriter(new FileWriter("plugins/PvPRecord/Data.dat"));
+            for(Party party: Save) {
+            	String s = party.getPartyName() + " " + party.getOwner() + " ";
+            	for(UUID u: party.getPlayers()) if(!party.getOwner().equals(u)) s += u + " ";
+            	bw.write(s);
+            	bw.newLine();
+            }
+            bw.close();
+        }
+		catch (IOException e) {
+            e.printStackTrace();
+		}
+	}
 	public void InstallPlugins() {
 		plugins.clear();
 
@@ -43,5 +87,8 @@ public class Mirsv extends JavaPlugin {
 				getConfig().set("enable." + plu.getPluginName(), false);
 			}
 		}
+	}
+	public static List<Party> getPartys() {
+		return partys;
 	}
 }
