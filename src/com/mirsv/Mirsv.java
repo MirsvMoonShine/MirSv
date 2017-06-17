@@ -60,7 +60,7 @@ public class Mirsv extends JavaPlugin {
 		try {
 			File f = new File("plugins/Mirsv/Party.dat");
 			f.delete();
-            BufferedWriter bw = new BufferedWriter(new FileWriter("plugins/PvPRecord/Data.dat"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("plugins/Mirsv/Party.dat"));
             for(Party party: Save) {
             	String s = party.getPartyName() + " " + party.getOwner() + " ";
             	for(UUID u: party.getPlayers()) if(!party.getOwner().equals(u)) s += u + " ";
