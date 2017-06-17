@@ -27,8 +27,8 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 		if(getConfig().getBoolean("enable.BroadCast", true)) {
 			String string = event.getMessage().substring(1);
 			String[] s = string.split(" ");
-			if(s[0].equalsIgnoreCase("tc") || s[0].equalsIgnoreCase("nc") || s[0].equalsIgnoreCase("lc") || s[0].equalsIgnoreCase("pc") || s[0].equalsIgnoreCase("g")) Target.remove(event.getPlayer().getName());
-			if(s.length > 1 && s[0].equalsIgnoreCase("party") && s[1].equalsIgnoreCase("chat")) Target.remove(event.getPlayer().getName());
+			if(s[0].equalsIgnoreCase("tc") || s[0].equalsIgnoreCase("nc") || s[0].equalsIgnoreCase("lc") || s[0].equalsIgnoreCase("pc") || s[0].equalsIgnoreCase("g")) Target.remove(event.getPlayer().getUniqueId());
+			if(s.length > 1 && s[0].equalsIgnoreCase("party") && s[1].equalsIgnoreCase("chat")) Target.remove(event.getPlayer().getUniqueId());
 		}
 	}
 	@SuppressWarnings("deprecation")
@@ -36,8 +36,8 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 		if((getConfig().getBoolean("enable.WhisperChat", true)) && ((sender instanceof Player))) {
 			Player player = (Player) sender;
 			if(args.length == 0) {
-				if(Target.containsKey(player.getName())) {
-					Target.remove(player.getName());
+				if(Target.containsKey(player.getUniqueId())) {
+					Target.remove(player.getUniqueId());
 					player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "모드 설정: general");
 					player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "[TownyChat] You are now talking in " + ChatColor.WHITE + "general");
 				}
@@ -54,7 +54,7 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 					player.sendMessage(ChatColor.GOLD + "[Towny] " +  ChatColor.RED + "자기 자신과 귓속말할 수 없습니다.");
 					return false;
 				}
-				if(Target.containsKey(player.getName())) Target.remove(player.getName());
+				if(Target.containsKey(player.getUniqueId())) Target.remove(player.getUniqueId());
 				Target.put(player.getUniqueId(), Bukkit.getPlayer(args[0]).getUniqueId());
 				player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "모드 설정: whisper");
 				player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "[TownyChat] You are now talking in " + ChatColor.WHITE + "whisper" + ChatColor.DARK_GREEN + " with " + ChatColor.WHITE + args[0]);
