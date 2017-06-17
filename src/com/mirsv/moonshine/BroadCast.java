@@ -1,6 +1,7 @@
 package com.mirsv.moonshine;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,7 +16,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import com.mirsv.MirPlugin;
 
 public class BroadCast extends MirPlugin implements CommandExecutor,Listener {
-	ArrayList < String > BCadmins = new ArrayList < String > ();
+	ArrayList < UUID > BCadmins = new ArrayList < UUID > ();
 	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public BroadCast() {
@@ -34,11 +35,11 @@ public class BroadCast extends MirPlugin implements CommandExecutor,Listener {
 			if ((sender instanceof Player)) {
 				Player p = (Player) sender;
 				if (p.hasPermission("mirsv.admin") || p.isOp()) {
-					if (!BCadmins.contains(p.getName())) {
-						BCadmins.add(p.getName());
+					if (!BCadmins.contains(p.getUniqueId())) {
+						BCadmins.add(p.getUniqueId());
 						p.sendMessage(prefix+"공지채팅이 활성화되었습니다.");
 					} else {
-						BCadmins.remove(p.getName());
+						BCadmins.remove(p.getUniqueId());
 						p.sendMessage(prefix+"공지채팅이 비활성화되었습니다.");
 					}
 				}
@@ -51,7 +52,7 @@ public class BroadCast extends MirPlugin implements CommandExecutor,Listener {
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
 		if (getConfig().getBoolean("enable.BroadCast", true)) {
 			Player player = e.getPlayer();
-			if (BCadmins.contains(player.getName())) {
+			if (BCadmins.contains(player.getUniqueId())) {
 				e.setCancelled(true);
 				String Prefix = getConfig().getString("BroadCast.Prefix").replaceAll("&", "§");
 				String ChatColor = getConfig().getString("BroadCast.ChatColor").replaceAll("&", "§");

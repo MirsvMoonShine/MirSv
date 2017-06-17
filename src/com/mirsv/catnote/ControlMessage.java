@@ -2,6 +2,8 @@ package com.mirsv.catnote;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -21,13 +23,13 @@ public class ControlMessage extends MirPlugin implements Listener, CommandExecut
 		getListener(this);
 	}
 
-	List < String > messagesOff = new ArrayList < String > ();
+	List < UUID > messagesOff = new ArrayList < UUID > ();
 	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if ((getConfig().getBoolean("enable.ControlDeathMessage")) && ((sender instanceof Player))) {
 			Player player = (Player) sender;
-			String name = player.getName();
+			UUID name = player.getUniqueId();
 			if (this.messagesOff.contains(name)) {
 				this.messagesOff.remove(name);
 				player.sendMessage(this.prefix + ChatColor.AQUA + "이제 죽을 때 메시지가 보입니다.");
@@ -45,7 +47,7 @@ public class ControlMessage extends MirPlugin implements Listener, CommandExecut
 			String message = event.getDeathMessage();
 			event.setDeathMessage(null);
 			for (Player p: Bukkit.getOnlinePlayers()) {
-				if (messagesOff.contains(p.getName())) continue;
+				if (messagesOff.contains(p.getUniqueId())) continue;
 				p.sendMessage(message);
 			}
 		}

@@ -2,6 +2,7 @@ package com.mirsv.catnote;
 
 import com.mirsv.MirPlugin;
 import java.util.HashMap;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,7 +21,7 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 		getCommand("wc", this);
 		getListener(this);
 	}
-	HashMap < String, String > Target = new HashMap < String, String > ();
+	HashMap < UUID, UUID > Target = new HashMap < UUID, UUID > ();
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onCommand(PlayerCommandPreprocessEvent event) {
 		if(getConfig().getBoolean("enable.BroadCast", true)) {
@@ -30,6 +31,7 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 			if(s.length > 1 && s[0].equalsIgnoreCase("party") && s[1].equalsIgnoreCase("chat")) Target.remove(event.getPlayer().getName());
 		}
 	}
+	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if((getConfig().getBoolean("enable.WhisperChat", true)) && ((sender instanceof Player))) {
 			Player player = (Player) sender;
@@ -44,14 +46,7 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 				}
 			}
 			else {
-				boolean isExist = false;
-				for(Player p: org.bukkit.Bukkit.getOnlinePlayers()) {
-					if(args[0].equalsIgnoreCase(p.getName())) {
-						isExist = true;
-						break;
-					}
-				}
-				if(!isExist) {
+				if(!Bukkit.getOfflinePlayer(args[0]).isOnline()) {
 					player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.RED + "존재하지 않는 플레이어입니다.");
 					return false;
 				}
@@ -60,7 +55,7 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 					return false;
 				}
 				if(Target.containsKey(player.getName())) Target.remove(player.getName());
-				Target.put(player.getName(), args[0]);
+				Target.put(player.getUniqueId(), Bukkit.getPlayer(args[0]).getUniqueId());
 				player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "모드 설정: whisper");
 				player.sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.DARK_GREEN + "[TownyChat] You are now talking in " + ChatColor.WHITE + "whisper" + ChatColor.DARK_GREEN + " with " + ChatColor.WHITE + args[0]);
 			}
@@ -69,12 +64,12 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 	}
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent event) {
-		if(getConfig().getBoolean("enable.WhisperChat", true) && Target.containsKey(event.getPlayer().getName())) {
+		if(getConfig().getBoolean("enable.WhisperChat", true) && Target.containsKey(event.getPlayer().getUniqueId())) {
 			event.getRecipients().clear();
-			if(Bukkit.getPlayer(Target.get(event.getPlayer().getName())).isOnline()) {
+			if(Bukkit.getOfflinePlayer(Target.get(event.getPlayer().getUniqueId())).isOnline()) {
 				event.setFormat("[" + ChatColor.DARK_AQUA + "WC" + ChatColor.WHITE + "] " + event.getPlayer().getName() + ": " + ChatColor.BLUE + event.getMessage());
-				event.getRecipients().add(Bukkit.getPlayer(event.getPlayer().getName()));
-				event.getRecipients().add(Bukkit.getPlayer(Target.get(event.getPlayer().getName())));
+				event.getRecipients().add(Bukkit.getPlayer(event.getPlayer().getUniqueId()));
+				event.getRecipients().add(Bukkit.getPlayer(Target.get(event.getPlayer().getUniqueId())));
 			}
 			else event.getPlayer().sendMessage(ChatColor.GOLD + "[Towny] " + ChatColor.RED + "귓속말을 보낸 상대가 오프라인입니다. \'/g\'를 입력해주세요.");
 		}
