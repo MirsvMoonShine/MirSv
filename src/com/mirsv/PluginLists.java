@@ -18,7 +18,8 @@ public enum PluginLists {
 	ControlDeathMessage("ControlDeathMessage", new ControlMessage()),
 	WhisperChat("WhisperChat", new WhisperChat()),
 	Party("Party", new PartyMain()),
-	BlockSpawner("BlockSpawner", new BlockSpawner());
+	BlockSpawner("BlockSpawner", new BlockSpawner()),
+	DisableCrat("DisableCraft", new DisableCraft());
 
 	private String PluginName;
 	private MirPlugin plugin;
