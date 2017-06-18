@@ -19,7 +19,8 @@ public enum PluginLists {
 	WhisperChat("WhisperChat", new WhisperChat()),
 	Party("Party", new PartyMain()),
 	BlockSpawner("BlockSpawner", new BlockSpawner()),
-	DisableCrat("DisableCraft", new DisableCraft());
+	DisableCrat("DisableCraft", new DisableCraft()),
+	DisableCreateTown("DisableCreateTown", new DisableCreateTown());
 
 	private String PluginName;
 	private MirPlugin plugin;
