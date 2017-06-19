@@ -34,6 +34,7 @@ implements CommandExecutor {
 		try {
 			warning.warning.save(prefixListFile);
 		} catch (Exception localException1) {}
+		warnCommand(player, warn);
 	}
 	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
