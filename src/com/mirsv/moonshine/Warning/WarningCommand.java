@@ -24,7 +24,17 @@ implements CommandExecutor {
 		this.warning = war;
 		this.plugin = war.getConfig();
 	}
-
+	public void addWarning(Player player) {
+		int warn = warning.warning.getInt(player.getName());
+		warn++;
+		if (warn > warning.getConfig().getInt("Warning.maxwarning", 5)) {
+			warn = warning.getConfig().getInt("Warning.maxwarning", 5);
+		}
+		warning.warning.set(player.getName(), Integer.valueOf(warn));
+		try {
+			warning.warning.save(prefixListFile);
+		} catch (Exception localException1) {}
+	}
 	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(!(sender instanceof Player)) return false;

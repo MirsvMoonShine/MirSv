@@ -16,6 +16,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.mirsv.MirPlugin;
 import com.mirsv.moonshine.Warning.Warning;
+import com.mirsv.moonshine.Warning.WarningCommand;
 
 import net.milkbowl.vault.economy.Economy;
 
@@ -38,6 +39,8 @@ public class DisableCreateTown extends MirPlugin implements Listener {
 			player.sendMessage(prefix + ChatColor.RED + "마을 생성 규칙 위반으로 경고 1회 추가");
 			Warning warning = new Warning();
 			warning.warnCommand(player, 1);
+			WarningCommand wc = new WarningCommand(warning);
+			wc.addWarning(player);
 			double Money = economy.getBalance(Bukkit.getOfflinePlayer(player.getUniqueId()));
 			economy.withdrawPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()), Money);
 			Timer timer = new Timer();
@@ -58,6 +61,8 @@ public class DisableCreateTown extends MirPlugin implements Listener {
 			player.sendMessage(prefix + ChatColor.RED + "마을 생성 규칙 위반으로 경고 1회 추가");
 			Warning warning = new Warning();
 			warning.warnCommand(player, 1);
+			WarningCommand wc = new WarningCommand(warning);
+			wc.addWarning(player);
 			double Money = economy.getBalance(Bukkit.getOfflinePlayer(player.getUniqueId()));
 			economy.withdrawPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()), Money);
 			Timer timer = new Timer();
