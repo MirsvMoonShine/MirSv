@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.mirsv.MirPlugin;
+import com.mirsv.moonshine.Warning.Warning;
 
 import net.milkbowl.vault.economy.Economy;
 
@@ -34,7 +35,9 @@ public class DisableCreateTown extends MirPlugin implements Listener {
 			Economy economy = economyProvider.getProvider();
 			if(player.getWorld().getName().equalsIgnoreCase("world")) return;
 			event.setCancelled(true);
-			player.sendMessage(prefix + ChatColor.RED + "마을은 건축월드에서만 생성이 가능합니다.");
+			player.sendMessage(prefix + ChatColor.RED + "마을 생성 규칙 위반으로 경고 1회 추가");
+			Warning warning = new Warning();
+			warning.warnCommand(player, 1);
 			double Money = economy.getBalance(Bukkit.getOfflinePlayer(player.getUniqueId()));
 			economy.withdrawPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()), Money);
 			Timer timer = new Timer();
@@ -52,7 +55,9 @@ public class DisableCreateTown extends MirPlugin implements Listener {
 			Economy economy = economyProvider.getProvider();
 			if(player.getWorld().getName().equalsIgnoreCase("world")) return;
 			event.setCancelled(true);
-			player.sendMessage(prefix + ChatColor.RED + "마을은 건축월드에서만 생성이 가능합니다.");
+			player.sendMessage(prefix + ChatColor.RED + "마을 생성 규칙 위반으로 경고 1회 추가");
+			Warning warning = new Warning();
+			warning.warnCommand(player, 1);
 			double Money = economy.getBalance(Bukkit.getOfflinePlayer(player.getUniqueId()));
 			economy.withdrawPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()), Money);
 			Timer timer = new Timer();

@@ -27,6 +27,7 @@ implements CommandExecutor {
 
 	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		if(!(sender instanceof Player)) return false;
 		Player player = (Player) sender;
 
 		if ((this.plugin.getBoolean("enable.warning", true)) && (
