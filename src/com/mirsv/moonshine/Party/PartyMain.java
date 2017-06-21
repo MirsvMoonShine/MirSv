@@ -236,7 +236,8 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 		Player p = event.getPlayer();
 		if (getConfig().getBoolean("enable.Party", true) && chat.contains(p.getUniqueId())){
 			event.getRecipients().clear();
-			event.setFormat("["+ChatColor.DARK_AQUA+"PC"+ChatColor.WHITE+"] "+event.getPlayer().getName()+": "+ChatColor.LIGHT_PURPLE+event.getMessage());
+			event.setMessage(event.getMessage().replaceAll("%", "%%"));
+			event.setFormat("["+ChatColor.LIGHT_PURPLE+"PC"+ChatColor.WHITE+"] "+event.getPlayer().getName()+": "+ChatColor.LIGHT_PURPLE+event.getMessage());
 			if (getParty(p.getUniqueId()) != null){
 				for (UUID u : getParty(p.getUniqueId()).getPlayers()){
 					if (Bukkit.getOfflinePlayer(u).isOnline()) {

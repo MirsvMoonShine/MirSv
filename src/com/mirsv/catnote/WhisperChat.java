@@ -66,8 +66,9 @@ public class WhisperChat extends MirPlugin implements Listener, CommandExecutor 
 	public void onChat(AsyncPlayerChatEvent event) {
 		if(getConfig().getBoolean("enable.WhisperChat", true) && Target.containsKey(event.getPlayer().getUniqueId())) {
 			event.getRecipients().clear();
+			event.setMessage(event.getMessage().replaceAll("%", "%%"));
 			if(Bukkit.getOfflinePlayer(Target.get(event.getPlayer().getUniqueId())).isOnline()) {
-				event.setFormat("[" + ChatColor.DARK_AQUA + "WC" + ChatColor.WHITE + "] " + event.getPlayer().getName() + ": " + ChatColor.BLUE + event.getMessage());
+				event.setFormat("[" + ChatColor.BLUE + "WC" + ChatColor.WHITE + "] " + event.getPlayer().getName() + ": " + ChatColor.BLUE + event.getMessage());
 				event.getRecipients().add(Bukkit.getPlayer(event.getPlayer().getUniqueId()));
 				event.getRecipients().add(Bukkit.getPlayer(Target.get(event.getPlayer().getUniqueId())));
 			}

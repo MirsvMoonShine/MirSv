@@ -20,7 +20,8 @@ public enum PluginLists {
 	Party("Party", new PartyMain()),
 	BlockSpawner("BlockSpawner", new BlockSpawner()),
 	DisableCrat("DisableCraft", new DisableCraft()),
-	DisableCreateTown("DisableCreateTown", new DisableCreateTown());
+	DisableCreateTown("DisableCreateTown", new DisableCreateTown()),
+	PvPTeleport("PvPTeleport", new PvPTeleport());
 
 	private String PluginName;
 	private MirPlugin plugin;

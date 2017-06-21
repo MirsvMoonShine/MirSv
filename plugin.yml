@@ -1,6 +1,6 @@
-name: Mirsv
+﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.10.1
+version: 1.10.2
 softdepend: [Vault]
 
 commands:
@@ -26,3 +26,9 @@ commands:
     description: WhisperChat Plugin
   party:
     description: Party Plugin
+  콜로세움:
+    description: PvPTeleport Plugin
+  천공섬:
+    description: PvPTeleport Plugin
+  캠핑장:
+    description: PvPTeleport Plugin
