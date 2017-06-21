@@ -1,8 +1,5 @@
 package com.mirsv.catnote;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,8 +16,6 @@ import com.mirsv.MirPlugin;
 
 public class PvPTeleport extends MirPlugin implements Listener, CommandExecutor {
 	final String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
-	HashMap <UUID, Location> Teleports = new HashMap <UUID, Location>();
-	HashMap <UUID, Long> Times = new HashMap <UUID, Long>();
 	public PvPTeleport() {
 		getCommand("콜로세움", this);
 		getCommand("캠핑장", this);
