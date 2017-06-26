@@ -39,7 +39,7 @@ public class Mirsv extends JavaPlugin {
 			}
 		}
 		try {
-			BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Party.dat"));
+			BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Party/Party.dat"));
 			String s;
 			while((s = in.readLine()) != null) {
 				String[] Array = s.split(" ");
@@ -60,7 +60,7 @@ public class Mirsv extends JavaPlugin {
 		try {
 			File f = new File("plugins/Mirsv/Party.dat");
 			f.delete();
-            BufferedWriter bw = new BufferedWriter(new FileWriter("plugins/Mirsv/Party.dat"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("plugins/Mirsv/Party/Party.dat"));
             for(Party party: Save) {
             	String s = party.getPartyName() + " " + party.getOwner() + " ";
             	for(UUID u: party.getPlayers()) if(!party.getOwner().equals(u)) s += u + " ";

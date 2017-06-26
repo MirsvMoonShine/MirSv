@@ -29,7 +29,7 @@ public class PvPTeleport extends MirPlugin implements Listener, CommandExecutor 
 		PotionEffect invincibility = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 40, 4);
 		if(args.length == 0) {
 			if(label.equalsIgnoreCase("콜로세움")) {
-				final int CenterX = 535, Y = 72, CenterZ = 321, Range = 20;
+				final int CenterX = 535, Y = 73, CenterZ = 321, Range = 20;
 				int X, Z;
 				do {
 					X = CenterX - Range + (int) (Math.random() * Range * 2);
