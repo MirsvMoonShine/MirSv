@@ -20,7 +20,7 @@ public class NoBlock extends MirPlugin implements Listener{
 		
 		if (blocks.size() < 1){
 			blocks.add(52);
-
+			blocks.add(408);
 			getConfig().addDefault("NoBlock.list", blocks);
 			getConfig().options().copyDefaults(true);
 			saveConfig();
