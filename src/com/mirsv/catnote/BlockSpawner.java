@@ -18,7 +18,7 @@ public class BlockSpawner extends MirPlugin implements Listener {
 			SpawnReason Reason = event.getSpawnReason();
 			EntityType Type = event.getEntityType();
 			if(Reason == SpawnReason.SPAWNER && Type != EntityType.BLAZE) event.setCancelled(true);
-			if(Reason == SpawnReason.BREEDING && Type == EntityType.VILLAGER) event.setCancelled(true);
+			if(Type == EntityType.VILLAGER) event.setCancelled(true);
 		}
 	}
 }

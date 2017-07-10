@@ -1,8 +1,5 @@
 package com.mirsv.moonshine.Party;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,19 +23,8 @@ import com.mirsv.MirPlugin;
 public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	String prefix = ChatColor.GOLD+"["+ChatColor.GREEN+"미르서버"+ChatColor.GOLD+"] "+ChatColor.RESET;
 	ArrayList<UUID> chat = new ArrayList<UUID>();
-	ArrayList<UUID> MST = new ArrayList<UUID>();
-	ArrayList<UUID> MSTChat = new ArrayList<UUID>();
 	static List<Party> partys = com.mirsv.Mirsv.getPartys();
 	public PartyMain(){
-		try {
-			BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Party/MST.dat"));
-			String[] Array = in.readLine().split(" ");
-			for(String s: Array) MST.add(UUID.fromString(s));
-			in.close();
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
 		getCommand("party", this);
 		getListener(this);
 	}
@@ -46,20 +32,9 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	public void onCommand(PlayerCommandPreprocessEvent event){
 		if (getConfig().getBoolean("enable.Party", true) && chat.contains(event.getPlayer().getUniqueId())){
 			String s = event.getMessage().split(" ")[0];
-			if (s.equalsIgnoreCase("/tc") || s.equalsIgnoreCase("/nc") || s.equalsIgnoreCase("/lc") || s.equalsIgnoreCase("/wc") || s.equalsIgnoreCase("/g") || s.equalsIgnoreCase("/admin") || s.equalsIgnoreCase("/mod") || s.equalsIgnoreCase("/a") || s.equalsIgnoreCase("/l") || s.equalsIgnoreCase("/m") || s.equalsIgnoreCase("/mst")) {
+			if (s.equalsIgnoreCase("/tc") || s.equalsIgnoreCase("/nc") || s.equalsIgnoreCase("/lc") || s.equalsIgnoreCase("/wc") || s.equalsIgnoreCase("/g") || s.equalsIgnoreCase("/admin") || s.equalsIgnoreCase("/mod") || s.equalsIgnoreCase("/a") || s.equalsIgnoreCase("/l") || s.equalsIgnoreCase("/m")) {
 				chat.remove(event.getPlayer().getUniqueId());
 				event.getPlayer().sendMessage(prefix + ChatColor.YELLOW + "파티 채팅을 종료합니다.");
-			}
-		}
-		if (getConfig().getBoolean("enable.Party", true) && MSTChat.contains(event.getPlayer().getUniqueId())){
-			String s = event.getMessage().split(" ")[0];
-			if (s.equalsIgnoreCase("/tc") || s.equalsIgnoreCase("/nc") || s.equalsIgnoreCase("/lc") || s.equalsIgnoreCase("/wc") || s.equalsIgnoreCase("/g") || s.equalsIgnoreCase("/admin") || s.equalsIgnoreCase("/mod") || s.equalsIgnoreCase("/a") || s.equalsIgnoreCase("/l") || s.equalsIgnoreCase("/m") || s.equalsIgnoreCase("/pc")) {
-				MSTChat.remove(event.getPlayer().getUniqueId());
-				event.getPlayer().sendMessage(prefix + ChatColor.YELLOW + "MST 채팅을 종료합니다.");
-			}
-			if(s.equalsIgnoreCase("/party") && event.getMessage().split(" ")[1].equalsIgnoreCase("chat")) {
-				MSTChat.remove(event.getPlayer().getUniqueId());
-				event.getPlayer().sendMessage(prefix + ChatColor.YELLOW + "MST 채팅을 종료합니다.");
 			}
 		}
 	}
@@ -249,29 +224,6 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 					p.sendMessage(prefix+ChatColor.YELLOW+"/party info: 파티 정보를 불러옵니다.");
 					p.sendMessage(prefix+ChatColor.YELLOW+"/party list: 존재하는 파티의 목록을 확인합니다.");
 					p.sendMessage(prefix+ChatColor.YELLOW+"/party chat: 파티채팅을 시작합니다. (/pc)");
-				} else if (args[0].equalsIgnoreCase("mst")) {
-					if(args.length == 2 && args[1].equalsIgnoreCase("reload") && p.isOp()) {
-						MST = new ArrayList<UUID>();
-						try {
-							BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Party/MST.dat"));
-							String[] Array = in.readLine().split(" ");
-							for(String s: Array) MST.add(UUID.fromString(s));
-							in.close();
-						}
-						catch(IOException e) {
-							e.printStackTrace();
-						}
-						p.sendMessage("리로드 완료");
-						return false;
-					}
-					if(!MST.contains(p.getUniqueId())) return false;
-					if (!MSTChat.contains(p.getUniqueId())){
-						MSTChat.add(p.getUniqueId());
-						p.sendMessage(prefix + ChatColor.YELLOW + "MST 채팅을 시작합니다.");
-					} else {
-						MSTChat.remove(p.getUniqueId());
-						p.sendMessage(prefix + ChatColor.YELLOW + "MST 채팅을 종료합니다.");
-					}
 				} else {
 					p.sendMessage(prefix+ChatColor.YELLOW+"사용법: /party ?");
 				}
@@ -284,16 +236,6 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onChat(AsyncPlayerChatEvent event){
 		Player p = event.getPlayer();
-		if (getConfig().getBoolean("enable.Party", true) && MSTChat.contains(p.getUniqueId())){
-			event.getRecipients().clear();
-			event.setMessage(event.getMessage().replaceAll("%", "%%"));
-			event.setFormat("["+ChatColor.DARK_AQUA+"MST"+ChatColor.WHITE+"] "+event.getPlayer().getName()+": "+ChatColor.DARK_AQUA+event.getMessage());
-			for (UUID u : MST){
-				if (Bukkit.getOfflinePlayer(u).isOnline()) {
-					event.getRecipients().add(Bukkit.getPlayer(u));
-				}
-			}
-		}
 		if (getConfig().getBoolean("enable.Party", true) && chat.contains(p.getUniqueId())){
 			event.getRecipients().clear();
 			event.setMessage(event.getMessage().replaceAll("%", "%%"));
