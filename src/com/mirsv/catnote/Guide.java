@@ -42,6 +42,7 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 			e.printStackTrace();
 		}
 		getCommand("guide", this);
+		getCommand("추천", this);
 		getListener(this);
 	}
 	public boolean setupPermission() {
@@ -90,6 +91,10 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 					e.printStackTrace();
 				}
 				Bukkit.getConsoleSender().sendMessage("리로드 완료");
+			}
+			if(label.equalsIgnoreCase("추천")) {
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "broadcast https://minelist.kr/servers/mirsv.com");
+				for(Player p: Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.ENTITY_EGG_THROW, 10.0F, 1.0F);
 			}
 		}
 		return false;

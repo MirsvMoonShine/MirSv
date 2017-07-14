@@ -1,6 +1,6 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.12.3
+version: 1.12.4.1
 softdepend: [Vault]
 
 commands:
@@ -34,3 +34,5 @@ commands:
     description: PvPTeleport Plugin
   guide:
     description: Guide Plugin
+  추천:
+    description: recommand
