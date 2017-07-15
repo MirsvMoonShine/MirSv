@@ -86,7 +86,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener{
 								}
 								if (!isExist){
 									p.sendMessage(prefix+ChatColor.YELLOW+"현재 접속중인 플레이어만 추가할 수 있습니다.");
-									break;
+									return false;
 								}
 								Player target = Bukkit.getPlayer(args[1]);
 								for (Party p2 : partys){

@@ -1,6 +1,6 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.12.4.1
+version: 1.12.5.4
 softdepend: [Vault]
 
 commands:
@@ -36,3 +36,5 @@ commands:
     description: Guide Plugin
   추천:
     description: recommand
+  부동산:
+    description: EasyResidence Plugin
