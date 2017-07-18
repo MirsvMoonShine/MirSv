@@ -83,36 +83,58 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 	}
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if(Burrow.containsKey(event.getPlayer().getUniqueId())) {
-			if(Burrow.get(event.getPlayer().getUniqueId()).isBurrow(event.getBlock().getLocation())) {
-				event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직굴이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
+		if(getConfig().getBoolean("enable.Guide", true)) {
+			String[] group = per.getPlayerGroups(event.getPlayer());
+			Boolean isNewbie = false;
+			for(String g: group) {
+				if(g.equalsIgnoreCase("newbie")) {
+					isNewbie = true;
+					break;
+				}
+			}
+			if(!isNewbie) return;
+			if(Burrow.containsKey(event.getPlayer().getUniqueId())) {
+				if(Burrow.get(event.getPlayer().getUniqueId()).isBurrow(event.getBlock().getLocation())) {
+					event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직굴이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
+					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
+				}
+			}
+			else Burrow.put(event.getPlayer().getUniqueId(), new Burrow(event.getBlock().getLocation()));
+			if(event.getBlock().getWorld().getName().equalsIgnoreCase("world") && Resources.contains(event.getBlock().getType())) {
+				event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 자원채집이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
 				event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
 			}
-		}
-		else Burrow.put(event.getPlayer().getUniqueId(), new Burrow(event.getBlock().getLocation()));
-		if(event.getBlock().getWorld().getName().equalsIgnoreCase("world") && Resources.contains(event.getBlock().getType())) {
-			event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 자원채집이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
-			event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
 		}
 	}
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
-		if(Tower.containsKey(event.getPlayer().getUniqueId())) {
-			if(Tower.get(event.getPlayer().getUniqueId()).isTower(event.getBlock().getLocation())) {
-				event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직탑이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
-				event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
+		if(getConfig().getBoolean("enable.Guide", true)) {
+			String[] group = per.getPlayerGroups(event.getPlayer());
+			Boolean isNewbie = false;
+			for(String g: group) {
+				if(g.equalsIgnoreCase("newbie")) {
+					isNewbie = true;
+					break;
+				}
 			}
+			if(!isNewbie) return;
+			if(Tower.containsKey(event.getPlayer().getUniqueId())) {
+				if(Tower.get(event.getPlayer().getUniqueId()).isTower(event.getBlock().getLocation())) {
+					event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직탑이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
+					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
+				}
+			}
+			else Tower.put(event.getPlayer().getUniqueId(), new Tower(event.getBlock().getLocation()));
 		}
-		else Tower.put(event.getPlayer().getUniqueId(), new Tower(event.getBlock().getLocation()));
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(label.equalsIgnoreCase("추천")) {
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "broadcast https://minelist.kr/servers/mirsv.com");
-			for(Player p: Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 10.0F);
-		}
-		if(sender instanceof Player) return false;
 		if(getConfig().getBoolean("enable.Guide", true)) {
+			if(label.equalsIgnoreCase("추천")) {
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "broadcast https://minelist.kr/servers/mirsv.com");
+				for(Player p: Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 10.0F);
+			}
+			if(sender instanceof Player) return false;
 			if(label.equalsIgnoreCase("guide") && args[0].equalsIgnoreCase("reload")) {
 				try {
 					BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Guide/Guide.dat"));
