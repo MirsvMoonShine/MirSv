@@ -89,11 +89,13 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 				event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
 			}
 		}
+		else Burrow.put(event.getPlayer().getUniqueId(), new Burrow(event.getBlock().getLocation()));
 		if(event.getBlock().getWorld().getName().equalsIgnoreCase("world") && Resources.contains(event.getBlock().getType())) {
 			event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 자원채집이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
 			event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
 		}
 	}
+	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
 		if(Tower.containsKey(event.getPlayer().getUniqueId())) {
 			if(Tower.get(event.getPlayer().getUniqueId()).isTower(event.getBlock().getLocation())) {
@@ -101,6 +103,7 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 				event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
 			}
 		}
+		else Tower.put(event.getPlayer().getUniqueId(), new Tower(event.getBlock().getLocation()));
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -140,10 +143,15 @@ class Burrow {
 		this.loc = loc;
 	}
 	public boolean isBurrow(Location loc) {
-		if(this.loc.getBlockX() == loc.getBlockX() && this.loc.getBlockZ() == loc.getBlockZ() && this.loc.getBlockY() - 1 == loc.getBlockY() && loc.getWorld().getName().equalsIgnoreCase("world")) num++;
+		if(this.loc.getBlockX() == loc.getBlockX() && this.loc.getBlockZ() == loc.getBlockZ() && this.loc.getBlockY() - 1 == loc.getBlockY() && loc.getWorld().getName().equalsIgnoreCase("world") && isNearFilled(loc)) num++;
 		else num = 1;
 		this.loc = loc;
 		return num > 4;
+	}
+	public boolean isNearFilled(Location loc) {
+		int R[][] = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+		for(int i = 0; i < 4; i++) if(!new Location(Bukkit.getWorld("World"), loc.getBlockX() + R[i][0], loc.getBlockY(), loc.getBlockZ() + R[i][1]).getBlock().getType().equals(Material.AIR)) return true;
+		return false;
 	}
 }
 
@@ -154,9 +162,14 @@ class Tower {
 		this.loc = loc;
 	}
 	public boolean isTower(Location loc) {
-		if(this.loc.getBlockX() == loc.getBlockX() && this.loc.getBlockZ() == loc.getBlockZ() && this.loc.getBlockY() + 1 == loc.getBlockY() && loc.getWorld().getName().equalsIgnoreCase("world")) num++;
+		if(this.loc.getBlockX() == loc.getBlockX() && this.loc.getBlockZ() == loc.getBlockZ() && this.loc.getBlockY() + 1 == loc.getBlockY() && loc.getWorld().getName().equalsIgnoreCase("world") && isNearEmpty(loc)) num++;
 		else num = 1;
 		this.loc = loc;
-		return num > 4;
+		return num > 9;
+	}
+	public boolean isNearEmpty(Location loc) {
+		int R[][] = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+		for(int i = 0; i < 4; i++) if(new Location(Bukkit.getWorld("World"), loc.getBlockX() + R[i][0], loc.getBlockY(), loc.getBlockZ() + R[i][1]).getBlock().getType().equals(Material.AIR)) return true;
+		return false;
 	}
 }
