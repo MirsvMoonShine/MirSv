@@ -3,10 +3,15 @@ package com.mirsv.catnote;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,6 +19,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
@@ -23,7 +30,10 @@ import net.milkbowl.vault.permission.Permission;
 
 public class Guide extends MirPlugin implements Listener, CommandExecutor {
 	Permission per = null;
+	ArrayList < Material > Resources = new ArrayList < Material >(Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.LOG, Material.LOG_2, Material.SAND, Material.CLAY, Material.GRAVEL));
 	HashMap < String, String > Guides = new HashMap < String, String >();
+	HashMap < UUID, Burrow > Burrow = new HashMap < UUID, Burrow >();
+	HashMap < UUID, Tower > Tower = new HashMap < UUID, Tower >();
 	final String Prefix = ChatColor.GRAY + "[" + ChatColor.GOLD + ChatColor.BOLD + "!" + ChatColor.GRAY + "] " + ChatColor.RESET;
 	public Guide() {
 		setupPermission();
@@ -71,11 +81,32 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 			}
 		}
 	}
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent event) {
+		if(Burrow.containsKey(event.getPlayer().getUniqueId())) {
+			if(Burrow.get(event.getPlayer().getUniqueId()).isBurrow(event.getBlock().getLocation())) {
+				event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직굴이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
+				event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
+			}
+		}
+		if(event.getBlock().getWorld().getName().equalsIgnoreCase("world") && Resources.contains(event.getBlock().getType())) {
+			event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 자원채집이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
+			event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
+		}
+	}
+	public void onBlockPlace(BlockPlaceEvent event) {
+		if(Tower.containsKey(event.getPlayer().getUniqueId())) {
+			if(Tower.get(event.getPlayer().getUniqueId()).isTower(event.getBlock().getLocation())) {
+				event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직탑이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
+				event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
+			}
+		}
+	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(label.equalsIgnoreCase("추천")) {
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "broadcast https://minelist.kr/servers/mirsv.com");
-			for(Player p: Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
+			for(Player p: Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 10.0F);
 		}
 		if(sender instanceof Player) return false;
 		if(getConfig().getBoolean("enable.Guide", true)) {
@@ -98,5 +129,34 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 			}
 		}
 		return false;
+	}
+}
+
+
+class Burrow {
+	Location loc;
+	int num = 1;
+	public Burrow(Location loc) {
+		this.loc = loc;
+	}
+	public boolean isBurrow(Location loc) {
+		if(this.loc.getBlockX() == loc.getBlockX() && this.loc.getBlockZ() == loc.getBlockZ() && this.loc.getBlockY() - 1 == loc.getBlockY() && loc.getWorld().getName().equalsIgnoreCase("world")) num++;
+		else num = 1;
+		this.loc = loc;
+		return num > 4;
+	}
+}
+
+class Tower {
+	Location loc;
+	int num = 1;
+	public Tower(Location loc) {
+		this.loc = loc;
+	}
+	public boolean isTower(Location loc) {
+		if(this.loc.getBlockX() == loc.getBlockX() && this.loc.getBlockZ() == loc.getBlockZ() && this.loc.getBlockY() + 1 == loc.getBlockY() && loc.getWorld().getName().equalsIgnoreCase("world")) num++;
+		else num = 1;
+		this.loc = loc;
+		return num > 4;
 	}
 }
