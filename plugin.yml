@@ -2,6 +2,7 @@
 main: com.mirsv.Mirsv
 version: 1.12.6.3
 softdepend: [Vault]
+author: ___Moonshine___, CatNote
 
 commands:
   mirsv:
