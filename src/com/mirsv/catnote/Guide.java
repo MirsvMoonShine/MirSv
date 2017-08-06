@@ -95,13 +95,13 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 			if(!isNewbie) return;
 			if(Burrow.containsKey(event.getPlayer().getUniqueId())) {
 				if(Burrow.get(event.getPlayer().getUniqueId()).isBurrow(event.getBlock().getLocation())) {
-					event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직굴이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
+					event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직굴이 감지되었습니다. 건축 목적이 아니라면 꼭 복구를 해주세요!");
 					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
 				}
 			}
 			else Burrow.put(event.getPlayer().getUniqueId(), new Burrow(event.getBlock().getLocation()));
 			if(event.getBlock().getWorld().getName().equalsIgnoreCase("world") && Resources.contains(event.getBlock().getType())) {
-				event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 자원채집이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
+				event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "자원 채집 목적의 나무 / 광물 블럭 파괴는 경고를 받을 수 있습니다. 자원 채집 목적으로 블럭을 캐고 있다면 복구를 해주세요!");
 				event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
 			}
 		}
@@ -120,7 +120,7 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 			if(!isNewbie) return;
 			if(Tower.containsKey(event.getPlayer().getUniqueId())) {
 				if(Tower.get(event.getPlayer().getUniqueId()).isTower(event.getBlock().getLocation())) {
-					event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직탑이 감지되었습니다. 경고를 받을 수 있으니 복구를 해주세요!");
+					event.getPlayer().sendMessage(Prefix + ChatColor.WHITE + ChatColor.BOLD + event.getPlayer().getName() + "님, " + ChatColor.GOLD + "건축월드 수직탑이 감지되었습니다. 사용을 하고 나서 꼭 철거를 해주세요!");
 					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
 				}
 			}
