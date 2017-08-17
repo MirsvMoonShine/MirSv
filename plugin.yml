@@ -1,6 +1,6 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.12.6.5
+version: 1.12.8.2
 softdepend: [Vault]
 author: ___Moonshine___, CatNote
 
@@ -27,6 +27,8 @@ commands:
     description: WhisperChat Plugin
   party:
     description: Party Plugin
+  pc:
+    description: Party Plugin
   콜로세움:
     description: PvPTeleport Plugin
   천공섬:
@@ -39,3 +41,5 @@ commands:
     description: recommand
   부동산:
     description: EasyResidence Plugin
+  머리:
+    description: HeadChange Plugin

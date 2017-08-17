@@ -22,7 +22,8 @@ public enum PluginLists {
 	DisableCreateTown("DisableCreateTown", new DisableCreateTown()),
 	PvPTeleport("PvPTeleport", new PvPTeleport()),
 	Guide("Guide", new Guide()),
-	EasyResidence("EasyResidence", new EasyResidence());
+	EasyResidence("EasyResidence", new EasyResidence()),
+	HeadChange("HeadChange", new HeadChange());
 
 	private String PluginName;
 	private MirPlugin plugin;

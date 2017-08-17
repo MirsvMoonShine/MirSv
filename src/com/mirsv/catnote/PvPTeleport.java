@@ -31,7 +31,7 @@ public class PvPTeleport extends MirPlugin implements Listener, CommandExecutor 
 				do {
 					X = CenterX - Range + (int) (Math.random() * Range * 2);
 					Z = CenterZ - Range + (int) (Math.random() * Range * 2);
-				} while(new Location(Bukkit.getWorld("spawn"), X, Y, Z).getBlock().getType() != Material.AIR);
+				} while(!new Location(Bukkit.getWorld("spawn"), X, Y, Z).getBlock().getType().equals(Material.AIR));
 				player.teleport(new Location(Bukkit.getWorld("spawn"), X, Y, Z));
 				player.sendMessage(prefix + ChatColor.GOLD + "콜로세움에 도착합니다.");
 			}
@@ -41,7 +41,7 @@ public class PvPTeleport extends MirPlugin implements Listener, CommandExecutor 
 				do {
 					X = CenterX - Range + (int) (Math.random() * Range * 2);
 					Z = CenterZ - Range + (int) (Math.random() * Range * 2);
-				} while(new Location(Bukkit.getWorld("spawn"), X, Y - 2, Z).getBlock().getType() == Material.AIR || new Location(Bukkit.getWorld("spawn"), X, Y, Z).getBlock().getType() != Material.AIR);
+				} while(new Location(Bukkit.getWorld("spawn"), X, Y - 2, Z).getBlock().getType().equals(Material.AIR) || !(new Location(Bukkit.getWorld("spawn"), X, Y, Z).getBlock().getType().equals(Material.AIR)));
 				player.teleport(new Location(Bukkit.getWorld("spawn"), X, Y, Z));
 				player.sendMessage(prefix + ChatColor.GOLD + "천공섬으로 떠납니다.");
 			}
@@ -51,7 +51,7 @@ public class PvPTeleport extends MirPlugin implements Listener, CommandExecutor 
 				do {
 					X = CenterX - Range + (int) (Math.random() * Range * 2);
 					Z = CenterZ - (int) (Range * 1.5) + (int) (Math.random() * Range * 3);
-				} while(new Location(Bukkit.getWorld("spawn"), X, Y, Z).getBlock().getType() != Material.AIR);
+				} while(!(new Location(Bukkit.getWorld("spawn"), X, Y, Z).getBlock().getType().equals(Material.AIR)) || new Location(Bukkit.getWorld("spawn"), X, 56, Z).getBlock().getType().equals(Material.WATER) || new Location(Bukkit.getWorld("spawn"), X, 56, Z).getBlock().getType().equals(Material.STATIONARY_WATER));
 				player.teleport(new Location(Bukkit.getWorld("spawn"), X, Y, Z));
 				player.sendMessage(prefix + ChatColor.GOLD + "캠핑장에 진입합니다.");
 			}
