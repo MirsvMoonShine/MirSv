@@ -23,7 +23,8 @@ public enum PluginLists {
 	PvPTeleport("PvPTeleport", new PvPTeleport()),
 	Guide("Guide", new Guide()),
 	EasyResidence("EasyResidence", new EasyResidence()),
-	HeadChange("HeadChange", new HeadChange());
+	HeadChange("HeadChange", new HeadChange()),
+	PlayTime("PlayTime", new PlayTime());
 
 	private String PluginName;
 	private MirPlugin plugin;

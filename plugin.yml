@@ -1,6 +1,6 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.12.8.2
+version: 1.12.9.4
 softdepend: [Vault]
 author: ___Moonshine___, CatNote
 
@@ -38,8 +38,10 @@ commands:
   guide:
     description: Guide Plugin
   추천:
-    description: recommand
+    description: Recommand
   부동산:
     description: EasyResidence Plugin
   머리:
     description: HeadChange Plugin
+  playtime:
+    description: PlayTime Plugin
