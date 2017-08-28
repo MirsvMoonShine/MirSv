@@ -24,7 +24,8 @@ public enum PluginLists {
 	Guide("Guide", new Guide()),
 	EasyResidence("EasyResidence", new EasyResidence()),
 	HeadChange("HeadChange", new HeadChange()),
-	PlayTime("PlayTime", new PlayTime());
+	PlayTime("PlayTime", new PlayTime()),
+	NoPickup("NoPickup", new NoPickup());
 
 	private String PluginName;
 	private MirPlugin plugin;

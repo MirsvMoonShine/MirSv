@@ -28,7 +28,8 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 
 			if (p.hasPermission("mirsv.admin")) {
 				ItemStack i = p.getItemInHand();
-				if (i != new ItemStack(Material.AIR) && i != null) {
+				Material m = i.getType();
+				if (!m.equals(Material.AIR)) {
 					ItemMeta item = i.getItemMeta();
 
 					if (args.length > 0) {

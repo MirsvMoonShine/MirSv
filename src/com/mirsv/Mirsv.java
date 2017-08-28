@@ -8,19 +8,27 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
+import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.mirsv.catnote.NoPickup;
 import com.mirsv.moonshine.Party.Party;
+import com.mirsv.moonshine.Party.PartyMain;
 
 public class Mirsv extends JavaPlugin {
 	PluginManager pm = getServer().getPluginManager();
 	ArrayList < String > plugins = new ArrayList < String > ();
+	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	public PluginLists lists;
-	public static List<Party> partys = new ArrayList<>();
+	Logger log = Bukkit.getLogger();
+	Timer t;
 	@Override
 	public void onEnable() {
 		getConfig().options().copyDefaults(true);
@@ -38,40 +46,21 @@ public class Mirsv extends JavaPlugin {
 				plugin = plugin + ", " + plu[i];
 			}
 		}
-		try {
-			BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Party/Party.dat"));
-			String s;
-			while((s = in.readLine()) != null) {
-				String[] Array = s.split(" ");
-				Party party = new Party(UUID.fromString(Array[1]), Array[0]);
-				for(int i = 2; i < Array.length; i++) party.getPlayers().add(UUID.fromString(Array[i]));
-				partys.add(party);
-			}
-			in.close();
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
 		System.out.println("[미르서버] 가동 된 플러그인들: " + plugin);
+		t = new Timer();
+		t.schedule(new TimerTask() {
+			public void run() {
+				NoPickup.Save();
+				PartyMain.Save();
+				log.info(prefix + "AutoSave Complete!");
+			}
+		}, 600000, 600000);
 	}
 	@Override
 	public void onDisable() {
-		List<Party> Save = com.mirsv.moonshine.Party.PartyMain.getPartys();
-		try {
-			File f = new File("plugins/Mirsv/Party.dat");
-			f.delete();
-            BufferedWriter bw = new BufferedWriter(new FileWriter("plugins/Mirsv/Party/Party.dat"));
-            for(Party party: Save) {
-            	String s = party.getPartyName() + " " + party.getOwner() + " ";
-            	for(UUID u: party.getPlayers()) if(!party.getOwner().equals(u)) s += u + " ";
-            	bw.write(s);
-            	bw.newLine();
-            }
-            bw.close();
-        }
-		catch (IOException e) {
-            e.printStackTrace();
-		}
+		NoPickup.Save();
+		PartyMain.Save();
+		t.cancel();
 	}
 	public void InstallPlugins() {
 		plugins.clear();
@@ -87,8 +76,5 @@ public class Mirsv extends JavaPlugin {
 				getConfig().set("enable." + plu.getPluginName(), false);
 			}
 		}
-	}
-	public static List<Party> getPartys() {
-		return partys;
 	}
 }

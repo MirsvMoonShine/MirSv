@@ -1,5 +1,11 @@
 package com.mirsv.moonshine.Party;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,9 +34,23 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	ArrayList < UUID > chat = new ArrayList < UUID > ();
 	Chat Vchat;
-	static List < Party > partys = com.mirsv.Mirsv.getPartys();
+	static ArrayList < Party > partys = new ArrayList < Party >();
 	Permission per = null;
 	public PartyMain() {
+		try {
+			BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Party/Party.dat"));
+			String s;
+			while((s = in.readLine()) != null) {
+				String[] Array = s.split(" ");
+				Party party = new Party(UUID.fromString(Array[1]), Array[0]);
+				for(int i = 2; i < Array.length; i++) party.getPlayers().add(UUID.fromString(Array[i]));
+				partys.add(party);
+			}
+			in.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 		setupChat();
 		getCommand("party", this);
 		getCommand("pc", this);
@@ -86,6 +106,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 						p.sendMessage(prefix + ChatColor.YELLOW + "당신은 파티에 소속되어있지 않습니다.");
 					}
 				}
+				Save();
 				return false;
 			}
 			if (args.length > 0) {
@@ -104,18 +125,19 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 				} else if (args[0].equalsIgnoreCase("disband")) {
 					if (getParty(p.getUniqueId()) == null) {
 						p.sendMessage(prefix + ChatColor.YELLOW + "당신은 권한이 없습니다.");
-						return false;
 					}
-					if (getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())) {
-						for (UUID pl: getParty(p.getUniqueId()).getPlayers()) {
-							chat.remove(pl);
-							if (Bukkit.getOfflinePlayer(pl).isOnline()) {
-								Bukkit.getPlayer(pl).sendMessage(prefix + ChatColor.YELLOW + "파티가 해체되었습니다.");
+					else {
+						if (getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())) {
+							for (UUID pl: getParty(p.getUniqueId()).getPlayers()) {
+								chat.remove(pl);
+								if (Bukkit.getOfflinePlayer(pl).isOnline()) {
+									Bukkit.getPlayer(pl).sendMessage(prefix + ChatColor.YELLOW + "파티가 해체되었습니다.");
+								}
 							}
+							partys.remove(getParty(p.getUniqueId()));
+						} else {
+							p.sendMessage(prefix + ChatColor.YELLOW + "당신은 권한이 없습니다.");
 						}
-						partys.remove(getParty(p.getUniqueId()));
-					} else {
-						p.sendMessage(prefix + ChatColor.YELLOW + "당신은 권한이 없습니다.");
 					}
 				} else if (args[0].equalsIgnoreCase("add")) {
 					if (args.length == 2) {
@@ -130,27 +152,29 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 								}
 								if (!isExist) {
 									p.sendMessage(prefix + ChatColor.YELLOW + "현재 접속중인 플레이어만 추가할 수 있습니다.");
+								}
+								else {
+									Player target = Bukkit.getPlayer(args[1]);
+									for (Party p2: partys) {
+										if (p2.isPlayerJoin(target.getUniqueId())) {
+											if (party.equals(p2)) {
+												p.sendMessage(prefix + ChatColor.YELLOW + "이미 당신의 파티원입니다.");
+											} else {
+												p.sendMessage(prefix + ChatColor.YELLOW + "다른 파티에 소속되어 있는 플레이어입니다.");
+											}
+											return false;
+										}
+									}
+									for (UUID u: party.getPlayers()) {
+										if (Bukkit.getOfflinePlayer(u).isOnline()) {
+											Bukkit.getPlayer(u).sendMessage(prefix + ChatColor.YELLOW + target.getName() + "님을 파티에 추가했습니다.");
+										}
+									}
+									party.getPlayers().add(target.getUniqueId());
+									target.sendMessage(prefix + ChatColor.YELLOW + p.getName() + "님이 당신을 " + party.getPartyName() + " 파티에 추가했습니다.");
+									Save();
 									return false;
 								}
-								Player target = Bukkit.getPlayer(args[1]);
-								for (Party p2: partys) {
-									if (p2.isPlayerJoin(target.getUniqueId())) {
-										if (party.equals(p2)) {
-											p.sendMessage(prefix + ChatColor.YELLOW + "이미 당신의 파티원입니다.");
-										} else {
-											p.sendMessage(prefix + ChatColor.YELLOW + "다른 파티에 소속되어 있는 플레이어입니다.");
-										}
-										return false;
-									}
-								}
-								for (UUID u: party.getPlayers()) {
-									if (Bukkit.getOfflinePlayer(u).isOnline()) {
-										Bukkit.getPlayer(u).sendMessage(prefix + ChatColor.YELLOW + target.getName() + "님을 파티에 추가했습니다.");
-									}
-								}
-								party.getPlayers().add(target.getUniqueId());
-								target.sendMessage(prefix + ChatColor.YELLOW + p.getName() + "님이 당신을 " + party.getPartyName() + " 파티에 추가했습니다.");
-								return false;
 							}
 						}
 						p.sendMessage(prefix + ChatColor.YELLOW + "당신은 권한이 없습니다.");
@@ -181,6 +205,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 												Bukkit.getPlayer(um).sendMessage(prefix + ChatColor.YELLOW + Bukkit.getOfflinePlayer(args[1]).getName() + "님을 파티에서 추방시켰습니다.");
 											}
 										}
+										Save();
 										return false;
 									}
 								}
@@ -288,6 +313,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 			} else {
 				p.sendMessage(prefix + ChatColor.YELLOW + "사용법: /party ?");
 			}
+			Save();
 		}
 		return false;
 	}
@@ -333,6 +359,23 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 			}
 		}
 	}
+	public static void Save() {
+		try {
+			File f = new File("plugins/Mirsv/Party.dat");
+			f.delete();
+            BufferedWriter bw = new BufferedWriter(new FileWriter("plugins/Mirsv/Party/Party.dat"));
+            for(Party party: partys) {
+            	String s = party.getPartyName() + " " + party.getOwner() + " ";
+            	for(UUID u: party.getPlayers()) if(!party.getOwner().equals(u)) s += u + " ";
+            	bw.write(s);
+            	bw.newLine();
+            }
+            bw.close();
+        }
+		catch (IOException e) {
+            e.printStackTrace();
+		}
+	}
 	public Party getParty(UUID uuid) {
 		Party result = null;
 		for (Party party: partys) {
@@ -343,8 +386,5 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 			}
 		}
 		return result;
-	}
-	public static List < Party > getPartys() {
-		return partys;
 	}
 }

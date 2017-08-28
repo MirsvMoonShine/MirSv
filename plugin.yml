@@ -1,6 +1,6 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.12.9.4
+version: 1.12.10.8
 softdepend: [Vault]
 author: ___Moonshine___, CatNote
 
@@ -45,3 +45,5 @@ commands:
     description: HeadChange Plugin
   playtime:
     description: PlayTime Plugin
+  np:
+    description: NoPickup Plugin
