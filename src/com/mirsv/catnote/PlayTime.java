@@ -70,6 +70,7 @@ public class PlayTime extends MirPlugin implements Listener, CommandExecutor {
 					TimerTask task = new TimerTask() {
 						@Override
 						public void run() {
+							player.sendMessage(ChatColor.GOLD + "유저들의 플레이 시간을 정렬하고 있습니다...");
 							getRank(player);
 						}
 					};
