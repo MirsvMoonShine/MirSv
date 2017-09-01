@@ -25,7 +25,8 @@ public enum PluginLists {
 	EasyResidence("EasyResidence", new EasyResidence()),
 	HeadChange("HeadChange", new HeadChange()),
 	PlayTime("PlayTime", new PlayTime()),
-	NoPickup("NoPickup", new NoPickup());
+	NoPickup("NoPickup", new NoPickup()),
+	CasinoSecurity("CasinoSecurity", new CasinoSecurity());
 
 	private String PluginName;
 	private MirPlugin plugin;
