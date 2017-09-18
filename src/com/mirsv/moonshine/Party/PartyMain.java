@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -66,6 +67,19 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 			}
 		}
 	}
+	@EventHandler
+	public void onAttack(EntityDamageByEntityEvent event) {
+		if (((event.getDamager() instanceof Player)) && ((event.getEntity() instanceof Player))){
+			Player player1 = (Player)event.getDamager();
+			Player player2 = (Player)event.getEntity();
+			Party p1 = this.getParty(player1.getUniqueId());
+			Party p2= this.getParty(player2.getUniqueId());
+			if (p1 == p2){
+				event.setCancelled(true);
+				player2.sendMessage(prefix +ChatColor.YELLOW +"같은 파티원 끼리는 공격할 수 없습니다.");
+			}
+		}
+	}	
 	private boolean setupChat() {
 		RegisteredServiceProvider<Chat> chatProvider = Bukkit.getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
 		if (chatProvider != null) Vchat = chatProvider.getProvider();
