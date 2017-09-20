@@ -48,7 +48,7 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
     		if(Sum == 0) Sum = 1;
     		player.sendMessage(ChatColor.GRAY + "------- " + ChatColor.BLUE + "BingoGamble Stats" + ChatColor.GRAY + " -------");
     		for(int i = 0; i < 11; i++) {
-    			double Rate = Math.round(Records[i] / Sum * 10000) / 100d;
+    			double Rate = Math.round((double) Records[i] / Sum * 10000) / 100d;
     			player.sendMessage(ChatColor.AQUA + "" + i + " Bingo - " + Records[i] + " (" + Rate + "%)");
     		}
     	}

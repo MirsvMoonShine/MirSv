@@ -8,11 +8,13 @@ public class Party {
 	List<UUID> player;
 	String PartyName;
 	UUID owner;
-	boolean open = false; boolean pvp = true;
+	boolean pvp = true, open = false;
 	
-	public Party(UUID owner, String Name){
+	public Party(UUID owner, String Name, boolean pvp, boolean open){
 		this.PartyName = Name;
 		this.player = new ArrayList<UUID>();
+		this.pvp = pvp;
+		this.open = open;
 		player.add(owner);
 		this.owner = owner;
 	}

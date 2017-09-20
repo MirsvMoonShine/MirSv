@@ -43,8 +43,10 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 			String s;
 			while((s = in.readLine()) != null) {
 				String[] Array = s.split(" ");
-				Party party = new Party(UUID.fromString(Array[1]), Array[0]);
-				for(int i = 2; i < Array.length; i++) party.getPlayers().add(UUID.fromString(Array[i]));
+				boolean pvp = (Integer.parseInt("0" + Array[1]) == 1) ? true : false;
+				boolean open = (Integer.parseInt("0" + Array[2]) == 1) ? true : false;
+				Party party = new Party(UUID.fromString(Array[3]), Array[0], pvp, open);
+				for(int i = 4; i < Array.length; i++) party.getPlayers().add(UUID.fromString(Array[i]));
 				partys.add(party);
 			}
 			in.close();
@@ -69,12 +71,13 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 	}
 	@EventHandler
 	public void onAttack(EntityDamageByEntityEvent event) {
-		if (((event.getDamager() instanceof Player)) && ((event.getEntity() instanceof Player))){
+		if(event.getDamager() instanceof Player && event.getEntity() instanceof Player && getConfig().getBoolean("enable.Party", true)) {
 			Player player1 = (Player) event.getDamager();
 			Player player2 = (Player) event.getEntity();
 			Party p1 = this.getParty(player1.getUniqueId());
 			Party p2 = this.getParty(player2.getUniqueId());
-			if (p1 == p2){
+			if (p1 == p2 && p1 != null){
+				if(p1.pvp) return;
 				event.setCancelled(true);
 				player1.sendMessage(prefix + ChatColor.YELLOW + "같은 파티원끼리는 공격할 수 없습니다.");
 			}
@@ -129,7 +132,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 						if (getParty(p.getUniqueId()) != null)
 							p.sendMessage(prefix + ChatColor.YELLOW + "이미 파티에 가입되어 있습니다.");
 						else {
-							Party party = new Party(p.getUniqueId(), args[1]);
+							Party party = new Party(p.getUniqueId(), args[1], true, false);
 							partys.add(party);
 							Bukkit.broadcastMessage(prefix + ChatColor.YELLOW + p.getName() + "님이 파티 \'" + args[1] + "\'을(를) 만들었습니다.");
 						}
@@ -458,7 +461,9 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 			f.delete();
             BufferedWriter bw = new BufferedWriter(new FileWriter("plugins/Mirsv/Party/Party.dat"));
             for(Party party: partys) {
-            	String s = party.getPartyName() + " " + party.getOwner() + " ";
+            	int i1 = party.pvp ? 1 : 0;
+            	int i2 = party.open ? 1 : 0;
+            	String s = party.getPartyName() + " " + i1 + " " + i2 + " " + party.getOwner() + " ";
             	for(UUID u: party.getPlayers()) if(!party.getOwner().equals(u)) s += u + " ";
             	bw.write(s);
             	bw.newLine();
