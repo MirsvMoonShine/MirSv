@@ -45,6 +45,7 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
     		if(!player.isOp()) return false;
     		int Sum = 0;
     		for(int i = 0; i < Records.size(); i++) Sum += ((Integer) Records.get(i)).intValue();
+    		if(Sum == 0) Sum = 1;
     		player.sendMessage(ChatColor.GRAY + "------- " + ChatColor.BLUE + "BingoGamble Stats" + ChatColor.GRAY + " -------");
     		for(int i = 0; i < Records.size(); i++) {
     			double Rate = Math.round(Records.get(i) / Sum * 10000) / 100d;
@@ -120,7 +121,7 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
 	        BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/BingoGamble/BingoGamble.dat"));
 	        String s = in .readLine();
 	        String[] Array = s.split(" ");
-	        for(int i = 0; i < Array.length; i++) Records.add(Integer.valueOf(Integer.parseInt(Array[i])));
+	        for(int i = 0; i < Array.length; i++) Records.add(Integer.parseInt(Array[i]));
 	        in.close();
 	    } catch (IOException e) {
 	        e.printStackTrace();
