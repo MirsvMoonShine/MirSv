@@ -8,6 +8,7 @@ public class Party {
 	List<UUID> player;
 	String PartyName;
 	UUID owner;
+	boolean open = false; boolean pvp = true;
 	
 	public Party(UUID owner, String Name){
 		this.PartyName = Name;
@@ -34,5 +35,13 @@ public class Party {
 	
 	public UUID getOwner(){
 		return owner;
+	}
+	public boolean TogglePvP() {
+		pvp = (!pvp);
+	    return pvp;
+	}
+	public boolean ToggleOpen() {
+		open = (!open);
+		return open;
 	}
 }

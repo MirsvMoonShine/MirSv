@@ -27,7 +27,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 public class BingoGamble extends MirPlugin implements Listener, CommandExecutor {
     int N_Casino;
-    static ArrayList <Integer> Records = new ArrayList <Integer>();
+    static int[] Records = new int[11];
     ArrayList <gRoom> CasinoList = new ArrayList <gRoom>();
     ArrayList <ItemStack> ItemList = new ArrayList <ItemStack>();
     @EventHandler
@@ -44,12 +44,12 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
     		Player player = (Player) sender;
     		if(!player.isOp()) return false;
     		int Sum = 0;
-    		for(int i = 0; i < Records.size(); i++) Sum += ((Integer) Records.get(i)).intValue();
+    		for(int i = 0; i < 11; i++) Sum += Records[i];
     		if(Sum == 0) Sum = 1;
     		player.sendMessage(ChatColor.GRAY + "------- " + ChatColor.BLUE + "BingoGamble Stats" + ChatColor.GRAY + " -------");
-    		for(int i = 0; i < Records.size(); i++) {
-    			double Rate = Math.round(Records.get(i) / Sum * 10000) / 100d;
-    			player.sendMessage(ChatColor.AQUA + "" + i + " Bingo - " + Records.get(i) + " (" + Rate + "%)");
+    		for(int i = 0; i < 11; i++) {
+    			double Rate = Math.round(Records[i] / Sum * 10000) / 100d;
+    			player.sendMessage(ChatColor.AQUA + "" + i + " Bingo - " + Records[i] + " (" + Rate + "%)");
     		}
     	}
 	    return false;
@@ -99,7 +99,7 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
 		        Gambler.playSound(Gambler.getLocation(), Sound.BLOCK_NOTE_GUITAR, 10.0F, 1.0F);
 		    }
 		}
-		Records.set(Bingo, Records.get(Bingo) + 1);
+		Records[Bingo]++;
 	}
 	public BingoGamble() {
 	    N_Casino = 2;
@@ -119,9 +119,9 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
 	    }
 	    try {
 	        BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/BingoGamble/BingoGamble.dat"));
-	        String s = in .readLine();
+	        String s = in.readLine();
 	        String[] Array = s.split(" ");
-	        for(int i = 0; i < Array.length; i++) Records.add(Integer.parseInt(Array[i]));
+	        for(int i = 0; i < 11; i++) Records[i] = Integer.parseInt("0" + Array[i]);
 	        in.close();
 	    } catch (IOException e) {
 	        e.printStackTrace();
@@ -134,8 +134,8 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
 	        File f = new File("plugins/Mirsv/BingoGamble/BingoGamble.dat");
 	        f.delete();
 	        BufferedWriter bw = new BufferedWriter(new FileWriter("plugins/Mirsv/BingoGamble/BingoGamble.dat"));
-	        String s = Records.get(0) + "";
-	        for (int i = 0; i < Records.size(); i++) s = " " + Records.get(i);
+	        String s = Records[0] + "";
+	        for(int i = 1; i < 11; i++) s += " " + Records[i];
 	        bw.write(s);
 	        bw.close();
 	    } catch (IOException e) {

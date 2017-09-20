@@ -70,13 +70,13 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 	@EventHandler
 	public void onAttack(EntityDamageByEntityEvent event) {
 		if (((event.getDamager() instanceof Player)) && ((event.getEntity() instanceof Player))){
-			Player player1 = (Player)event.getDamager();
-			Player player2 = (Player)event.getEntity();
+			Player player1 = (Player) event.getDamager();
+			Player player2 = (Player) event.getEntity();
 			Party p1 = this.getParty(player1.getUniqueId());
-			Party p2= this.getParty(player2.getUniqueId());
+			Party p2 = this.getParty(player2.getUniqueId());
 			if (p1 == p2){
 				event.setCancelled(true);
-				player2.sendMessage(prefix +ChatColor.YELLOW +"같은 파티원 끼리는 공격할 수 없습니다.");
+				player1.sendMessage(prefix + ChatColor.YELLOW + "같은 파티원끼리는 공격할 수 없습니다.");
 			}
 		}
 	}	
@@ -195,6 +195,27 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 					} else {
 						p.sendMessage(prefix + ChatColor.YELLOW + "사용법: /party add <닉네임>");
 					}
+				} else if(args[0].equalsIgnoreCase("join")) {
+					if(args.length == 2) {
+						if(getParty(p.getUniqueId()) != null) {
+							p.sendMessage(prefix + ChatColor.YELLOW + "당신은 이미 파티에 소속되어 있습니다.");
+							return false;
+						}
+						for(Party party : partys) {
+							if(party.getPartyName().equalsIgnoreCase(args[1])) {
+								if(!party.open) {
+									p.sendMessage(prefix + ChatColor.YELLOW + "해당 파티는 개방되어있지 않습니다.");
+									return false;
+								}
+								party.getPlayers().add(p.getUniqueId());
+								for(UUID uuid: party.getPlayers()) if(Bukkit.getOfflinePlayer(uuid).isOnline()) Bukkit.getPlayer(uuid).sendMessage(prefix + ChatColor.YELLOW + p.getName() + "님이 파티에 가입했습니다.");
+							}
+							return false;
+						}
+						p.sendMessage(prefix + ChatColor.YELLOW + "해당 파티는 존재하지 않습니다.");
+						return false;
+					}
+					p.sendMessage(prefix + ChatColor.YELLOW + "사용법: /party join <파티이름>");
 				} else if (args[0].equalsIgnoreCase("kick")) {
 					if (args.length == 2) {
 						if (!Bukkit.getOfflinePlayer(args[1]).hasPlayedBefore()) {
@@ -255,6 +276,55 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 					} else {
 						p.sendMessage(prefix + ChatColor.YELLOW + "당신은 파티에 소속되어있지 않습니다.");
 					}
+				} else if(args[0].equalsIgnoreCase("toggle")) {
+					if(getParty(p.getUniqueId()) == null) {
+						p.sendMessage(prefix + ChatColor.YELLOW + "당신은 파티에 소속되어있지 않습니다.");
+						return false;
+					}
+					if(!getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())) {
+						p.sendMessage(prefix + ChatColor.YELLOW + "당신은 권한이 없습니다.");
+	                    return false;
+	                }
+					if(args.length == 1) {
+						p.sendMessage(ChatColor.BLUE + "/party toggle pvp: " + ChatColor.WHITE + "파티원 간의 pvp 허용 여부을 변경합니다.");
+	                    p.sendMessage(ChatColor.BLUE + "/party toggle open: " + ChatColor.WHITE + "초대 없이 파티에 가입 가능 여부를 변경합니다.");
+	                }
+					else if(args[1].equalsIgnoreCase("pvp")) {
+						if(getParty(p.getUniqueId()).TogglePvP()) {
+							for(UUID uuid : getParty(p.getUniqueId()).getPlayers()) {
+								if(Bukkit.getOfflinePlayer(uuid).isOnline()) {
+									Bukkit.getPlayer(uuid).sendMessage(prefix + ChatColor.YELLOW + "이제 파티원 간 PvP가 허용됩니다.");
+								}
+							}
+	                    }
+						else {
+							for(UUID uuid : getParty(p.getUniqueId()).getPlayers()) {
+								if(Bukkit.getOfflinePlayer(uuid).isOnline()) {
+									Bukkit.getPlayer(uuid).sendMessage(prefix + ChatColor.YELLOW + "이제 파티원 간 PvP가 금지됩니다.");
+								}
+							}
+						}
+					}
+					else if(args[1].equalsIgnoreCase("open")) {
+						if(getParty(p.getUniqueId()).ToggleOpen()) {
+							for(UUID uuid : getParty(p.getUniqueId()).getPlayers()) {
+								if(Bukkit.getOfflinePlayer(uuid).isOnline()) {
+									Bukkit.getPlayer(uuid).sendMessage(prefix + ChatColor.YELLOW + "이제 파티장의 초대 없이 플레이어가 가입할 수 있습니다.");
+								}
+							}
+	                    }
+						else {
+							for(UUID uuid : getParty(p.getUniqueId()).getPlayers()) {
+								if(Bukkit.getOfflinePlayer(uuid).isOnline()) {
+									Bukkit.getPlayer(uuid).sendMessage(prefix + ChatColor.YELLOW + "이제 파티장의 초대 없이 플레이어가 가입할 수 없습니다.");
+								}
+							}
+	                    }
+					}
+					else {
+						p.sendMessage(ChatColor.BLUE + "/party toggle pvp: " + ChatColor.WHITE + "파티원 간의 pvp 허용 여부을 변경합니다.");
+	                    p.sendMessage(ChatColor.BLUE + "/party toggle open: " + ChatColor.WHITE + "초대 없이 파티에 가입 가능 여부를 변경합니다.");
+	                }
 				} else if (args[0].equalsIgnoreCase("chat")) {
 					if(args.length > 1) {
 						String Message = "";
@@ -289,6 +359,13 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 					if (getParty(p.getUniqueId()) != null) {
 						Party party = getParty(p.getUniqueId());
 						p.sendMessage(prefix + ChatColor.GOLD + party.getPartyName() + ChatColor.YELLOW + " 파티 정보 - 파티장: " + ChatColor.WHITE + Bukkit.getOfflinePlayer(party.getOwner()).getName());
+						String PvPString = "";
+	                    if(party.pvp) PvPString = ChatColor.GREEN + "켜짐";
+	                    else PvPString = ChatColor.RED + "꺼짐";
+	                    String OpenString = "";
+	                    if(party.open) OpenString = ChatColor.GREEN + "켜짐";
+	                    else OpenString = ChatColor.RED + "꺼짐";
+	                    p.sendMessage(ChatColor.AQUA + " PvP: " + PvPString + " " + ChatColor.AQUA + "개방: " + OpenString);
 						for (UUID u: party.getPlayers()) {
 							if (Bukkit.getOfflinePlayer(u).isOnline()) {
 								p.sendMessage(ChatColor.WHITE + " ◇ " + Bukkit.getOfflinePlayer(u).getName() + ChatColor.YELLOW + " - 체력: " + ((int)(Bukkit.getPlayer(u).getHealth())) + "/20, 배고픔: " + ((int)(Bukkit.getPlayer(u).getFoodLevel())) + "/20 " + ChatColor.GREEN + "(온라인)");
@@ -317,7 +394,9 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 					p.sendMessage(ChatColor.BLUE + "/party disband: " + ChatColor.WHITE + "파티를 해체합니다.");
 					p.sendMessage(ChatColor.BLUE + "/party add <닉네임>: " + ChatColor.WHITE + "파티원을 추가합니다.");
 					p.sendMessage(ChatColor.BLUE + "/party kick <닉네임>: " + ChatColor.WHITE + "파티원을 추방합니다.");
-					p.sendMessage(ChatColor.BLUE + "/party leave: " + ChatColor.WHITE + "소속된 파티에서 떠납니다.");
+					p.sendMessage(ChatColor.BLUE + "/party join <파티이름>: " + ChatColor.WHITE + "개방된 파티에 가입합니다.");
+	                p.sendMessage(ChatColor.BLUE + "/party leave: " + ChatColor.WHITE + "소속된 파티에서 떠납니다.");
+	                p.sendMessage(ChatColor.BLUE + "/party toggle: " + ChatColor.WHITE + "파티의 설정을 변경합니다."); 
 					p.sendMessage(ChatColor.BLUE + "/party info: " + ChatColor.WHITE + "파티 정보를 불러옵니다.");
 					p.sendMessage(ChatColor.BLUE + "/party list: " + ChatColor.WHITE + "존재하는 파티의 목록을 확인합니다.");
 					p.sendMessage(ChatColor.BLUE + "/party chat: " + ChatColor.WHITE + "파티채팅을 시작합니다. (/pc)");
