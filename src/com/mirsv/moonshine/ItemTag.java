@@ -31,10 +31,10 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 				Material m = i.getType();
 				if (!m.equals(Material.AIR)) {
 					ItemMeta item = i.getItemMeta();
-
 					if (args.length > 0) {
 						if ((args[0].equalsIgnoreCase("name")) && (args.length > 1)) {
-							String name = args[1].replaceAll("&", "§").replaceAll("_", " ");
+							String name = args[1];
+							for (int a = 2; a < args.length;a++) name += " "+args[a];
 							item.setDisplayName(name);
 							i.setItemMeta(item);
 							p.sendMessage(prefix+"§a손에 들고 있는 아이템의 이름을 바꾸었습니다.");
@@ -42,14 +42,10 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 							if (args[1].equalsIgnoreCase("add")){
 								if (args.length > 2){
 									String lore = args[2];
-									for (int a = 3; a < args.length;a++){
-										lore += " "+args[a];
-									}
+									for (int a = 3; a < args.length;a++) lore += " "+args[a];
 									lore = lore.replaceAll("&", "§");
 									List<String> lores = item.getLore();
-									if (lores == null){
-										lores = new ArrayList<String>();
-									}
+									if (lores == null) lores = new ArrayList<String>();
 									lores.add(lore);
 									item.setLore(lores);
 									i.setItemMeta(item);
@@ -57,11 +53,9 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 								}
 							} else if (args[1].equalsIgnoreCase("show")){
 								List<String> lores = item.getLore();
-								if (lores != null){
-									for (int j = 0;j < lores.size(); j++){
+								if (lores != null)
+									for (int j = 0;j < lores.size(); j++)
 										p.sendMessage(prefix+"§a"+j+". "+lores.get(j));
-									}
-								}
 							} else if (args[1].equalsIgnoreCase("remove")){
 								List<String> lores = item.getLore();
 								if (lores != null){
