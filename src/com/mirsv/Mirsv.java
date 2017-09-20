@@ -18,6 +18,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.mirsv.catnote.BingoGamble;
 import com.mirsv.catnote.NoPickup;
 import com.mirsv.moonshine.Party.Party;
 import com.mirsv.moonshine.Party.PartyMain;
@@ -52,14 +53,16 @@ public class Mirsv extends JavaPlugin {
 			public void run() {
 				NoPickup.Save();
 				PartyMain.Save();
+				BingoGamble.Save();
 				log.info(prefix + "AutoSave Complete!");
 			}
-		}, 600000, 600000);
+		}, 3600000, 3600000);
 	}
 	@Override
 	public void onDisable() {
 		NoPickup.Save();
 		PartyMain.Save();
+		BingoGamble.Save();
 		t.cancel();
 	}
 	public void InstallPlugins() {

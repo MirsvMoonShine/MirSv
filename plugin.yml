@@ -1,6 +1,6 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.12.12.1
+version: 1.12.13
 softdepend: [Vault]
 author: ___Moonshine___, CatNote
 
@@ -47,3 +47,5 @@ commands:
     description: PlayTime Plugin
   np:
     description: NoPickup Plugin
+  gamble:
+    description: BingoGamble Plugin
