@@ -132,8 +132,7 @@ public class NoPickup extends MirPlugin implements Listener, CommandExecutor {
 			if(BItemList.containsKey(e.getPlayer().getUniqueId())) {
 				for(String s: BItemList.get(e.getPlayer().getUniqueId())) {
 					int lItemTypeId = Integer.parseInt(s.split(":")[0]);
-					short lItemDur = Short.parseShort(s.split(":")[1]);
-					if(itemTypeId == lItemTypeId && itemDur == lItemDur) {
+					if(itemTypeId == lItemTypeId) {
 						e.setCancelled(true);
 						e.getItem().remove();
 						return;
