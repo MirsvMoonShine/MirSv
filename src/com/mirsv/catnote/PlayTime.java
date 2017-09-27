@@ -144,7 +144,7 @@ public class PlayTime extends MirPlugin implements Listener, CommandExecutor {
 				Object obj = parser.parse(new FileReader("world/stats/" + file.getName()));
 				JSONObject jsonObject = (JSONObject) obj;
 				int Ticks = Integer.parseInt(jsonObject.get("stat.playOneMinute") + "");
-				if(Ticks > 34560000) UserPlaytimeList.put(uuid, Ticks);
+				if(Ticks > 50112000) UserPlaytimeList.put(uuid, Ticks);
 			}
 			catch (FileNotFoundException e) {
 				e.printStackTrace();
