@@ -212,8 +212,8 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 								}
 								party.getPlayers().add(p.getUniqueId());
 								for(UUID uuid: party.getPlayers()) if(Bukkit.getOfflinePlayer(uuid).isOnline()) Bukkit.getPlayer(uuid).sendMessage(prefix + ChatColor.YELLOW + p.getName() + "님이 파티에 가입했습니다.");
+								return false;
 							}
-							return false;
 						}
 						p.sendMessage(prefix + ChatColor.YELLOW + "해당 파티는 존재하지 않습니다.");
 						return false;
@@ -388,7 +388,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 					} else {
 						p.sendMessage(prefix + ChatColor.DARK_GRAY + "============ " + ChatColor.YELLOW + "파티 목록" + ChatColor.DARK_GRAY + " ============");
 						for (Party party: partys) {
-							p.sendMessage(ChatColor.WHITE + "◇ " + ChatColor.GOLD + ChatColor.BOLD + party.getPartyName() + ChatColor.YELLOW + " - 파티장: " + ChatColor.WHITE + Bukkit.getOfflinePlayer(party.getOwner()).getName() + ChatColor.YELLOW + ", 파티원 " + ChatColor.WHITE + party.getPlayers().size());
+							p.sendMessage(ChatColor.WHITE + "◇ " + ChatColor.GOLD + ChatColor.BOLD + party.getPartyName() + ChatColor.YELLOW + " - 파티장: " + ChatColor.WHITE + Bukkit.getOfflinePlayer(party.getOwner()).getName() + ChatColor.YELLOW + ", 파티원 " + ChatColor.WHITE + party.getPlayers().size() + ChatColor.AQUA + (party.open ? " (개방)" : ""));
 						}
 					}
 				} else if (args[0].equalsIgnoreCase("?")) {
