@@ -18,6 +18,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -25,6 +26,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.mirsv.MirPlugin;
+import com.mirsv.moonshine.Warning.Warning;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -34,6 +36,7 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 	HashMap < String, String > Guides = new HashMap < String, String >();
 	HashMap < UUID, Burrow > Burrow = new HashMap < UUID, Burrow >();
 	HashMap < UUID, Tower > Tower = new HashMap < UUID, Tower >();
+	ArrayList < Chat > ChatList = new ArrayList < Chat >();
 	final String Prefix = ChatColor.GRAY + "[" + ChatColor.GOLD + ChatColor.BOLD + "!" + ChatColor.GRAY + "] " + ChatColor.RESET;
 	public Guide() {
 		setupPermission();
@@ -60,9 +63,34 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 		if(chatProvider != null) per = (Permission) chatProvider.getProvider();
 		return per != null;
 	}
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	private void onPlayerChat(AsyncPlayerChatEvent e) {
 		if(getConfig().getBoolean("enable.Guide", true)) {
+			if(e.getMessage().length() < 6) {
+				boolean isExist = false;
+				for(Chat c: ChatList) {
+					if(c.uuid.equals(e.getPlayer().getUniqueId())) {
+						if(c.Stack(System.currentTimeMillis())) {
+							Warning warning = new Warning();
+							warning.warnCommand(e.getPlayer(), 1);
+							e.getPlayer().sendMessage(ChatColor.RED + "" +  ChatColor.BOLD + "단타 관련 규정 위반으로 경고 1회입니다.");
+						}
+						if(c.Number == 4) e.getPlayer().sendMessage(ChatColor.RED + "" +  ChatColor.BOLD + "4회째 단타 입력중입니다. 5회 입력 시 경고 1회입니다.");
+						isExist = true;
+						break;
+					}
+				}
+				if(!isExist) ChatList.add(new Chat(e.getPlayer().getUniqueId(), System.currentTimeMillis()));
+			}
+			String Message = "Mirsv" + e.getMessage() + "Mirsv";
+			String[] Bans = new String[]{"ㅅ", "ㅂ", "^", "人", "ㄱ", "ㄷ", "ㅈ", "ㅍ"};
+			for(int i = 0; i < Bans.length; i++) {
+				if(Message.contains(Bans[i])) {
+					if(Message.charAt(Message.indexOf(Bans[i]) - 1) == Message.charAt(Message.indexOf(Bans[i]) + 1)) {
+						e.setMessage(e.getMessage().replaceAll(Bans[i], "").replaceAll(e.getMessage().charAt(e.getMessage().indexOf(Bans[i]) - 1) + "", ""));
+					}
+				}
+			}
 			String[] group = per.getPlayerGroups(e.getPlayer());
 			Boolean isNewbie = false;
 			for(String g: group) {
@@ -192,6 +220,27 @@ class Tower {
 	public boolean isNearEmpty(Location loc) {
 		int R[][] = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 		for(int i = 0; i < 4; i++) if(new Location(Bukkit.getWorld("World"), loc.getBlockX() + R[i][0], loc.getBlockY(), loc.getBlockZ() + R[i][1]).getBlock().getType().equals(Material.AIR)) return true;
+		return false;
+	}
+}
+
+class Chat {
+	UUID uuid;
+	int Number;
+	long Time;
+	public Chat(UUID uuid, long Time) {
+		this.uuid = uuid;
+		this.Time = Time;
+		this.Number = 1;
+	}
+	boolean Stack(long Now) {
+		if(Now - Time < 3000) {
+			Number++;
+			Time = Now;
+			return Number > 4;
+		}
+		Time = Now;
+		Number = 1;
 		return false;
 	}
 }
