@@ -248,4 +248,16 @@ implements CommandExecutor {
 	public void warnCommand(OfflinePlayer player, boolean bool) {
 		warning.loadboolean.put(player.getName(), bool);
 	}
+	public void AddWarning(Player target) {
+		int warn = warning.warning.getInt(target.getName());
+		warn++;
+		if (warn > warning.getConfig().getInt("Warning.maxwarning", 5)) {
+			warn = warning.getConfig().getInt("Warning.maxwarning", 5);
+		}
+		warning.warning.set(target.getName(), Integer.valueOf(warn));
+		try {
+			warning.warning.save(prefixListFile);
+		} catch (Exception localException1) {}
+		warnCommand(target, warn);
+	}
 }

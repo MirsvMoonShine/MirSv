@@ -28,6 +28,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.mirsv.MirPlugin;
 import com.mirsv.moonshine.Warning.Warning;
+import com.mirsv.moonshine.Warning.WarningCommand;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -73,7 +74,8 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 					if(c.uuid.equals(e.getPlayer().getUniqueId())) {
 						if(c.Stack(System.currentTimeMillis())) {
 							Warning warning = new Warning();
-							warning.warnCommand(e.getPlayer(), 1);
+							WarningCommand wCommand = new WarningCommand(warning);
+							wCommand.AddWarning(e.getPlayer());
 							e.getPlayer().sendMessage(ChatColor.RED + "" +  ChatColor.BOLD + "단타 관련 규정 위반으로 경고 1회입니다.");
 						}
 						if(c.Number > 3) {
@@ -229,7 +231,7 @@ class Chat {
 		this.Number = 1;
 	}
 	boolean Stack(long Now) {
-		if(Now - Time < 2500) {
+		if(Now - Time < 3000) {
 			Number++;
 			Time = Now;
 			return Number > 5;
