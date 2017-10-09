@@ -16,6 +16,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -75,21 +76,15 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 							warning.warnCommand(e.getPlayer(), 1);
 							e.getPlayer().sendMessage(ChatColor.RED + "" +  ChatColor.BOLD + "단타 관련 규정 위반으로 경고 1회입니다.");
 						}
-						if(c.Number == 4) e.getPlayer().sendMessage(ChatColor.RED + "" +  ChatColor.BOLD + "4회째 단타 입력중입니다. 5회 입력 시 경고 1회입니다.");
+						if(c.Number > 3) {
+							e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + c.Number + "회째 단타 입력중입니다. 6회 입력 시 경고 1회입니다.");
+							e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_EGG_THROW, 1.0F, 10.0F);
+						}
 						isExist = true;
 						break;
 					}
 				}
 				if(!isExist) ChatList.add(new Chat(e.getPlayer().getUniqueId(), System.currentTimeMillis()));
-			}
-			String Message = "Mirsv" + e.getMessage() + "Mirsv";
-			String[] Bans = new String[]{"ㅅ", "ㅂ", "^", "人", "ㄱ", "ㄷ", "ㅈ", "ㅍ"};
-			for(int i = 0; i < Bans.length; i++) {
-				if(Message.contains(Bans[i])) {
-					if(Message.charAt(Message.indexOf(Bans[i]) - 1) == Message.charAt(Message.indexOf(Bans[i]) + 1)) {
-						e.setMessage(e.getMessage().replaceAll(Bans[i], "").replaceAll(e.getMessage().charAt(e.getMessage().indexOf(Bans[i]) - 1) + "", ""));
-					}
-				}
 			}
 			String[] group = per.getPlayerGroups(e.getPlayer());
 			Boolean isNewbie = false;
@@ -234,10 +229,10 @@ class Chat {
 		this.Number = 1;
 	}
 	boolean Stack(long Now) {
-		if(Now - Time < 3000) {
+		if(Now - Time < 2500) {
 			Number++;
 			Time = Now;
-			return Number > 4;
+			return Number > 5;
 		}
 		Time = Now;
 		Number = 1;

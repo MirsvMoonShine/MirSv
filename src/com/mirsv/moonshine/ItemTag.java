@@ -35,6 +35,7 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 						if ((args[0].equalsIgnoreCase("name")) && (args.length > 1)) {
 							String name = args[1];
 							for (int a = 2; a < args.length;a++) name += " "+args[a];
+							name = name.replaceAll("&", "§");
 							item.setDisplayName(name);
 							i.setItemMeta(item);
 							p.sendMessage(prefix+"§a손에 들고 있는 아이템의 이름을 바꾸었습니다.");

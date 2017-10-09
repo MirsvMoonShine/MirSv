@@ -69,17 +69,22 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
 		for(int i = 0; i < 4; i++) {
 		    int cnt = 0;
 		    for(int j = 0; j < 4; j++) cnt += Grid[i][j];
-		    if(cnt == 0 || cnt == 4) Bingo++;
+		    if(cnt == 0) Bingo++;
+		    if(cnt == 4) Bingo += 2;
 		    cnt = 0;
 		    for(int j = 0; j < 4; j++) cnt += Grid[j][i];
-		    if(cnt == 0 || cnt == 4) Bingo++;
+		    if(cnt == 0) Bingo++;
+		    if(cnt == 4) Bingo += 2;
 		}
 		int cnt = 0;
 		for(int i = 0; i < 4; i++) cnt += Grid[i][i];
-		if(cnt == 0 || cnt == 4) Bingo++;
+		if(cnt == 0) Bingo++;
+	    if(cnt == 4) Bingo += 2;
 		cnt = 0;
 		for(int i = 0; i < 4; i++) cnt += Grid[i][3 - i];
-		if(cnt == 0 || cnt == 4) Bingo++;
+		if(cnt == 0) Bingo++;
+	    if(cnt == 4) Bingo += 2;
+	    Bingo /= 2;
 		Player Gambler = null;
 		boolean isEmpty = true;
 		for(Player p: Bukkit.getOnlinePlayers()) {
@@ -94,9 +99,8 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
 		    if(Bingo > 0) Gambler.getInventory().addItem(ItemList.get(Bingo));
 		    if(Bingo > 3) {
 		        String ItemName = ((ItemStack) ItemList.get(Bingo)).getItemMeta().getDisplayName();
-		        if (Bingo == 5) ItemName = ItemName + " 32개";
 		        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "broadcast " + ChatColor.GOLD + ChatColor.BOLD + Gambler.getName() + " " + ChatColor.RESET + ChatColor.GREEN + "님이 " + (Num + 1) + "번 빙고도박에서 " + ItemName + ChatColor.GREEN + "을(를) 획득하셨습니다.");
-		        Gambler.playSound(Gambler.getLocation(), Sound.BLOCK_NOTE_GUITAR, 10.0F, 1.0F);
+		        Gambler.playSound(Gambler.getLocation(), Sound.BLOCK_NOTE_GUITAR, Bingo * 2, 1.0F);
 		    }
 		}
 		Records[Bingo]++;
@@ -105,11 +109,10 @@ public class BingoGamble extends MirPlugin implements Listener, CommandExecutor 
 	    N_Casino = 2;
 	    CasinoList.add(new gRoom(-163, 91, -124, -162, 96, -133, -171, 95, -135, -161, 100, -128));
 	    CasinoList.add(new gRoom(-163, 92, -104, -162, 96, -113, -171, 95, -115, -161, 100, -108));
-	    Material[] Materials = {Material.AIR, Material.COAL, Material.COOKED_BEEF, Material.DIAMOND, Material.SLIME_BALL, Material.GOLD_NUGGET, Material.MAGMA, Material.EYE_OF_ENDER, Material.BEACON, Material.AIR, Material.DRAGON_EGG};
-	    String[] Names = {"", ChatColor.GRAY + "석탄", ChatColor.DARK_PURPLE + "스테이크", ChatColor.DARK_AQUA + "다이아몬드", "§A완두콩", ChatColor.YELLOW + "금화", ChatColor.DARK_RED + "불 블럭", ChatColor.LIGHT_PURPLE + "캡슐", ChatColor.AQUA + "신호기", "", ChatColor.DARK_GRAY + "드래곤 알"};
-	    int[] Numbers = {0, 1, 1, 1, 1, 32, 1, 1, 1, 0, 1};
+	    Material[] Materials = {Material.AIR, Material.COAL, Material.COOKED_BEEF, Material.DIAMOND, Material.SLIME_BALL, Material.NAME_TAG, Material.MAGMA, Material.EYE_OF_ENDER, Material.BEACON, Material.AIR, Material.DRAGON_EGG};
+	    String[] Names = {"", ChatColor.GRAY + "석탄", ChatColor.DARK_PURPLE + "스테이크", ChatColor.DARK_AQUA + "다이아몬드", "§A완두콩", ChatColor.YELLOW + "금화교환권", ChatColor.DARK_RED + "불 블럭", ChatColor.LIGHT_PURPLE + "캡슐", ChatColor.AQUA + "신호기", "", ChatColor.DARK_GRAY + "드래곤 알"};
 	    for(int i = 0; i < 11; i++) {
-	        ItemStack item = new ItemStack(Materials[i], Numbers[i], (short) 0);
+	        ItemStack item = new ItemStack(Materials[i], 1, (short) 0);
 	        ItemMeta meta = item.getItemMeta();
 	        if(!Materials[i].equals(Material.AIR)) {
 	            meta.setDisplayName(Names[i]);
