@@ -26,7 +26,7 @@ public class ItemTag extends MirPlugin implements CommandExecutor{
 		if ((getConfig().getBoolean("enable.ItemTag", true)) && ((sender instanceof Player))) {
 			Player p = (Player) sender;
 
-			if (p.hasPermission("mirsv.admin")) {
+			if (p.isOp()) {
 				ItemStack i = p.getItemInHand();
 				Material m = i.getType();
 				if (!m.equals(Material.AIR)) {

@@ -24,7 +24,7 @@ public class GlobalMute extends MirPlugin implements Listener, CommandExecutor {
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
 		if ((chat == false) && (getConfig().getBoolean("enable.GlobalMute", true))) {
-			if (e.getPlayer().hasPermission("mirsv.admin")) {
+			if (e.getPlayer().hasPermission("mirsv.admin") || e.getPlayer().isOp()) {
 				return;
 			}
 			e.setCancelled(true);

@@ -20,7 +20,7 @@ public class ClearChat extends MirPlugin implements CommandExecutor{
 		if (((sender instanceof Player)) && (getConfig().getBoolean("enable.ClearChat", true))) {
 			Player p = (Player) sender;
 
-			if (p.hasPermission("mirsv.admin")) {
+			if (p.hasPermission("mirsv.admin") || p.isOp()) {
 				for (int i = 0; i < 60; i++) {
 					Bukkit.broadcastMessage(" ");
 				}
