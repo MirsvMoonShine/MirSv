@@ -37,9 +37,11 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 	Chat Vchat;
 	static ArrayList < Party > partys = new ArrayList < Party >();
 	Permission per = null;
+	File f = new File("plugins/Mirsv/Party/Party.dat");
 	public PartyMain() {
 		try {
-			BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Party/Party.dat"));
+			if (!f.exists()) f.createNewFile();
+			BufferedReader in = new BufferedReader(new FileReader(f));
 			String s;
 			while((s = in.readLine()) != null) {
 				String[] Array = s.split(" ");

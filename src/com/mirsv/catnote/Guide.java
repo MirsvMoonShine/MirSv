@@ -1,6 +1,7 @@
 package com.mirsv.catnote;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,10 +41,12 @@ public class Guide extends MirPlugin implements Listener, CommandExecutor {
 	HashMap < UUID, Tower > Tower = new HashMap < UUID, Tower >();
 	ArrayList < Chat > ChatList = new ArrayList < Chat >();
 	final String Prefix = ChatColor.GRAY + "[" + ChatColor.GOLD + ChatColor.BOLD + "!" + ChatColor.GRAY + "] " + ChatColor.RESET;
+	File f = new File("plugins/Mirsv/Guide/Guide.dat");
 	public Guide() {
 		setupPermission();
 		try {
-			BufferedReader in = new BufferedReader(new FileReader("plugins/Mirsv/Guide/Guide.dat"));
+			if (!f.exists()) f.createNewFile();
+			BufferedReader in = new BufferedReader(new FileReader(f));
 			String s;
 			while((s = in.readLine()) != null) {
 				String[] Array = s.split(" ");
