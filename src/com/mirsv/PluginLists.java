@@ -26,7 +26,8 @@ public enum PluginLists {
 	HeadChange("HeadChange", new HeadChange()),
 	PlayTime("PlayTime", new PlayTime()),
 	NoPickup("NoPickup", new NoPickup()),
-	BingoGamble("BingoGamble", new BingoGamble());
+	BingoGamble("BingoGamble", new BingoGamble()),
+	DisableCommand("DisableCommand", new DisableCommand());
 
 	private String PluginName;
 	private MirPlugin plugin;
