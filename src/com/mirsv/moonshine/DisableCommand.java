@@ -31,7 +31,8 @@ public class DisableCommand extends MirPlugin implements Listener {
 		Player player = event.getPlayer();
 		if (!player.isOp()){
 			for (int a = 0; a < discommand.size(); a++){
-				String[] command = discommand.get(a).split(" ");
+				String loaded = discommand.get(a);
+				String[] command = loaded.split(" ");
 				if (Array.length >= command.length){
 					int control = command.length;
 					for (int b=0;  b < command.length; b++){
@@ -40,7 +41,7 @@ public class DisableCommand extends MirPlugin implements Listener {
 					
 					if (control == 0){
 						event.setCancelled(true);
-						player.sendMessage(prefix+"다음 명령어를 사용할 수 없습니다.");
+						player.sendMessage(prefix+"\'/"+loaded+"\' 명령어를 사용할 수 없습니다.");
 					}
 				}
 			}
