@@ -41,7 +41,7 @@ public class DisableCommand extends MirPlugin implements Listener {
 					
 					if (control == 0){
 						event.setCancelled(true);
-						player.sendMessage(prefix+"명령어를 사용할 수 없습니다.");
+						player.sendMessage(prefix+"/"+loaded+" 명령어를 사용할 수 없습니다.");
 					}
 				}
 			}
