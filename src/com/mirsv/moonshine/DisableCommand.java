@@ -20,7 +20,7 @@ public class DisableCommand extends MirPlugin implements Listener {
 		
 		discommand = getConfig().getStringList("DisableCommand.Commands");
 		if (discommand.isEmpty()){
-			discommand.add("nick");
+			discommand.add("mirsv");
 			getConfig().set("DisableCommand.Commands", discommand);
 		}
 	}
