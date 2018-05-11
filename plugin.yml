@@ -49,3 +49,5 @@ commands:
     description: NoPickup Plugin
   gamble:
     description: BingoGamble Plugin
+  forbidden:
+    description: ForbiddenWord Plugin

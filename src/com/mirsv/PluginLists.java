@@ -13,7 +13,6 @@ public enum PluginLists {
 	BroadCast("BroadCast", new BroadCast()),
 	Hungry("Hungry", new Hungry()),
 	Welcome("Welcome", new Welcome()),
-	NoBlock("NoBlock", new NoBlock()),
 	CallPlayer("CallPlayer", new CallPlayer()),
 	ControlDeathMessage("ControlDeathMessage", new ControlMessage()),
 	WhisperChat("WhisperChat", new WhisperChat()),
@@ -27,7 +26,9 @@ public enum PluginLists {
 	PlayTime("PlayTime", new PlayTime()),
 	NoPickup("NoPickup", new NoPickup()),
 	BingoGamble("BingoGamble", new BingoGamble()),
-	DisableCommand("DisableCommand", new DisableCommand());
+	Disables("Disables", new Disables()),
+	NoBedInAnotherWorld("NoBedInAnotherWorld", new NoBedInAnotherWorld()),
+	ForbiddenWord("ForbiddenWord", new ForbiddenWord());
 
 	private String PluginName;
 	private MirPlugin plugin;

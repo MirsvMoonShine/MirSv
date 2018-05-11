@@ -203,6 +203,15 @@ implements CommandExecutor {
 						player.sendMessage(prefix+ChatColor.GREEN + target.getName() + "님의 경고 횟수:  " + warn);
 					}
 				}
+				else if ((args[0].equalsIgnoreCase("list"))) {
+					player.sendMessage(prefix+ChatColor.GREEN+"경고 목록 리스트");
+					for (OfflinePlayer pl :Bukkit.getOfflinePlayers()){
+						int war = this.warning.warning.getInt(pl.getName());
+						if (war != 0){
+							player.sendMessage(ChatColor.GREEN+pl.getName()+" : "+war);
+						}
+					}
+				}
 			} else {
 				player.sendMessage(prefix+ChatColor.GREEN+"/warning add [playername] [int] - 경고 횟수를 [int]만큼 증가");
 				player.sendMessage(prefix+ChatColor.GREEN+"/warning del [playername] [int] - 경고 횟수를 [int]만큼 감소");
