@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -57,6 +58,8 @@ public class BroadCast extends MirPlugin implements CommandExecutor,Listener {
 				String ChatColor = getConfig().getString("BroadCast.ChatColor").replaceAll("&", "¡×");
 				String rawmsg = e.getMessage();
 				Bukkit.broadcastMessage(Prefix + " " + ChatColor + rawmsg);
+				
+				for(int i = 0; i < 100; i++) for(Player p:Bukkit.getServer().getOnlinePlayers()) p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 10);
 			}
 		}
 	}
