@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import com.mirsv.MirPlugin;
 
 public class Disables extends MirPlugin implements Listener{ // 신세계에 오신걸 환영합니다
-	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	List<String> discommand;
 	List <Integer> disblocks, disrecipe;
 	

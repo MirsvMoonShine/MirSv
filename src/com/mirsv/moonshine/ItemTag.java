@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.mirsv.MirPlugin;
 
 public class ItemTag extends MirPlugin implements CommandExecutor{
-	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public ItemTag() {
 		getCommand("ItemTag", this);

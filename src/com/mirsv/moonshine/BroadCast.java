@@ -17,7 +17,6 @@ import com.mirsv.MirPlugin;
 
 public class BroadCast extends MirPlugin implements CommandExecutor,Listener {
 	ArrayList < UUID > BCadmins = new ArrayList < UUID > ();
-	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public BroadCast() {
 		if (getConfig().getString("BroadCast.Prefix") == null)

@@ -14,7 +14,6 @@ import com.mirsv.MirPlugin;
 
 public class GlobalMute extends MirPlugin implements Listener, CommandExecutor {
 	boolean chat = true;
-	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
 	public GlobalMute() {
 		getCommand("gmute", this);

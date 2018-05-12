@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import com.mirsv.MirPlugin;
 
 public class ClearChat extends MirPlugin implements CommandExecutor{
-	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	
 	public ClearChat() {
 		getCommand("clearchat", this);

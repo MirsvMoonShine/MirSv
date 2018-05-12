@@ -12,8 +12,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import com.mirsv.MirPlugin;
 
 public class NoBedInAnotherWorld extends MirPlugin implements Listener{
-	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
-	
 	public NoBedInAnotherWorld(){
 		getListener(this);
 	}
