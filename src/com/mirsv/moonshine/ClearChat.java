@@ -21,10 +21,8 @@ public class ClearChat extends MirPlugin implements CommandExecutor{
 			Player p = (Player) sender;
 
 			if (p.hasPermission("mirsv.admin") || p.isOp()) {
-				for (int i = 0; i < 60; i++) {
-					Bukkit.broadcastMessage(" ");
-				}
-				Bukkit.broadcastMessage(prefix + p.getName() + "님이 채팅을 청소하였습니다.");
+				for(int i = 0; i < 100; i++) for(Player p:Bukkit.getServer().getOnlinePlayers()) p.sendMessage("");
+				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', prefix + " &e" + p.getName() + "&f님이 채팅을 청소하셨습니다!"));
 			}
 		}
 		return false;
