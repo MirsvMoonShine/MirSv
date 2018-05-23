@@ -32,7 +32,7 @@ public class DisableCreateTown extends MirPlugin implements Listener {
 			Player player = event.getPlayer();
 			RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 			Economy economy = economyProvider.getProvider();
-			if(player.getWorld().getName().equalsIgnoreCase("world")) return;
+			if(player.getWorld().getName().equalsIgnoreCase("world2")) return;
 			event.setCancelled(true);
 			player.sendMessage(prefix + ChatColor.RED + "마을은 건축월드에서만 생성 가능합니다. 감옥에 있는 10분동안 카페에서 규칙을 읽고 오시기 바랍니다.");
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "jail " + player.getName() + " 감옥1 10m");
@@ -51,7 +51,7 @@ public class DisableCreateTown extends MirPlugin implements Listener {
 			Player player = event.getPlayer();
 			RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 			Economy economy = economyProvider.getProvider();
-			if(player.getWorld().getName().equalsIgnoreCase("world")) return;
+			if(player.getWorld().getName().equalsIgnoreCase("world2")) return;
 			event.setCancelled(true);
 			player.sendMessage(prefix + ChatColor.RED + "마을은 건축월드에서만 생성 가능합니다. 감옥에 있는 10분동안 카페에서 규칙을 읽고 오시기 바랍니다.");
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "jail " + player.getName() + " 감옥1 10m");
