@@ -2,7 +2,7 @@
 main: com.mirsv.Mirsv
 version: 1.12.16.2
 softdepend: [Vault]
-author: ___Moonshine___, CatNote
+author: ___Moonshine___, CatNote, _Marlang
 
 commands:
   mirsv:
@@ -51,3 +51,6 @@ commands:
     description: BingoGamble Plugin
   forbidden:
     description: ForbiddenWord Plugin
+  안녕: 
+    description: Commands Plugin
+    alias: [hi]

@@ -1,4 +1,4 @@
-package com.mirsv.Marlang.util;
+package com.mirsv.Marlang.Util;
 
 public class IsInt {
 	

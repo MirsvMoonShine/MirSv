@@ -23,6 +23,6 @@ public class ClearChat extends MirPlugin implements CommandExecutor{
 				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', prefix + " &e" + sender.getName() + "&f님이 채팅을 청소하셨습니다!"));
 			}
 		}
-		return false;
+		return true;
 	}
 }

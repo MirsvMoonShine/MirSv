@@ -1,8 +1,28 @@
 package com.mirsv;
 
-import com.mirsv.catnote.*;
-import com.mirsv.moonshine.*;
-import com.mirsv.moonshine.Party.*;
+import com.mirsv.Marlang.Commands;
+import com.mirsv.catnote.BingoGamble;
+import com.mirsv.catnote.BlockSpawner;
+import com.mirsv.catnote.CallPlayer;
+import com.mirsv.catnote.ControlMessage;
+import com.mirsv.catnote.DisableCreateTown;
+import com.mirsv.catnote.EasyResidence;
+import com.mirsv.catnote.Guide;
+import com.mirsv.catnote.HeadChange;
+import com.mirsv.catnote.NoPickup;
+import com.mirsv.catnote.PlayTime;
+import com.mirsv.catnote.PvPTeleport;
+import com.mirsv.catnote.WhisperChat;
+import com.mirsv.moonshine.BroadCast;
+import com.mirsv.moonshine.ClearChat;
+import com.mirsv.moonshine.Disables;
+import com.mirsv.moonshine.ForbiddenWord;
+import com.mirsv.moonshine.GlobalMute;
+import com.mirsv.moonshine.Hungry;
+import com.mirsv.moonshine.ItemTag;
+import com.mirsv.moonshine.NoBedInAnotherWorld;
+import com.mirsv.moonshine.Welcome;
+import com.mirsv.moonshine.Party.PartyMain;
 import com.mirsv.moonshine.Warning.Warning;
 
 public enum PluginLists {
@@ -28,7 +48,8 @@ public enum PluginLists {
 	BingoGamble("BingoGamble", new BingoGamble()),
 	Disables("Disables", new Disables()),
 	NoBedInAnotherWorld("NoBedInAnotherWorld", new NoBedInAnotherWorld()),
-	ForbiddenWord("ForbiddenWord", new ForbiddenWord());
+	ForbiddenWord("ForbiddenWord", new ForbiddenWord()),
+	Commands("Commands", new Commands());
 
 	private String PluginName;
 	private MirPlugin plugin;

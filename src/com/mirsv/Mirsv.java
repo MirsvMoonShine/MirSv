@@ -26,17 +26,18 @@ import com.mirsv.moonshine.Party.PartyMain;
 public class Mirsv extends JavaPlugin {
 	PluginManager pm = getServer().getPluginManager();
 	ArrayList < String > plugins = new ArrayList < String > ();
-	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "¹Ì¸£¼­¹ö" + ChatColor.GOLD + "] " + ChatColor.RESET;
+	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "ë¯¸ë¥´ì„œë²„" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	public PluginLists lists;
 	Logger log = Bukkit.getLogger();
 	Timer t;
+	
 	@Override
 	public void onEnable() {
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 
 		getCommand("Mirsv").setExecutor(new mainCommand(this));
-		System.out.println("[¹Ì¸£¼­¹ö] Á¾ÇÕ ÇÃ·¯±×ÀÎ °¡µ¿");
+		System.out.println("[ë¯¸ë¥´ì„œë²„] ì¢…í•© í”ŒëŸ¬ê·¸ì¸ ê°€ë™");
 		InstallPlugins();
 
 		String[] plu = (String[]) this.plugins.toArray(new String[this.plugins.size()]);
@@ -47,7 +48,7 @@ public class Mirsv extends JavaPlugin {
 				plugin = plugin + ", " + plu[i];
 			}
 		}
-		System.out.println("[¹Ì¸£¼­¹ö] °¡µ¿ µÈ ÇÃ·¯±×ÀÎµé: " + plugin);
+		System.out.println("[ë¯¸ë¥´ì„œë²„] ê°€ë™ ëœ í”ŒëŸ¬ê·¸ì¸ë“¤: " + plugin);
 		t = new Timer();
 		t.schedule(new TimerTask() {
 			public void run() {
