@@ -12,6 +12,7 @@ public class Commands extends MirPlugin implements CommandExecutor{
 	
 	public Commands() {
 		getCommand("안녕", this);
+		getCommand("오피", this);
 	}
 	
 	@Override
@@ -22,7 +23,16 @@ public class Commands extends MirPlugin implements CommandExecutor{
 				return true;
 			}
 			Player p = (Player) sender;
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a안녕 " + p.getName() + "!"));
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a반가워, " + p.getName() + "!"));
+			return true;
+		}
+		if(label.equalsIgnoreCase("오피")) {
+			if(!(sender instanceof Player)) {
+				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c콘솔에서는 사용할 수 없는 명령어입니다!"));
+				return true;
+			}
+			Player p = (Player) sender;
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou are no longer op!"));
 			return true;
 		}
 		return true;

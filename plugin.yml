@@ -1,6 +1,6 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.12.16.2
+version: 1.12.20.2
 softdepend: [Vault]
 author: ___Moonshine___, CatNote, _Marlang
 
@@ -52,5 +52,22 @@ commands:
   forbidden:
     description: ForbiddenWord Plugin
   안녕: 
-    description: Commands Plugin
-    alias: [hi]
+    description: Say "Hi" to player
+  오피: 
+    description: Fake OP
+  신원: 
+    description: PlayerID Plugin
+  야생: 
+    description: Mine World Random TP
+  채집: 
+    description: Mine World Random TP
+  네더: 
+    description: Mine World Random TP
+  지옥: 
+    description: Mine World Random TP
+  엔드: 
+    description: Mine World Random TP
+  엔더: 
+    description: Mine World Random TP
+  닉네임: 
+    description: ChangeName Plugin

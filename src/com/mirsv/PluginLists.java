@@ -1,6 +1,8 @@
 package com.mirsv;
 
 import com.mirsv.Marlang.Commands;
+import com.mirsv.Marlang.PlayerID;
+import com.mirsv.Marlang.RandomTP;
 import com.mirsv.catnote.BingoGamble;
 import com.mirsv.catnote.BlockSpawner;
 import com.mirsv.catnote.CallPlayer;
@@ -49,7 +51,9 @@ public enum PluginLists {
 	Disables("Disables", new Disables()),
 	NoBedInAnotherWorld("NoBedInAnotherWorld", new NoBedInAnotherWorld()),
 	ForbiddenWord("ForbiddenWord", new ForbiddenWord()),
-	Commands("Commands", new Commands());
+	Commands("Commands", new Commands()),
+	PlayerID("PlayerID", new PlayerID()),
+	RandomTP("RandomTP", new RandomTP());
 
 	private String PluginName;
 	private MirPlugin plugin;
