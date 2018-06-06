@@ -76,8 +76,8 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 		if(event.getDamager() instanceof Player && event.getEntity() instanceof Player && getConfig().getBoolean("enable.Party", true)) {
 			Player player1 = (Player) event.getDamager();
 			Player player2 = (Player) event.getEntity();
-			Party p1 = this.getParty(player1.getUniqueId());
-			Party p2 = this.getParty(player2.getUniqueId());
+			Party p1 = PartyMain.getParty(player1.getUniqueId());
+			Party p2 = PartyMain.getParty(player2.getUniqueId());
 			if(p1 == p2 && p1 != null){
 				if(p1.pvp) return;
 				event.setCancelled(true);
@@ -382,6 +382,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
 			else event.getPlayer().sendMessage(prefix + ChatColor.YELLOW + "당신은 파티에 소속되어있지 않습니다. /g 명령어를 통해 전체 채팅 모드로 변경해주세요!");
 		}
 	}
+	@SuppressWarnings("unlikely-arg-type")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player p = event.getPlayer();
@@ -411,7 +412,7 @@ public class PartyMain extends MirPlugin implements CommandExecutor, Listener {
             e.printStackTrace();
 		}
 	}
-	public Party getParty(UUID uuid) {
+	public static Party getParty(UUID uuid) {
 		for(Party party: partys) for(UUID u: party.getPlayers()) if(u.equals(uuid)) return party;
 		return null;
 	}

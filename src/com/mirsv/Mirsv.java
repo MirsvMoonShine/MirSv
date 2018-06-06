@@ -39,7 +39,7 @@ public class Mirsv extends JavaPlugin {
 		getCommand("Mirsv").setExecutor(new mainCommand(this));
 		System.out.println("[미르서버] 종합 플러그인 가동");
 		InstallPlugins();
-
+		
 		String[] plu = (String[]) this.plugins.toArray(new String[this.plugins.size()]);
 		String plugin = "";
 		if (plu.length > 0) {

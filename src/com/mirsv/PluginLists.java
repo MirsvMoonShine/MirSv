@@ -1,8 +1,13 @@
 package com.mirsv;
 
-import com.mirsv.Marlang.Commands;
-import com.mirsv.Marlang.PlayerID;
+import com.mirsv.Marlang.DisablePlotClear;
 import com.mirsv.Marlang.RandomTP;
+import com.mirsv.Marlang.Userconvenience;
+import com.mirsv.Marlang.CustomAdvancements.CustomAdvancements;
+import com.mirsv.Marlang.CustomAdvancements.Listeners;
+import com.mirsv.Marlang.PlayerID.PlayerID;
+import com.mirsv.Marlang.UserMenu.UserMenu;
+import com.mirsv.Marlang.Vote.VotePoint;
 import com.mirsv.catnote.BingoGamble;
 import com.mirsv.catnote.BlockSpawner;
 import com.mirsv.catnote.CallPlayer;
@@ -51,9 +56,14 @@ public enum PluginLists {
 	Disables("Disables", new Disables()),
 	NoBedInAnotherWorld("NoBedInAnotherWorld", new NoBedInAnotherWorld()),
 	ForbiddenWord("ForbiddenWord", new ForbiddenWord()),
-	Commands("Commands", new Commands()),
 	PlayerID("PlayerID", new PlayerID()),
-	RandomTP("RandomTP", new RandomTP());
+	RandomTP("RandomTP", new RandomTP()),
+	Userconvenience("Userconvenience", new Userconvenience()),
+	VotePoint("VotePoint", new VotePoint()),
+	UserMenu("UserMenu", new UserMenu()),
+	CustomAdvancements("CustomAdvancements", new CustomAdvancements()),
+	Listeners("Listeners", new Listeners()),
+	DisablePlotClear("DisablePlotClear", new DisablePlotClear());
 
 	private String PluginName;
 	private MirPlugin plugin;

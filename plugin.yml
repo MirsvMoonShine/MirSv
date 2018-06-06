@@ -51,10 +51,6 @@ commands:
     description: BingoGamble Plugin
   forbidden:
     description: ForbiddenWord Plugin
-  안녕: 
-    description: Say "Hi" to player
-  오피: 
-    description: Fake OP
   신원: 
     description: PlayerID Plugin
   야생: 
@@ -69,5 +65,15 @@ commands:
     description: Mine World Random TP
   엔더: 
     description: Mine World Random TP
-  닉네임: 
-    description: ChangeName Plugin
+  아침: 
+    description: Userconvenience Plugin
+  저녁: 
+    description: Userconvenience Plugin
+  비끄기: 
+    description: Userconvenience Plugin
+  추천포인트: 
+    description: VotePoint Plugin
+  유저: 
+    description: UserMenu Plugin
+  customadvancements: 
+    description: CustomAdvancements Plugin

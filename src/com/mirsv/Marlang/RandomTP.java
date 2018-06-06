@@ -29,12 +29,13 @@ public class RandomTP extends MirPlugin implements CommandExecutor{
 	public HashMap<String, Long> mineCooldown = new HashMap<String, Long>();
 	public HashMap<String, Long> netherCooldown = new HashMap<String, Long>();
 	public HashMap<String, Long> endCooldown = new HashMap<String, Long>();
-	int cooldownTime = 35;
+	final int cooldownTime = 35;
 	
 	Random r = new Random();
 	int X;
 	int Z;
 	int Y;
+	final int maxCoord = 4000;
 	Location l;
 	Location fl;
 	Location tl;
@@ -104,8 +105,8 @@ public class RandomTP extends MirPlugin implements CommandExecutor{
 	}
 	
 	public void genCoord(World w, Player p) {
-		this.X = r.nextInt(10000);
-		this.Z = r.nextInt(10000);
+		this.X = r.nextInt(maxCoord);
+		this.Z = r.nextInt(maxCoord);
 		this.Y = w.getHighestBlockYAt(X, Z);
 	
 		this.l = new Location(w, this.X + 0.5D, this.Y, this.Z + 0.5D);
@@ -117,7 +118,8 @@ public class RandomTP extends MirPlugin implements CommandExecutor{
 				|| l.getBlock().getType().equals(Material.LAVA) || l.getBlock().getType().equals(Material.STATIONARY_LAVA)
 				|| fl.getBlock().getType().equals(Material.LAVA) || fl.getBlock().getType().equals(Material.STATIONARY_LAVA)
 				|| l.getBlock().getType().equals(Material.BEDROCK) || fl.getBlock().getType().equals(Material.BEDROCK)
-				|| !tl.getBlock().getType().equals(Material.AIR) || fl.getBlock().getType().equals(Material.MAGMA)) {
+				|| !tl.getBlock().getType().equals(Material.AIR) || fl.getBlock().getType().equals(Material.MAGMA)
+				|| fl.getBlock().getType().equals(Material.SOUL_SAND)) {
 			genCoord(w, p);
 		}
 	}

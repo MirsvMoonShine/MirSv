@@ -1,4 +1,4 @@
-package com.mirsv.Marlang;
+package com.mirsv.Marlang.PlayerID;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -86,7 +86,7 @@ public class PlayerID extends MirPlugin implements Listener, CommandExecutor{
 		
 	}
 	
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Random r = new Random();
 		Player p = e.getPlayer();
@@ -119,13 +119,7 @@ public class PlayerID extends MirPlugin implements Listener, CommandExecutor{
 			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l✅&r &f유저 " + p.getName() + "의 신원을 만들었습니다!"));
 			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&fID : " + PlayerID.get("Players." + p.getName() + ".ID")));
 			
-			try {
-				PlayerID.save(PlayerIDFile);
-				PlayerID.load(PlayerIDFile);
-				Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l✅&r &fPlayerID 파일을 성공적으로 저장했습니다!"));
-			} catch (Exception exception) {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l✅&r &fPlayerID 파일을 저장하는데 실패했습니다!"));
-			}
+			configSave();
 		}
 	}
 	
@@ -160,6 +154,16 @@ public class PlayerID extends MirPlugin implements Listener, CommandExecutor{
 			return true;
 		}
 		return true;
+	}
+	
+	public void configSave() {
+		try {
+			PlayerID.save(PlayerIDFile);
+			PlayerID.load(PlayerIDFile);
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l✅&r &fPlayerID 파일을 성공적으로 저장했습니다!"));
+		} catch (Exception exception) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l✅&r &fPlayerID 파일을 저장하는데 실패했습니다!"));
+		}
 	}
 	
 }

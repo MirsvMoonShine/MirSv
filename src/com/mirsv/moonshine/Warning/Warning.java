@@ -18,6 +18,8 @@ public class Warning extends MirPlugin implements Listener {
 	FileConfiguration warning;
 	HashMap < String, Boolean > loadboolean = new HashMap < String, Boolean > ();
 	String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
+	
+	static Warning thisclass = new Warning();
 
 	public Warning() {
 		config();
@@ -77,5 +79,9 @@ public class Warning extends MirPlugin implements Listener {
 						}
 					});
 				}
+	}
+	
+	public static int getWarning(Player p) {
+		return thisclass.warning.getInt(p.getName());
 	}
 }

@@ -1,4 +1,8 @@
 eclipse.preferences.version=1
-encoding//src/com/mirsv/Marlang/PlayerID.java=UTF-8
+encoding//src/com/mirsv/Marlang/CustomAdvancements/CustomAdvancements.java=UTF-8
+encoding//src/com/mirsv/Marlang/CustomAdvancements/CustomAdvancementsConfigManager.java=UTF-8
+encoding//src/com/mirsv/Marlang/PlayerID/PlayerID.java=UTF-8
+encoding//src/com/mirsv/Marlang/Vote/VoteConfigManager.java=UTF-8
+encoding//src/com/mirsv/Marlang/Vote/VotePoint.java=UTF-8
 encoding//src/com/mirsv/Mirsv.java=UTF-8
 encoding/plugin.yml=UTF-8
