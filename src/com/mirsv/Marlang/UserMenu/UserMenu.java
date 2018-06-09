@@ -31,7 +31,7 @@ public class UserMenu extends MirPlugin implements CommandExecutor{
 		Player p = (Player) sender;
 		
 		if(label.equalsIgnoreCase("À¯Àú")) {
-			mg.openGUI(p);
+			MainGUI.openGUI(p);
 		}
 		
 		return true;

@@ -37,6 +37,7 @@ public class CustomAdvancements extends MirPlugin implements Listener, CommandEx
 	
 	public void setChecker(Player p) {
 		for(AdvancementsList s : AdvancementsList.values()) {
+			cfgm.Checker.set("Players." + p.getUniqueId() + ".Nickname" , p.getName());
 			cfgm.Checker.addDefault("Players." + p.getUniqueId() + "." + s.getAdvid() + ".Clear" , false);
 			cfgm.Checker.addDefault("Players." + p.getUniqueId() + "." + s.getAdvid() + ".Reward" , false);
 			cfgm.SaveConfig();
@@ -71,7 +72,6 @@ public class CustomAdvancements extends MirPlugin implements Listener, CommandEx
 			setCleared(p, s, true);
 			CustomAdvancementClearEvent event = new CustomAdvancementClearEvent(p, s);
 			Bukkit.getServer().getPluginManager().callEvent(event);
-			showClear(p, s);
 		}
 	}
 	

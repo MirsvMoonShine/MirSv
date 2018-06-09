@@ -8,7 +8,8 @@ import com.mirsv.Marlang.UserMenu.MainGUI;
 
 public enum AdvancementsList {
 	
-	StartOfJourney("startofjourney", "발전과제 알아보기", AdvancementTypes.발전);
+	StartOfJourney("startofjourney", "발전과제 알아보기", AdvancementTypes.발전),
+	Community("community", "공동체", AdvancementTypes.발전 );
 	
 	private String advid;
 	private String advname;
