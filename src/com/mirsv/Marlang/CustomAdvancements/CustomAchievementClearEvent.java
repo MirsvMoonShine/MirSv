@@ -4,11 +4,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class CustomAdvancementClearEvent extends Event{
+import com.mirsv.Marlang.CustomAdvancements.List.AchievementList;
+
+public class CustomAchievementClearEvent extends Event{
     Player p;
-    AdvancementsList advl;
+    AchievementList advl;
    
-    public CustomAdvancementClearEvent(Player player, AdvancementsList advancementslist){
+    public CustomAchievementClearEvent(Player player, AchievementList advancementslist){
         p = player;
         advl = advancementslist;
     }
@@ -17,7 +19,7 @@ public class CustomAdvancementClearEvent extends Event{
         return p;
     }
    
-    public AdvancementsList getAdvancement(){
+    public AchievementList getAdvancement(){
         return advl;
     }
  

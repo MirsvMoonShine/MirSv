@@ -3,8 +3,7 @@ package com.mirsv;
 import com.mirsv.Marlang.DisablePlotClear;
 import com.mirsv.Marlang.RandomTP;
 import com.mirsv.Marlang.Userconvenience;
-import com.mirsv.Marlang.CustomAdvancements.CustomAdvancements;
-import com.mirsv.Marlang.CustomAdvancements.Listeners;
+import com.mirsv.Marlang.CustomAdvancements.CustomAchievement;
 import com.mirsv.Marlang.PlayerID.PlayerID;
 import com.mirsv.Marlang.UserMenu.UserMenu;
 import com.mirsv.Marlang.Vote.VotePoint;
@@ -61,8 +60,7 @@ public enum PluginLists {
 	Userconvenience("Userconvenience", new Userconvenience()),
 	VotePoint("VotePoint", new VotePoint()),
 	UserMenu("UserMenu", new UserMenu()),
-	CustomAdvancements("CustomAdvancements", new CustomAdvancements()),
-	Listeners("Listeners", new Listeners()),
+	CustomAchievement("CustomAchievement", new CustomAchievement()),
 	DisablePlotClear("DisablePlotClear", new DisablePlotClear());
 
 	private String PluginName;

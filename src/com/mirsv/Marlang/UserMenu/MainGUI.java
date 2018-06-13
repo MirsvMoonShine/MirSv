@@ -23,10 +23,10 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.mirsv.MirPlugin;
 import com.mirsv.Marlang.Adventure.AdventureGUI;
-import com.mirsv.Marlang.CustomAdvancements.AdvancementsList;
-import com.mirsv.Marlang.CustomAdvancements.CustomAdvancements;
-import com.mirsv.Marlang.CustomAdvancements.GUI.CustomAdvancementsGUI;
-import com.mirsv.Marlang.CustomAdvancements.Reward.CustomAdvancementRewardManager;
+import com.mirsv.Marlang.CustomAdvancements.CustomAchievement;
+import com.mirsv.Marlang.CustomAdvancements.GUI.CustomAdchievementGUI;
+import com.mirsv.Marlang.CustomAdvancements.List.AchievementList;
+import com.mirsv.Marlang.CustomAdvancements.Manager.RewardManager;
 import com.mirsv.Marlang.Vote.VotePoint;
 import com.mirsv.Marlang.Vote.Shop.VoteGUI;
 

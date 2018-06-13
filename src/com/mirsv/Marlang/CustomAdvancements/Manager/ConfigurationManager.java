@@ -1,4 +1,4 @@
-package com.mirsv.Marlang.CustomAdvancements;
+package com.mirsv.Marlang.CustomAdvancements.Manager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,13 +12,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.mirsv.MirPlugin;
 
-public class CustomAdvancementsConfigManager extends MirPlugin{
+public class ConfigurationManager extends MirPlugin{
 	
-	FileConfiguration Checker;
+	public FileConfiguration Checker;
 	File folder = new File("plugins/Mirsv/CustomAdvancements");
 	File CheckerFile = new File("plugins/" + pm.getDescription().getName() + "/CustomAdvancements/Checker.yml");
 	
-	public CustomAdvancementsConfigManager() {
+	public ConfigurationManager() {
 		Checker = YamlConfiguration.loadConfiguration(CheckerFile);
 		SetupConfig();
 	}

@@ -59,6 +59,7 @@ public class Mirsv extends JavaPlugin {
 			}
 		}, 3600000, 3600000);
 	}
+	
 	@Override
 	public void onDisable() {
 		NoPickup.Save();
@@ -66,6 +67,7 @@ public class Mirsv extends JavaPlugin {
 		BingoGamble.Save();
 		t.cancel();
 	}
+	
 	public void InstallPlugins() {
 		plugins.clear();
 

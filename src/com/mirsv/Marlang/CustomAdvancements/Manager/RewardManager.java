@@ -1,25 +1,25 @@
-package com.mirsv.Marlang.CustomAdvancements.Reward;
+package com.mirsv.Marlang.CustomAdvancements.Manager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-import com.mirsv.Marlang.CustomAdvancements.AdvancementsList;
-import com.mirsv.Marlang.CustomAdvancements.CustomAdvancements;
+import com.mirsv.Marlang.CustomAdvancements.CustomAchievement;
+import com.mirsv.Marlang.CustomAdvancements.List.AchievementList;
 
 import net.milkbowl.vault.economy.Economy;
 
-public class CustomAdvancementRewardManager {
+public class RewardManager {
 	
 	public static Economy eco = null;
 	RegisteredServiceProvider <Economy> rspe = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-	static CustomAdvancementRewardManager carm = new CustomAdvancementRewardManager();
+	static RewardManager carm = new RewardManager();
 	
-	public static void rewardPlayer(Player p, AdvancementsList s) {
-		if(CustomAdvancements.getRewarded(p, s)) return;
+	public static void rewardPlayer(Player p, AchievementList s) {
+		if(CustomAchievement.getRewarded(p, s)) return;
 		
-		if(s.getAdvid().equals("startofjourney")) {
+		if(s.getID().equals("startofjourney")) {
 			giveMoney(p, 100);
 		}
 	}

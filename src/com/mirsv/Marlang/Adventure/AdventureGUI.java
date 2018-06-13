@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.mirsv.MirPlugin;
-import com.mirsv.Marlang.CustomAdvancements.GUI.CustomAdvancementsGUI;
+import com.mirsv.Marlang.CustomAdvancements.GUI.CustomAdchievementGUI;
 import com.mirsv.Marlang.UserMenu.MainGUI;
 
 public class AdventureGUI extends MirPlugin implements Listener{
@@ -83,7 +83,7 @@ public class AdventureGUI extends MirPlugin implements Listener{
 		try {
 			if(inventory.equals(adventuregui)) {
 				if(item.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&a도전과제"))) {
-					CustomAdvancementsGUI.openMainGUI(p);
+					CustomAdchievementGUI.openMainGUI(p);
 				}
 				if(item.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&a나가기"))) {
 					MainGUI.openGUI(p);

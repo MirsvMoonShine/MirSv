@@ -26,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.mirsv.MirPlugin;
-import com.mirsv.Marlang.CustomAdvancements.CustomAdvancementsConfigManager;
+import com.mirsv.Marlang.CustomAdvancements.Manager.ConfigurationManager;
 import com.mirsv.Marlang.Util.IsInt;
 
 public class VotePoint extends MirPlugin implements CommandExecutor, Listener{

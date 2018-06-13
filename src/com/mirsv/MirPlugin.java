@@ -23,7 +23,7 @@ public class MirPlugin {
 	public void saveConfig() {
 		pm.saveConfig();
 	}
-
+	
 	public void getListener(Listener lis) {
 		pm.getServer().getPluginManager().registerEvents(lis, pm);
 	}
