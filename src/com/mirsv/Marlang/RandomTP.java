@@ -20,10 +20,6 @@ public class RandomTP extends MirPlugin implements CommandExecutor{
 	public RandomTP() {
 		getCommand("야생", this);
 		getCommand("채집", this);
-		getCommand("네더", this);
-		getCommand("지옥", this);
-		getCommand("엔드", this);
-		getCommand("엔더", this);
 	}
 	
 	public HashMap<String, Long> mineCooldown = new HashMap<String, Long>();
@@ -65,42 +61,6 @@ public class RandomTP extends MirPlugin implements CommandExecutor{
 			return true;
 		}
 		
-		if(label.equalsIgnoreCase("네더") || label.equalsIgnoreCase("지옥")) {
-			if(netherCooldown.containsKey(sender.getName())) {
-				long secondsLeft = ((netherCooldown.get(p.getName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
-				if(secondsLeft>0) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l네더&f&l월드에 다시 랜덤으로 TP할 수 있는 시간까지 &e&l" + secondsLeft + "초 &f&l남았습니다!"));
-					return true;
-				}
-			}
-			World world = Bukkit.getServer().getWorld("world_nether");
-			genCoord(world, p);
-			this.Y = world.getHighestBlockYAt(X, Z);
-			this.l = new Location(world, this.X + 0.5D, this.Y, this.Z + 0.5D);
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l네더&f&l월드에 랜덤으로 TP되었습니다! &8( X : " + this.X + ", Y : " + this.Y + ", Z : " + this.Z + " )"));
-			p.teleport(l);
-			netherCooldown.put(sender.getName(), System.currentTimeMillis());
-			return true;
-		}
-		
-		if(label.equalsIgnoreCase("엔드") || label.equalsIgnoreCase("엔더")) {
-			if(endCooldown.containsKey(sender.getName())) {
-				long secondsLeft = ((endCooldown.get(p.getName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
-				if(secondsLeft>0) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&l엔더&f&l월드에 다시 TP할 수 있는 시간까지 &e&l" + secondsLeft + "초 &f&l남았습니다!"));
-					return true;
-				}
-			}
-			World world = Bukkit.getServer().getWorld("world_the_end");
-			this.X = 0;
-			this.Z = 0;
-			this.Y = world.getHighestBlockYAt(X, Z);
-			this.l = new Location(world, this.X + 0.5D, this.Y, this.Z + 0.5D);
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&l엔더&f&l월드에 TP되었습니다! &8( X : " + this.X + ", Y : " + this.Y + ", Z : " + this.Z + " )"));
-			p.teleport(l);
-			endCooldown.put(sender.getName(), System.currentTimeMillis());
-			return true;
-		}
 		return true;
 	}
 	
