@@ -10,7 +10,7 @@ public class MirPlugin {
 	protected Mirsv pm;
 	public FileConfiguration config;
 	public String prefix = ChatColor.GOLD + "[" + ChatColor.GREEN + "미르서버" + ChatColor.GOLD + "] " + ChatColor.RESET;
-
+	
 	public MirPlugin() {
 		pm = (Mirsv) Bukkit.getPluginManager().getPlugin("Mirsv");
 		config = pm.getConfig();

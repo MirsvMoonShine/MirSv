@@ -14,24 +14,28 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mirsv.MirPlugin;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Coord;
+import com.palmergames.bukkit.towny.object.TownyUniverse;
+import com.palmergames.bukkit.towny.object.TownyWorld;
 
 public class RandomTP extends MirPlugin implements CommandExecutor{
 	
 	public RandomTP() {
 		getCommand("야생", this);
 		getCommand("채집", this);
+		getCommand("건축", this);
 	}
-	
+
 	public HashMap<String, Long> mineCooldown = new HashMap<String, Long>();
-	public HashMap<String, Long> netherCooldown = new HashMap<String, Long>();
-	public HashMap<String, Long> endCooldown = new HashMap<String, Long>();
-	final int cooldownTime = 35;
+	public HashMap<String, Long> buildCooldown = new HashMap<String, Long>();
+	final int cooldownTime = 5;
 	
 	Random r = new Random();
 	int X;
 	int Z;
 	int Y;
-	final int maxCoord = 4000;
+	final int maxCoord = 5000;
 	Location l;
 	Location fl;
 	Location tl;
@@ -49,16 +53,29 @@ public class RandomTP extends MirPlugin implements CommandExecutor{
 			if(mineCooldown.containsKey(sender.getName())) {
 				long secondsLeft = ((mineCooldown.get(p.getName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
 				if(secondsLeft>0) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l야생&f&l월드에 다시 랜덤으로 TP할 수 있는 시간까지 &e&l" + secondsLeft + "초 &f&l남았습니다!"));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l채집&f&l월드에 다시 랜덤으로 TP할 수 있는 시간까지 &e&l" + secondsLeft + "초 &f&l남았습니다!"));
 					return true;
 				}
 			}
 			World world = Bukkit.getServer().getWorld("mineworld");
 			genCoord(world, p);
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l야생&f&l월드에 랜덤으로 TP되었습니다! &8( X : " + this.X + ", Y : " + this.Y + ", Z : " + this.Z + " )"));
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l채집&f&l월드에 랜덤으로 TP되었습니다! &8( X : " + this.X + ", Y : " + this.Y + ", Z : " + this.Z + " )"));
 			p.teleport(l);
 			mineCooldown.put(sender.getName(), System.currentTimeMillis());
 			return true;
+		} else if(label.equalsIgnoreCase("건축")) {
+			if(buildCooldown.containsKey(sender.getName())) {
+				long secondsLeft = ((buildCooldown.get(p.getName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
+				if(secondsLeft>0) {
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&l건축&f&l월드에 다시 랜덤으로 TP할 수 있는 시간까지 &e&l" + secondsLeft + "초 &f&l남았습니다!"));
+					return true;
+				}
+			}
+			World world = Bukkit.getServer().getWorld("world");
+			genCoord(world, p);
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&l건축&f&l월드에 랜덤으로 TP되었습니다! &8( X : " + this.X + ", Y : " + this.Y + ", Z : " + this.Z + " )"));
+			p.teleport(l);
+			buildCooldown.put(sender.getName(), System.currentTimeMillis());
 		}
 		
 		return true;

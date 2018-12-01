@@ -57,6 +57,8 @@ commands:
     description: Mine World Random TP
   채집: 
     description: Mine World Random TP
+  건축: 
+    description: Build World Random TP
   아침: 
     description: Userconvenience Plugin
   저녁: 
