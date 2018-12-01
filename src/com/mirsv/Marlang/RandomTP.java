@@ -84,6 +84,15 @@ public class RandomTP extends MirPlugin implements CommandExecutor{
 	public void genCoord(World w, Player p) {
 		this.X = r.nextInt(maxCoord);
 		this.Z = r.nextInt(maxCoord);
+		int R = r.nextInt(4);
+		if(R == 0) {
+			X = -X;
+		} else if(R == 1) {
+			Z = -Z;
+		} else if(R == 2) {
+			X = -X;
+			Z = -Z;
+		}
 		this.Y = w.getHighestBlockYAt(X, Z);
 	
 		this.l = new Location(w, this.X + 0.5D, this.Y, this.Z + 0.5D);
