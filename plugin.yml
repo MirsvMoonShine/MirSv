@@ -1,6 +1,6 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.12.20.2
+version: 1.12.21.2
 softdepend: [Vault]
 author: ___Moonshine___, CatNote, _Marlang
 
