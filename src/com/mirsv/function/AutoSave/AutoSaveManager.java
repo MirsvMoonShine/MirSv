@@ -3,6 +3,7 @@ package com.mirsv.function.AutoSave;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mirsv.util.Messager;
 import com.mirsv.util.thread.AbstractThread;
 
 public class AutoSaveManager extends AbstractThread {
@@ -17,9 +18,11 @@ public class AutoSaveManager extends AbstractThread {
 	
 	@Override
 	public void run() {
+		Messager.sendMessage("자동 저장중...");
 		for(AutoSave as : autoSaves) {
 			as.Save();
 		}
+		Messager.sendMessage("자동 저장 완료.");
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import com.mirsv.function.AutoSave.AutoSaveManager;
 public class ThreadUtil {
 
 	private static final ThreadRegistration[] registrations = {
-			new ThreadUtil.ThreadRegistration(new AutoSaveManager(), 4)
+			new ThreadUtil.ThreadRegistration(new AutoSaveManager(), 12000)
 	};
 	
 	public static void onEnable() {
