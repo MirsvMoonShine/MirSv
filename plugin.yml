@@ -1,8 +1,8 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
-version: 1.12.20.2
+version: 1.14.0
 softdepend: [Vault]
-author: ___Moonshine___, CatNote, _Marlang
+author: Cokes_86, DayBreak, CatNote
 
 commands:
   mirsv:
@@ -13,55 +13,17 @@ commands:
     description: Clear Chat Plugin
   itemtag:
     description: ItemTag Plugin
-  warning:
-    description: Warning Plugin
-  prefix:
-    description: Prefix Plugin
   bc:
     description: BroadCast Plugin
   cl:
     description: CallPlayer Plugin
-  dm:
-    description: ControlDeathMessage Plugin
   wc:
     description: WhisperChat Plugin
   party:
     description: Party Plugin
   pc:
     description: Party Plugin
-  콜로세움:
-    description: PvPTeleport Plugin
-  천공섬:
-    description: PvPTeleport Plugin
-  캠핑장:
-    description: PvPTeleport Plugin
-  guide:
-    description: Guide Plugin
-  추천:
-    description: Recommand
-  부동산:
-    description: EasyResidence Plugin
-  머리:
-    description: HeadChange Plugin
   playtime:
     description: PlayTime Plugin
-  np:
-    description: NoPickup Plugin
-  gamble:
-    description: BingoGamble Plugin
   forbidden:
     description: ForbiddenWord Plugin
-  신원: 
-    description: PlayerID Plugin
-  야생: 
-    description: Mine World Random TP
-  채집: 
-    description: Mine World Random TP
-  건축: 
-    description: Build World Random TP
-  아침: 
-    description: Userconvenience Plugin
-  저녁: 
-    description: Userconvenience Plugin
-  비끄기: 
-    description: Userconvenience Plugin
