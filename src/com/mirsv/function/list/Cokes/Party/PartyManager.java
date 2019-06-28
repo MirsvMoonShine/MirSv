@@ -26,8 +26,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.mirsv.function.AbstractFunction;
-import com.mirsv.function.AutoSave.AutoSave;
-import com.mirsv.function.AutoSave.AutoSaveManager;
+import com.mirsv.function.autosave.AutoSave;
+import com.mirsv.function.autosave.AutoSaveManager;
 import com.mirsv.util.Messager;
 import com.mirsv.util.data.FileUtil;
 

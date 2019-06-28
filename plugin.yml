@@ -1,16 +1,17 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
 version: 1.14.0
-softdepend: [Vault]
 author: Cokes_86, DayBreak, CatNote
 
 commands:
   mirsv:
     description: Mirsv main command
-  gmute:
-    description: Global Mute Plugin
+  globalmute:
+    description: 전체 유저를 뮤트할 때 사용됩니다.
+    aliases: [gmute]
   clearchat:
-    description: Clear Chat Plugin
+    description: 채팅을 청소할 때 사용됩니다.
+    aliases: [chatclear, cc]
   itemtag:
     description: ItemTag Plugin
   bc:
@@ -23,7 +24,5 @@ commands:
     description: Party Plugin
   pc:
     description: Party Plugin
-  playtime:
-    description: PlayTime Plugin
   forbidden:
     description: ForbiddenWord Plugin

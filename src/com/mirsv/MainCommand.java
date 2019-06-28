@@ -14,7 +14,7 @@ import com.mirsv.function.AbstractFunction;
 import com.mirsv.function.Functions;
 import com.mirsv.util.Messager;
 
-public class mainCommand implements CommandExecutor {
+public class MainCommand implements CommandExecutor {
 	
 	private List<String> getFunctionsAsString() {
 		List<String> list = new ArrayList<String>();

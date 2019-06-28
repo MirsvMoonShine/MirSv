@@ -31,10 +31,15 @@ public class Mirsv extends JavaPlugin {
 		
 		getConfig().options().copyDefaults(true);
 		
-		getCommand("Mirsv").setExecutor(new mainCommand());
+		getCommand("Mirsv").setExecutor(new MainCommand());
 		
 		StringJoiner joiner = new StringJoiner(ChatColor.translateAlternateColorCodes('&', ", "));
 		for(AbstractFunction f : InitFunctions()) joiner.add(f.getName());
+
+		Messager.sendMessage(ChatColor.translateAlternateColorCodes('&', "&9┌─┬─┐ &3┬ &b┌──┐ "));
+		Messager.sendMessage(ChatColor.translateAlternateColorCodes('&', "&9│ │ │ &3│ &b│──┘ &9M&3i&br&fServer v" + this.getDescription().getVersion()));
+		Messager.sendMessage(ChatColor.translateAlternateColorCodes('&', "&9│   │ &3│ &b│\\  &7플러그인이 최신 버전입니다."));
+		Messager.sendMessage(ChatColor.translateAlternateColorCodes('&', "&9│   │ &3┴ &b│ \\ "));
 		
 		Messager.sendMessage("활성화된 기능: " + joiner.toString());
 		ThreadUtil.onEnable();

@@ -3,7 +3,7 @@ package com.mirsv.util.thread;
 import org.bukkit.Bukkit;
 
 import com.mirsv.Mirsv;
-import com.mirsv.function.AutoSave.AutoSaveManager;
+import com.mirsv.function.autosave.AutoSaveManager;
 
 public class ThreadUtil {
 

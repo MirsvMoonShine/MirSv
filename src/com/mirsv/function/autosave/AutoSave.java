@@ -1,4 +1,4 @@
-package com.mirsv.function.AutoSave;
+package com.mirsv.function.autosave;
 
 public interface AutoSave {
 

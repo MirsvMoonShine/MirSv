@@ -18,7 +18,7 @@ import com.mirsv.Mirsv;
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.util.Messager;
 
-public class BroadCast extends AbstractFunction implements CommandExecutor, Listener {
+public class BroadcastChat extends AbstractFunction implements CommandExecutor, Listener {
 
 	@Override
 	protected void onEnable() {
@@ -31,7 +31,7 @@ public class BroadCast extends AbstractFunction implements CommandExecutor, List
 	
 	ArrayList<UUID> BCadmins = new ArrayList<UUID>();
 
-	public BroadCast() {
+	public BroadcastChat() {
 		super("공지채팅", "1.0", "보다 편리하게 플레이어들에게 공지를 전달할 수 있습니다.");
 	}
 	

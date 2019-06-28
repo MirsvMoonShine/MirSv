@@ -15,10 +15,10 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.util.Messager;
 
-public class NoBedInAnotherWorld extends AbstractFunction implements Listener {
+public class BedProhibition extends AbstractFunction implements Listener {
 
-	public NoBedInAnotherWorld() {
-		super("침대제한", "1.0", "네더월드와 엔더월드에서 침대를 사용할 수 없도록 막습니다.");
+	public BedProhibition() {
+		super("침대금지", "1.0", "네더월드와 엔더월드에서 침대를 사용할 수 없도록 막습니다.");
 	}
 
 	@Override

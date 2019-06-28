@@ -47,6 +47,7 @@ public class WhisperChat extends AbstractFunction implements Listener, CommandEx
 			Target.remove(event.getPlayer().getUniqueId());
 		}
 	}
+	
 	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player) {
@@ -86,7 +87,7 @@ public class WhisperChat extends AbstractFunction implements Listener, CommandEx
 				event.getRecipients().add(Bukkit.getPlayer(event.getPlayer().getUniqueId()));
 				event.getRecipients().add(Bukkit.getPlayer(Target.get(event.getPlayer().getUniqueId())));
 			}
-			else event.getPlayer().sendMessage(Messager.getPrefix() + ChatColor.RED + "귓속말을 보낸 상대가 오프라인입니다. \'/g\'를 입력해주세요.");
+			else event.getPlayer().sendMessage(Messager.getPrefix() + ChatColor.RED + "귓속말을 보낸 상대가 오프라인입니다. \'/g\'를 입력해 귓속말 채팅을 종료해주세요.");
 		}
 	}
 }

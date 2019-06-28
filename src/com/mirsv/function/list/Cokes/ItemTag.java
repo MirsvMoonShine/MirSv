@@ -22,7 +22,7 @@ public class ItemTag extends AbstractFunction implements CommandExecutor{
 
 	@Override
 	protected void onEnable() {
-		registerCommand("ItemTag", this);
+		registerCommand("itemtag", this);
 	}
 
 	@Override

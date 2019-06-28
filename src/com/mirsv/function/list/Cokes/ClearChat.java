@@ -26,10 +26,12 @@ public class ClearChat extends AbstractFunction implements CommandExecutor{
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
 		if (sender instanceof Player) {
-
+			
 			if (sender.hasPermission("mirsv.admin") || sender.isOp()) {
 				for(int i = 0; i < 100; i++) for(Player p:Bukkit.getServer().getOnlinePlayers()) p.sendMessage("");
 				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Messager.getPrefix() + " &e" + sender.getName() + "&f님이 채팅을 청소하셨습니다!"));
+			} else {
+				for(int i = 0; i < 100; i++) sender.sendMessage("");
 			}
 		}
 		return true;

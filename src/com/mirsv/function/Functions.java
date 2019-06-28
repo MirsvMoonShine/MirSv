@@ -1,29 +1,27 @@
 package com.mirsv.function;
 
 import com.mirsv.function.list.CatNote.CallPlayer;
-import com.mirsv.function.list.CatNote.PlayTime;
 import com.mirsv.function.list.CatNote.WhisperChat;
-import com.mirsv.function.list.Cokes.BroadCast;
+import com.mirsv.function.list.Cokes.BroadcastChat;
 import com.mirsv.function.list.Cokes.ClearChat;
-import com.mirsv.function.list.Cokes.ForbiddenWord;
+import com.mirsv.function.list.Cokes.WordProhibition;
 import com.mirsv.function.list.Cokes.GlobalMute;
-import com.mirsv.function.list.Cokes.Hungry;
+import com.mirsv.function.list.Cokes.HungerMaintenance;
 import com.mirsv.function.list.Cokes.ItemTag;
-import com.mirsv.function.list.Cokes.NoBedInAnotherWorld;
+import com.mirsv.function.list.Cokes.BedProhibition;
 import com.mirsv.function.list.Cokes.Party.PartyManager;
 
 public enum Functions {
 	GlobalMute(new GlobalMute()),
 	ClearChat(new ClearChat()),
 	ItemTag(new ItemTag()),
-	BroadCast(new BroadCast()),
-	Hungry(new Hungry()),
+	BroadCast(new BroadcastChat()),
+	Hungry(new HungerMaintenance()),
 	CallPlayer(new CallPlayer()),
 	WhisperChat(new WhisperChat()),
 	Party(new PartyManager()),
-	PlayTime(new PlayTime()),
-	NoBedInAnotherWorld(new NoBedInAnotherWorld()),
-	ForbiddenWord(new ForbiddenWord());
+	NoBedInAnotherWorld(new BedProhibition()),
+	ForbiddenWord(new WordProhibition());
 
 	private final AbstractFunction function;
 

@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.mirsv.function.AbstractFunction;
 
-public class Hungry extends AbstractFunction implements Listener {
+public class HungerMaintenance extends AbstractFunction implements Listener {
 
 	@Override
 	protected void onEnable() {
@@ -24,8 +24,8 @@ public class Hungry extends AbstractFunction implements Listener {
 	
 	private HashMap<Player, Integer> hungry = new HashMap<Player, Integer>();
 
-	public Hungry() {
-		super("배고픔", "1.0", "죽은 후 리스폰해도 배고픔이 죽기 전과 동일하게 변경합니다.");
+	public HungerMaintenance() {
+		super("배고픔 유지", "1.0", "죽은 후 리스폰해도 배고픔이 죽기 전과 동일하게 변경합니다.");
 	}
 	
 	@EventHandler

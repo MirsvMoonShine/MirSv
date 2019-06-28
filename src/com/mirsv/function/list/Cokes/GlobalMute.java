@@ -16,7 +16,7 @@ public class GlobalMute extends AbstractFunction implements Listener, CommandExe
 
 	@Override
 	protected void onEnable() {
-		registerCommand("gmute", this);
+		registerCommand("globalmute", this);
 		registerListener(this);
 	}
 
