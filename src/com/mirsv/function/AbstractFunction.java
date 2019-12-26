@@ -11,7 +11,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import com.mirsv.Mirsv;
-import com.mirsv.util.Messager;
 
 abstract public class AbstractFunction {
 	
@@ -40,14 +39,14 @@ abstract public class AbstractFunction {
 	private boolean Enabled = false;
 
 	/**
-	 * ±â´ÉÀÇ È°¼º ¿©ºÎ¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+	 * ê¸°ëŠ¥ì˜ í™œì„± ì—¬ë¶€ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
 	 */
 	public boolean isEnabled() {
 		return Enabled;
 	}
 
 	/**
-	 * ±â´ÉÀ» È°¼ºÈ­ÇÕ´Ï´Ù.
+	 * ê¸°ëŠ¥ì„ í™œì„±í™”í•©ë‹ˆë‹¤.
 	 */
 	public void Enable() {
 		if(!isEnabled()) {
@@ -59,7 +58,7 @@ abstract public class AbstractFunction {
 	abstract protected void onEnable();
 
 	/**
-	 * ±â´ÉÀ» ºñÈ°¼ºÈ­ÇÕ´Ï´Ù.
+	 * ê¸°ëŠ¥ì„ ë¹„í™œì„±í™”í•©ë‹ˆë‹¤.
 	 */
 	public void Disable() {
 		if(isEnabled()) {

@@ -21,7 +21,7 @@ public class ClearChat extends AbstractFunction implements CommandExecutor{
 	protected void onDisable() {}
 	
 	public ClearChat() {
-		super("Ã¤ÆÃÃ»¼Ò", "1.0", "Ã¤ÆÃÀ» ±ú²ıÇÏ°Ô Ã»¼ÒÇÕ´Ï´Ù.");
+		super("ì±„íŒ…ì²­ì†Œ", "1.0", "ì±„íŒ…ì„ ê¹¨ë—í•˜ê²Œ ì²­ì†Œí•©ë‹ˆë‹¤.");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
@@ -29,7 +29,7 @@ public class ClearChat extends AbstractFunction implements CommandExecutor{
 			
 			if (sender.hasPermission("mirsv.admin") || sender.isOp()) {
 				for(int i = 0; i < 100; i++) for(Player p:Bukkit.getServer().getOnlinePlayers()) p.sendMessage("");
-				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Messager.getPrefix() + " &e" + sender.getName() + "&f´ÔÀÌ Ã¤ÆÃÀ» Ã»¼ÒÇÏ¼Ì½À´Ï´Ù!"));
+				Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Messager.getPrefix() + " &e" + sender.getName() + "&fë‹˜ì´ ì±„íŒ…ì„ ì²­ì†Œí•˜ì…¨ìŠµë‹ˆë‹¤!"));
 			} else {
 				for(int i = 0; i < 100; i++) sender.sendMessage("");
 			}

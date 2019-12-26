@@ -18,11 +18,11 @@ public class AutoSaveManager extends AbstractThread {
 	
 	@Override
 	public void run() {
-		Messager.sendMessage("ÀÚµ¿ ÀúÀåÁß...");
+		Messager.sendMessage("ìë™ ì €ì¥ì¤‘...");
 		for(AutoSave as : autoSaves) {
 			as.Save();
 		}
-		Messager.sendMessage("ÀÚµ¿ ÀúÀå ¿Ï·á.");
+		Messager.sendMessage("ìë™ ì €ì¥ ì™„ë£Œ.");
 	}
 
 	@Override

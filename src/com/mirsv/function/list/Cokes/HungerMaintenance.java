@@ -25,7 +25,7 @@ public class HungerMaintenance extends AbstractFunction implements Listener {
 	private HashMap<Player, Integer> hungry = new HashMap<Player, Integer>();
 
 	public HungerMaintenance() {
-		super("¹è°íÇÄ À¯Áö", "1.0", "Á×Àº ÈÄ ¸®½ºÆùÇØµµ ¹è°íÇÄÀÌ Á×±â Àü°ú µ¿ÀÏÇÏ°Ô º¯°æÇÕ´Ï´Ù.");
+		super("ë°°ê³ í”” ìœ ì§€", "1.0", "ì£½ì€ í›„ ë¦¬ìŠ¤í°í•´ë„ ë°°ê³ í””ì´ ì£½ê¸° ì „ê³¼ ë™ì¼í•˜ê²Œ ë³€ê²½í•©ë‹ˆë‹¤.");
 	}
 	
 	@EventHandler

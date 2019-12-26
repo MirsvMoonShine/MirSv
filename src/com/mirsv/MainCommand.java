@@ -45,13 +45,13 @@ public class MainCommand implements CommandExecutor {
 							plugin += ChatColor.WHITE + ", " + plu[i];
 						}
 					}
-					p.sendMessage(Messager.formatTitle(ChatColor.AQUA, ChatColor.WHITE, "¹Ì¸£¼­¹ö Á¾ÇÕ ÇÃ·¯±×ÀÎ"));
-					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "¹öÀü: " + ChatColor.DARK_AQUA + Mirsv.getPlugin().getDescription().getVersion());
-					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "°¡µ¿ÁßÀÎ ÇÃ·¯±×ÀÎ: " + plugin);
-					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "---¸í·É¾î---");
-					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "/mirsv enable <function> - ±â´ÉÀ» È°¼ºÈ­ÇÕ´Ï´Ù.");
-					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "/mirsv disable <function> - ±â´ÉÀ» ºñÈ°¼ºÈ­ÇÕ´Ï´Ù.");
-					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "/mirsv info <function> - ±â´É ¼³¸íÀ» È®ÀÎÇÕ´Ï´Ù.");
+					p.sendMessage(Messager.formatTitle(ChatColor.AQUA, ChatColor.WHITE, "ë¯¸ë¥´ì„œë²„ ì¢…í•© í”ŒëŸ¬ê·¸ì¸"));
+					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "ë²„ì „: " + ChatColor.DARK_AQUA + Mirsv.getPlugin().getDescription().getVersion());
+					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "ê°€ë™ì¤‘ì¸ í”ŒëŸ¬ê·¸ì¸: " + plugin);
+					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "---ëª…ë ¹ì–´---");
+					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "/mirsv enable <function> - ê¸°ëŠ¥ì„ í™œì„±í™”í•©ë‹ˆë‹¤.");
+					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "/mirsv disable <function> - ê¸°ëŠ¥ì„ ë¹„í™œì„±í™”í•©ë‹ˆë‹¤.");
+					p.sendMessage(Messager.getPrefix()+ChatColor.WHITE + "/mirsv info <function> - ê¸°ëŠ¥ ì„¤ëª…ì„ í™•ì¸í•©ë‹ˆë‹¤.");
 				} else if (args.length > 0) {
 					if (args[0].equalsIgnoreCase("disable")) {
 						if ((args.length == 2)) {
@@ -62,12 +62,12 @@ public class MainCommand implements CommandExecutor {
 									Mirsv.getPlugin().getConfig().set("enable." + f.toString(), false);
 									Mirsv.getPlugin().saveConfig();
 									function.Disable();
-									p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + function.getName() + " ±â´ÉÀ» ºñÈ°¼ºÈ­Çß½À´Ï´Ù.");
+									p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + function.getName() + " ê¸°ëŠ¥ì„ ë¹„í™œì„±í™”í–ˆìŠµë‹ˆë‹¤.");
 								} else {
-									p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "ÀÌ¹Ì ºñÈ°¼ºÈ­µÅÀÖ½À´Ï´Ù.");
+									p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "ì´ë¯¸ ë¹„í™œì„±í™”ë¼ìˆìŠµë‹ˆë‹¤.");
 								}
 							} else {
-								p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "Á¸ÀçÇÏÁö ¾Ê´Â ±â´ÉÀÔ´Ï´Ù.");
+								p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê¸°ëŠ¥ì…ë‹ˆë‹¤.");
 							}
 						}
 					} else if (args[0].equalsIgnoreCase("info")) {
@@ -75,13 +75,13 @@ public class MainCommand implements CommandExecutor {
 							Functions f = Functions.getFunction(args[1]);
 							if(f != null) {
 								AbstractFunction function = f.getFunction();
-								p.sendMessage(Messager.formatTitle(ChatColor.AQUA, ChatColor.WHITE, function.getName() + " ±â´É"));
-								p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f¹öÀü: &3" + function.getVersion()));
+								p.sendMessage(Messager.formatTitle(ChatColor.AQUA, ChatColor.WHITE, function.getName() + " ê¸°ëŠ¥"));
+								p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&fë²„ì „: &3" + function.getVersion()));
 								StringJoiner joiner = new StringJoiner("\n");
 								for(String s : function.getExplain()) joiner.add(s);
 								p.sendMessage(joiner.toString());
 							} else {
-								p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "Á¸ÀçÇÏÁö ¾Ê´Â ±â´ÉÀÔ´Ï´Ù.");
+								p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê¸°ëŠ¥ì…ë‹ˆë‹¤.");
 							}
 						}
 					}

@@ -34,10 +34,9 @@ import com.mirsv.util.data.FileUtil;
 public class PartyManager extends AbstractFunction implements CommandExecutor, Listener, AutoSave {
 
 	public PartyManager() {
-		super("ÆÄÆ¼", "1.0", "¹Ì¸£¼­¹ö ÆÄÆ¼ ½Ã½ºÅÛÀÔ´Ï´Ù.");
+		super("íŒŒí‹°", "1.0", "ë¯¸ë¥´ì„œë²„ íŒŒí‹° ì‹œìŠ¤í…œì…ë‹ˆë‹¤.");
 	}
 
-	private File folder = FileUtil.getFolder("Party");
 	private File data = FileUtil.getFile("Party/Party.dat");
 	private static List<Party> Parties = new ArrayList<Party>();
 
@@ -62,7 +61,7 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 			}
 			br.close();
 		} catch(IOException ex) {
-			Messager.sendErrorMessage("ÆÄÆ¼ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´ø µµÁß ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+			Messager.sendErrorMessage("íŒŒí‹° ë°ì´í„°ë¥¼ ì €ì¥í•˜ë˜ ë„ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
 			ex.printStackTrace();
 		}
 		
@@ -91,7 +90,7 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
             bw.flush();
             bw.close();
         } catch(IOException e) {
-			Messager.sendErrorMessage("ÆÄÆ¼ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´ø µµÁß ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+			Messager.sendErrorMessage("íŒŒí‹° ë°ì´í„°ë¥¼ ì €ì¥í•˜ë˜ ë„ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
             e.printStackTrace();
 		}
 	}
@@ -105,10 +104,10 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 			e.getRecipients().clear();
 			if(getParty(p.getUniqueId()) != null) {
 				e.setMessage(e.getMessage().replaceAll("%", "%%"));
-				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&f[&dÆÄÆ¼&f][&5" + getParty(p.getUniqueId()).getPartyName() + "&f] " + p.getName() + ": &d" + e.getMessage()));
+				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&f[&díŒŒí‹°&f][&5" + getParty(p.getUniqueId()).getPartyName() + "&f] " + p.getName() + ": &d" + e.getMessage()));
 				for(UUID u: getParty(p.getUniqueId()).getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline()) e.getRecipients().add(Bukkit.getPlayer(u));
 			} else {
-				Messager.sendMessage(p, ChatColor.translateAlternateColorCodes('&', Messager.getPrefix() + "&e´ç½ÅÀº ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù. /g ¸í·É¾î¸¦ ÅëÇØ ÀüÃ¼ Ã¤ÆÃÀ¸·Î º¯°æÇØÁÖ¼¼¿ä!"));
+				Messager.sendMessage(p, ChatColor.translateAlternateColorCodes('&', Messager.getPrefix() + "&eë‹¹ì‹ ì€ íŒŒí‹°ì— ì†Œì†ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤. /g ëª…ë ¹ì–´ë¥¼ í†µí•´ ì „ì²´ ì±„íŒ…ìœ¼ë¡œ ë³€ê²½í•´ì£¼ì„¸ìš”!"));
 			}
 		}
 	}
@@ -120,7 +119,7 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 			String s = e.getMessage().split(" ")[0];
 			if(s.equalsIgnoreCase("/tc") || s.equalsIgnoreCase("/nc") || s.equalsIgnoreCase("/lc") || s.equalsIgnoreCase("/wc") || s.equalsIgnoreCase("/g") || s.equalsIgnoreCase("/admin") || s.equalsIgnoreCase("/mod") || s.equalsIgnoreCase("/a") || s.equalsIgnoreCase("/l") || s.equalsIgnoreCase("/m")) {
 				chat.remove(p.getUniqueId());
-				Messager.sendMessage(p, ChatColor.translateAlternateColorCodes('&', Messager.getPrefix() + "ÆÄÆ¼ Ã¤ÆÃÀ» Á¾·áÇÕ´Ï´Ù."));
+				Messager.sendMessage(p, ChatColor.translateAlternateColorCodes('&', Messager.getPrefix() + "íŒŒí‹° ì±„íŒ…ì„ ì¢…ë£Œí•©ë‹ˆë‹¤."));
 			}
 		}
 	}
@@ -135,7 +134,7 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 			if(p1 == p2 && p1 != null){
 				if(p1.isPVP()) return;
 				e.setCancelled(true);
-				Messager.sendMessage(player1, ChatColor.translateAlternateColorCodes('&', Messager.getPrefix() + "&eÆÄÆ¼¿ø°£ PVP°¡ ºñÈ°¼ºÈ­µÇ¾îÀÖ½À´Ï´Ù."));
+				Messager.sendMessage(player1, ChatColor.translateAlternateColorCodes('&', Messager.getPrefix() + "&eíŒŒí‹°ì›ê°„ PVPê°€ ë¹„í™œì„±í™”ë˜ì–´ìˆìŠµë‹ˆë‹¤."));
 			}
 		}
 	}
@@ -154,19 +153,19 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 						chat.add(p.getUniqueId());
 						p.chat(Message);
 						chat.remove(p.getUniqueId());
-					} else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.");
+					} else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ íŒŒí‹°ì— ì†Œì†ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 				} else {
 					if(getParty(p.getUniqueId()) != null) {
 						if(!chat.contains(p.getUniqueId())) {
 							chat.add(p.getUniqueId());
-							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼ Ã¤ÆÃÀ» ½ÃÀÛÇÕ´Ï´Ù.");
+							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹° ì±„íŒ…ì„ ì‹œì‘í•©ë‹ˆë‹¤.");
 						}
 						else {
 							chat.remove(p.getUniqueId());
-							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼ Ã¤ÆÃÀ» Á¾·áÇÕ´Ï´Ù.");
+							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹° ì±„íŒ…ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
 						}
 					}
-					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.");
+					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ íŒŒí‹°ì— ì†Œì†ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 				}
 				return false;
 			}
@@ -174,26 +173,26 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 				if(args[0].equalsIgnoreCase("create")) {
 					if(args.length == 2) {
 						if(getParty(p.getUniqueId()) != null)
-							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÀÌ¹Ì ÆÄÆ¼¿¡ °¡ÀÔµÇ¾î ÀÖ½À´Ï´Ù.");
+							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì´ë¯¸ íŒŒí‹°ì— ê°€ì…ë˜ì–´ ìˆìŠµë‹ˆë‹¤.");
 						else {
 							Party party = new Party(p.getUniqueId(), args[1], true, false);
 							Parties.add(party);
-							Bukkit.broadcastMessage(Messager.getPrefix() + ChatColor.YELLOW + p.getName() + "´ÔÀÌ ÆÄÆ¼ \'" + args[1] + "\'À»(¸¦) ¸¸µé¾ú½À´Ï´Ù.");
+							Bukkit.broadcastMessage(Messager.getPrefix() + ChatColor.YELLOW + p.getName() + "ë‹˜ì´ íŒŒí‹° \'" + args[1] + "\'ì„(ë¥¼) ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤.");
 						}
 					}
-					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "»ç¿ë¹ı: /party create <´Ğ³×ÀÓ>");
+					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì‚¬ìš©ë²•: /party create <ë‹‰ë„¤ì„>");
 				}
 				else if(args[0].equalsIgnoreCase("disband")) {
-					if(getParty(p.getUniqueId()) == null) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.");
+					if(getParty(p.getUniqueId()) == null) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.");
 					else {
 						if(getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())) {
 							for(UUID pl: getParty(p.getUniqueId()).getPlayers()) {
 								chat.remove(pl);
-								if(Bukkit.getOfflinePlayer(pl).isOnline()) Bukkit.getPlayer(pl).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼°¡ ÇØÃ¼µÇ¾ú½À´Ï´Ù.");
+								if(Bukkit.getOfflinePlayer(pl).isOnline()) Bukkit.getPlayer(pl).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹°ê°€ í•´ì²´ë˜ì—ˆìŠµë‹ˆë‹¤.");
 							}
 							Parties.remove(getParty(p.getUniqueId()));
 						}
-						else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.");
+						else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.");
 					}
 				}
 				else if(args[0].equalsIgnoreCase("add")) {
@@ -207,122 +206,122 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 										break;
 									}
 								}
-								if(!isExist) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÇöÀç Á¢¼ÓÁßÀÎ ÇÃ·¹ÀÌ¾î¸¸ Ãß°¡ÇÒ ¼ö ÀÖ½À´Ï´Ù.");
+								if(!isExist) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "í˜„ì¬ ì ‘ì†ì¤‘ì¸ í”Œë ˆì´ì–´ë§Œ ì¶”ê°€í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 								else {
 									Player target = Bukkit.getPlayer(args[1]);
 									for(Party p2: Parties) {
 										if(p2.isPlayerJoin(target.getUniqueId())) {
-											if(party.equals(p2)) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÀÌ¹Ì ´ç½ÅÀÇ ÆÄÆ¼¿øÀÔ´Ï´Ù.");
-											else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´Ù¸¥ ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾î ÀÖ´Â ÇÃ·¹ÀÌ¾îÀÔ´Ï´Ù.");
+											if(party.equals(p2)) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì´ë¯¸ ë‹¹ì‹ ì˜ íŒŒí‹°ì›ì…ë‹ˆë‹¤.");
+											else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¤ë¥¸ íŒŒí‹°ì— ì†Œì†ë˜ì–´ ìˆëŠ” í”Œë ˆì´ì–´ì…ë‹ˆë‹¤.");
 											return false;
 										}
 									}
-									for(UUID u: party.getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline()) Bukkit.getPlayer(u).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + target.getName() + "´ÔÀ» ÆÄÆ¼¿¡ Ãß°¡Çß½À´Ï´Ù.");
+									for(UUID u: party.getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline()) Bukkit.getPlayer(u).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + target.getName() + "ë‹˜ì„ íŒŒí‹°ì— ì¶”ê°€í–ˆìŠµë‹ˆë‹¤.");
 									party.getPlayers().add(target.getUniqueId());
-									target.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + p.getName() + "´ÔÀÌ ´ç½ÅÀ» " + party.getPartyName() + " ÆÄÆ¼¿¡ Ãß°¡Çß½À´Ï´Ù.");
+									target.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + p.getName() + "ë‹˜ì´ ë‹¹ì‹ ì„ " + party.getPartyName() + " íŒŒí‹°ì— ì¶”ê°€í–ˆìŠµë‹ˆë‹¤.");
 									return false;
 								}
 							}
 						}
-						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.");
+						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.");
 					}
-					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "»ç¿ë¹ı: /party add <ÆÄÆ¼ÀÌ¸§>");
+					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì‚¬ìš©ë²•: /party add <íŒŒí‹°ì´ë¦„>");
 				}
 				else if(args[0].equalsIgnoreCase("join")) {
 					if(args.length == 2) {
 						if(getParty(p.getUniqueId()) != null) {
-							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ÀÌ¹Ì ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾î ÀÖ½À´Ï´Ù.");
+							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ ì´ë¯¸ íŒŒí‹°ì— ì†Œì†ë˜ì–´ ìˆìŠµë‹ˆë‹¤.");
 							return false;
 						}
 						for(Party party : Parties) {
 							if(party.getPartyName().equalsIgnoreCase(args[1])) {
 								if(!party.isOPEN()) {
-									p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÇØ´ç ÆÄÆ¼´Â °³¹æµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.");
+									p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "í•´ë‹¹ íŒŒí‹°ëŠ” ê°œë°©ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 									return false;
 								}
 								party.getPlayers().add(p.getUniqueId());
-								for(UUID uuid: party.getPlayers()) if(Bukkit.getOfflinePlayer(uuid).isOnline()) Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + p.getName() + "´ÔÀÌ ÆÄÆ¼¿¡ °¡ÀÔÇß½À´Ï´Ù.");
+								for(UUID uuid: party.getPlayers()) if(Bukkit.getOfflinePlayer(uuid).isOnline()) Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + p.getName() + "ë‹˜ì´ íŒŒí‹°ì— ê°€ì…í–ˆìŠµë‹ˆë‹¤.");
 								return false;
 							}
 						}
-						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÇØ´ç ÆÄÆ¼´Â Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "í•´ë‹¹ íŒŒí‹°ëŠ” ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 						return false;
 					}
-					p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "»ç¿ë¹ı: /party join <ÆÄÆ¼ÀÌ¸§>");
+					p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì‚¬ìš©ë²•: /party join <íŒŒí‹°ì´ë¦„>");
 				}
 				else if(args[0].equalsIgnoreCase("kick")) {
 					if(args.length == 2) {
 						if(!Bukkit.getOfflinePlayer(args[1]).hasPlayedBefore()) {
-							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼¿¡ Á¸ÀçÇÏÁö ¾Ê´Â ÇÃ·¹ÀÌ¾îÀÔ´Ï´Ù.");
+							p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹°ì— ì¡´ì¬í•˜ì§€ ì•ŠëŠ” í”Œë ˆì´ì–´ì…ë‹ˆë‹¤.");
 							return false;
 						}
 						if(getParty(p.getUniqueId()) != null) {
 							if(getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())) {
 								if(p.getName().equalsIgnoreCase(args[1])) {
-									p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÀÚ±â ÀÚ½ÅÀº Ãß¹æÇÒ ¼ö ¾ø½À´Ï´Ù.");
+									p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ìê¸° ìì‹ ì€ ì¶”ë°©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 									return false;
 								}
 								Party party = getParty(p.getUniqueId());
 								for(UUID u: party.getPlayers()) {
 									if(u.equals(Bukkit.getOfflinePlayer(args[1]).getUniqueId())) {
 										party.getPlayers().remove(u);
-										if(Bukkit.getOfflinePlayer(u).isOnline()) Bukkit.getPlayer(u).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼·ÎºÎÅÍ Ãß¹æ´çÇÏ¼Ì½À´Ï´Ù.");
-										for(UUID um: party.getPlayers()) if(Bukkit.getOfflinePlayer(um).isOnline()) Bukkit.getPlayer(um).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + Bukkit.getOfflinePlayer(args[1]).getName() + "´ÔÀ» ÆÄÆ¼¿¡¼­ Ãß¹æ½ÃÄ×½À´Ï´Ù.");
+										if(Bukkit.getOfflinePlayer(u).isOnline()) Bukkit.getPlayer(u).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹°ë¡œë¶€í„° ì¶”ë°©ë‹¹í•˜ì…¨ìŠµë‹ˆë‹¤.");
+										for(UUID um: party.getPlayers()) if(Bukkit.getOfflinePlayer(um).isOnline()) Bukkit.getPlayer(um).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + Bukkit.getOfflinePlayer(args[1]).getName() + "ë‹˜ì„ íŒŒí‹°ì—ì„œ ì¶”ë°©ì‹œì¼°ìŠµë‹ˆë‹¤.");
 										return false;
 									}
 								}
-								p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼¿¡ Á¸ÀçÇÏÁö ¾Ê´Â ÇÃ·¹ÀÌ¾îÀÔ´Ï´Ù.");
+								p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹°ì— ì¡´ì¬í•˜ì§€ ì•ŠëŠ” í”Œë ˆì´ì–´ì…ë‹ˆë‹¤.");
 							}
-							else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.");
+							else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.");
 						}
-						else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.");
+						else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.");
 					}
-					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "»ç¿ë¹ı: /party kick <´Ğ³×ÀÓ>");
+					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì‚¬ìš©ë²•: /party kick <ë‹‰ë„¤ì„>");
 				}
 				else if(args[0].equalsIgnoreCase("leave")) {
 					if(getParty(p.getUniqueId()) != null) {
 						Party party = getParty(p.getUniqueId());
-						if(getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼ÀåÀº ÆÄÆ¼¸¦ ³ª°¥ ¼ö ¾ø½À´Ï´Ù.");
+						if(getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹°ì¥ì€ íŒŒí‹°ë¥¼ ë‚˜ê°ˆ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 						else {
 							for(UUID u: party.getPlayers()) {
 								if(u.equals(p.getUniqueId())) {
 									party.getPlayers().remove(u);
-									for(UUID um: party.getPlayers()) if(Bukkit.getOfflinePlayer(um).isOnline()) Bukkit.getPlayer(um).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + p.getName() + "´ÔÀÌ ÆÄÆ¼¸¦ ¶°³µ½À´Ï´Ù.");
-									p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼¸¦ ¶°³µ½À´Ï´Ù.");
+									for(UUID um: party.getPlayers()) if(Bukkit.getOfflinePlayer(um).isOnline()) Bukkit.getPlayer(um).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + p.getName() + "ë‹˜ì´ íŒŒí‹°ë¥¼ ë– ë‚¬ìŠµë‹ˆë‹¤.");
+									p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹°ë¥¼ ë– ë‚¬ìŠµë‹ˆë‹¤.");
 									break;
 								}
 							}
 						}
 					}
 					else {
-						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.");
+						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ íŒŒí‹°ì— ì†Œì†ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 					}
 				}
 				else if(args[0].equalsIgnoreCase("toggle")) {
 					if(getParty(p.getUniqueId()) == null) {
-						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.");
+						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ íŒŒí‹°ì— ì†Œì†ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 						return false;
 					}
 					if(!getParty(p.getUniqueId()).getOwner().equals(p.getUniqueId())) {
-						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.");
+						p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.");
 	                    return false;
 	                }
 					if(args.length == 1) {
-						p.sendMessage(ChatColor.BLUE + "/party toggle pvp: " + ChatColor.WHITE + "ÆÄÆ¼¿ø °£ÀÇ pvp Çã¿ë ¿©ºÎÀ» º¯°æÇÕ´Ï´Ù.");
-	                    p.sendMessage(ChatColor.BLUE + "/party toggle open: " + ChatColor.WHITE + "ÃÊ´ë ¾øÀÌ ÆÄÆ¼¿¡ °¡ÀÔ °¡´É ¿©ºÎ¸¦ º¯°æÇÕ´Ï´Ù.");
+						p.sendMessage(ChatColor.BLUE + "/party toggle pvp: " + ChatColor.WHITE + "íŒŒí‹°ì› ê°„ì˜ pvp í—ˆìš© ì—¬ë¶€ì„ ë³€ê²½í•©ë‹ˆë‹¤.");
+	                    p.sendMessage(ChatColor.BLUE + "/party toggle open: " + ChatColor.WHITE + "ì´ˆëŒ€ ì—†ì´ íŒŒí‹°ì— ê°€ì… ê°€ëŠ¥ ì—¬ë¶€ë¥¼ ë³€ê²½í•©ë‹ˆë‹¤.");
 	                }
 					else if(args[1].equalsIgnoreCase("pvp")) {
 						if(getParty(p.getUniqueId()).TogglePvP()) {
 							for(UUID uuid : getParty(p.getUniqueId()).getPlayers()) {
 								if(Bukkit.getOfflinePlayer(uuid).isOnline()) {
-									Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÀÌÁ¦ ÆÄÆ¼¿ø °£ PvP°¡ Çã¿ëµË´Ï´Ù.");
+									Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì´ì œ íŒŒí‹°ì› ê°„ PvPê°€ í—ˆìš©ë©ë‹ˆë‹¤.");
 								}
 							}
 	                    }
 						else {
 							for(UUID uuid : getParty(p.getUniqueId()).getPlayers()) {
 								if(Bukkit.getOfflinePlayer(uuid).isOnline()) {
-									Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÀÌÁ¦ ÆÄÆ¼¿ø °£ PvP°¡ ±İÁöµË´Ï´Ù.");
+									Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì´ì œ íŒŒí‹°ì› ê°„ PvPê°€ ê¸ˆì§€ë©ë‹ˆë‹¤.");
 								}
 							}
 						}
@@ -331,21 +330,21 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 						if(getParty(p.getUniqueId()).ToggleOpen()) {
 							for(UUID uuid : getParty(p.getUniqueId()).getPlayers()) {
 								if(Bukkit.getOfflinePlayer(uuid).isOnline()) {
-									Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÀÌÁ¦ ÆÄÆ¼ÀåÀÇ ÃÊ´ë ¾øÀÌ ÇÃ·¹ÀÌ¾î°¡ °¡ÀÔÇÒ ¼ö ÀÖ½À´Ï´Ù.");
+									Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì´ì œ íŒŒí‹°ì¥ì˜ ì´ˆëŒ€ ì—†ì´ í”Œë ˆì´ì–´ê°€ ê°€ì…í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 								}
 							}
 	                    }
 						else {
 							for(UUID uuid : getParty(p.getUniqueId()).getPlayers()) {
 								if(Bukkit.getOfflinePlayer(uuid).isOnline()) {
-									Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÀÌÁ¦ ÆÄÆ¼ÀåÀÇ ÃÊ´ë ¾øÀÌ ÇÃ·¹ÀÌ¾î°¡ °¡ÀÔÇÒ ¼ö ¾ø½À´Ï´Ù.");
+									Bukkit.getPlayer(uuid).sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì´ì œ íŒŒí‹°ì¥ì˜ ì´ˆëŒ€ ì—†ì´ í”Œë ˆì´ì–´ê°€ ê°€ì…í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 								}
 							}
 	                    }
 					}
 					else {
-						p.sendMessage(ChatColor.BLUE + "/party toggle pvp: " + ChatColor.WHITE + "ÆÄÆ¼¿ø °£ÀÇ pvp Çã¿ë ¿©ºÎÀ» º¯°æÇÕ´Ï´Ù.");
-	                    p.sendMessage(ChatColor.BLUE + "/party toggle open: " + ChatColor.WHITE + "ÃÊ´ë ¾øÀÌ ÆÄÆ¼¿¡ °¡ÀÔ °¡´É ¿©ºÎ¸¦ º¯°æÇÕ´Ï´Ù.");
+						p.sendMessage(ChatColor.BLUE + "/party toggle pvp: " + ChatColor.WHITE + "íŒŒí‹°ì› ê°„ì˜ pvp í—ˆìš© ì—¬ë¶€ì„ ë³€ê²½í•©ë‹ˆë‹¤.");
+	                    p.sendMessage(ChatColor.BLUE + "/party toggle open: " + ChatColor.WHITE + "ì´ˆëŒ€ ì—†ì´ íŒŒí‹°ì— ê°€ì… ê°€ëŠ¥ ì—¬ë¶€ë¥¼ ë³€ê²½í•©ë‹ˆë‹¤.");
 	                }
 				}
 				else if(args[0].equalsIgnoreCase("chat")) {
@@ -357,61 +356,61 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 							for(UUID u: getParty(p.getUniqueId()).getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline()) Bukkit.getPlayer(u).sendMessage("[" + ChatColor.LIGHT_PURPLE + "PC" + ChatColor.WHITE + "][" + ChatColor.DARK_PURPLE + getParty(p.getUniqueId()).getPartyName() + ChatColor.WHITE + "] " + Messager.getPrefix() + p.getName() + ": " + ChatColor.LIGHT_PURPLE + Message);
 							Bukkit.getConsoleSender().sendMessage("[" + ChatColor.LIGHT_PURPLE + "PC" + ChatColor.WHITE + "][" + ChatColor.DARK_PURPLE + getParty(p.getUniqueId()).getPartyName() + ChatColor.WHITE + "] " + Messager.getPrefix() + p.getName() + ": " + ChatColor.LIGHT_PURPLE + Message);
 						}
-						else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.");
+						else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ íŒŒí‹°ì— ì†Œì†ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 					}
 					else {
 						if(getParty(p.getUniqueId()) != null) {
 							if(!chat.contains(p.getUniqueId())) {
 								chat.add(p.getUniqueId());
-								p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼ Ã¤ÆÃÀ» ½ÃÀÛÇÕ´Ï´Ù.");
+								p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹° ì±„íŒ…ì„ ì‹œì‘í•©ë‹ˆë‹¤.");
 							}
 							else {
 								chat.remove(p.getUniqueId());
-								p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÆÄÆ¼ Ã¤ÆÃÀ» Á¾·áÇÕ´Ï´Ù.");
+								p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "íŒŒí‹° ì±„íŒ…ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
 							}
 						}
-						else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.");
+						else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ íŒŒí‹°ì— ì†Œì†ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 					}
 				}
 				else if(args[0].equalsIgnoreCase("info")) {
 					if(getParty(p.getUniqueId()) != null) {
 						Party party = getParty(p.getUniqueId());
-						p.sendMessage(Messager.getPrefix() + ChatColor.GOLD + party.getPartyName() + ChatColor.YELLOW + " ÆÄÆ¼ Á¤º¸ - ÆÄÆ¼Àå: " + ChatColor.WHITE + Bukkit.getOfflinePlayer(party.getOwner()).getName());
+						p.sendMessage(Messager.getPrefix() + ChatColor.GOLD + party.getPartyName() + ChatColor.YELLOW + " íŒŒí‹° ì •ë³´ - íŒŒí‹°ì¥: " + ChatColor.WHITE + Bukkit.getOfflinePlayer(party.getOwner()).getName());
 						String PvPString = "";
-	                    if(party.isPVP()) PvPString = ChatColor.GREEN + "ÄÑÁü";
-	                    else PvPString = ChatColor.RED + "²¨Áü";
+	                    if(party.isPVP()) PvPString = ChatColor.GREEN + "ì¼œì§";
+	                    else PvPString = ChatColor.RED + "êº¼ì§";
 	                    String OpenString = "";
-	                    if(party.isOPEN()) OpenString = ChatColor.GREEN + "ÄÑÁü";
-	                    else OpenString = ChatColor.RED + "²¨Áü";
-	                    p.sendMessage(ChatColor.AQUA + " PvP: " + PvPString + " " + ChatColor.AQUA + "°³¹æ: " + OpenString);
-						for(UUID u: party.getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline()) p.sendMessage(ChatColor.WHITE + " ¡Ş " + Bukkit.getOfflinePlayer(u).getName() + ChatColor.YELLOW + " - Ã¼·Â: " + ((int)(Bukkit.getPlayer(u).getHealth())) + "/20, ¹è°íÇÄ: " + ((int)(Bukkit.getPlayer(u).getFoodLevel())) + "/20 " + ChatColor.GREEN + "(¿Â¶óÀÎ)");
-						for(UUID u: party.getPlayers()) if(!Bukkit.getOfflinePlayer(u).isOnline()) p.sendMessage(ChatColor.WHITE + " ¡Ş " + Bukkit.getOfflinePlayer(u).getName() + ChatColor.YELLOW + " - " + ChatColor.RED + "(¿ÀÇÁ¶óÀÎ)");
+	                    if(party.isOPEN()) OpenString = ChatColor.GREEN + "ì¼œì§";
+	                    else OpenString = ChatColor.RED + "êº¼ì§";
+	                    p.sendMessage(ChatColor.AQUA + " PvP: " + PvPString + " " + ChatColor.AQUA + "ê°œë°©: " + OpenString);
+						for(UUID u: party.getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline()) p.sendMessage(ChatColor.WHITE + " â—‡ " + Bukkit.getOfflinePlayer(u).getName() + ChatColor.YELLOW + " - ì²´ë ¥: " + ((int)(Bukkit.getPlayer(u).getHealth())) + "/20, ë°°ê³ í””: " + ((int)(Bukkit.getPlayer(u).getFoodLevel())) + "/20 " + ChatColor.GREEN + "(ì˜¨ë¼ì¸)");
+						for(UUID u: party.getPlayers()) if(!Bukkit.getOfflinePlayer(u).isOnline()) p.sendMessage(ChatColor.WHITE + " â—‡ " + Bukkit.getOfflinePlayer(u).getName() + ChatColor.YELLOW + " - " + ChatColor.RED + "(ì˜¤í”„ë¼ì¸)");
 					}
-					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "´ç½ÅÀº ÆÄÆ¼¿¡ ¼Ò¼ÓµÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.");
+					else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ë‹¹ì‹ ì€ íŒŒí‹°ì— ì†Œì†ë˜ì–´ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 				}
 				else if(args[0].equalsIgnoreCase("list")) {
-					if(Parties.size() == 0) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ÇöÀç »ı¼ºµÈ ÆÄÆ¼°¡ ¾ø½À´Ï´Ù.");
+					if(Parties.size() == 0) p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "í˜„ì¬ ìƒì„±ëœ íŒŒí‹°ê°€ ì—†ìŠµë‹ˆë‹¤.");
 					else {
-						p.sendMessage(Messager.getPrefix() + ChatColor.DARK_GRAY + "============ " + ChatColor.YELLOW + "ÆÄÆ¼ ¸ñ·Ï" + ChatColor.DARK_GRAY + " ============");
-						for(Party party: Parties) p.sendMessage(ChatColor.WHITE + "¡Ş " + ChatColor.GOLD + ChatColor.BOLD + party.getPartyName() + ChatColor.YELLOW + " - ÆÄÆ¼Àå: " + ChatColor.WHITE + Bukkit.getOfflinePlayer(party.getOwner()).getName() + ChatColor.YELLOW + ", ÆÄÆ¼¿ø " + ChatColor.WHITE + party.getPlayers().size() + ChatColor.AQUA + (party.isOPEN() ? " (°³¹æ)" : ""));
+						p.sendMessage(Messager.getPrefix() + ChatColor.DARK_GRAY + "============ " + ChatColor.YELLOW + "íŒŒí‹° ëª©ë¡" + ChatColor.DARK_GRAY + " ============");
+						for(Party party: Parties) p.sendMessage(ChatColor.WHITE + "â—‡ " + ChatColor.GOLD + ChatColor.BOLD + party.getPartyName() + ChatColor.YELLOW + " - íŒŒí‹°ì¥: " + ChatColor.WHITE + Bukkit.getOfflinePlayer(party.getOwner()).getName() + ChatColor.YELLOW + ", íŒŒí‹°ì› " + ChatColor.WHITE + party.getPlayers().size() + ChatColor.AQUA + (party.isOPEN() ? " (ê°œë°©)" : ""));
 					}
 				}
 				else if(args[0].equalsIgnoreCase("?")) {
-					p.sendMessage("----- " + ChatColor.AQUA + "¹Ì¸£¼­¹ö ÆÄÆ¼ ÇÃ·¯±×ÀÎ" + ChatColor.WHITE + " -----");
-					p.sendMessage(ChatColor.BLUE + "/party create <ÀÌ¸§>: " + ChatColor.WHITE + "ÆÄÆ¼¸¦ ¸¸µì´Ï´Ù.");
-					p.sendMessage(ChatColor.BLUE + "/party disband: " + ChatColor.WHITE + "ÆÄÆ¼¸¦ ÇØÃ¼ÇÕ´Ï´Ù.");
-					p.sendMessage(ChatColor.BLUE + "/party add <´Ğ³×ÀÓ>: " + ChatColor.WHITE + "ÆÄÆ¼¿øÀ» Ãß°¡ÇÕ´Ï´Ù.");
-					p.sendMessage(ChatColor.BLUE + "/party kick <´Ğ³×ÀÓ>: " + ChatColor.WHITE + "ÆÄÆ¼¿øÀ» Ãß¹æÇÕ´Ï´Ù.");
-					p.sendMessage(ChatColor.BLUE + "/party join <ÆÄÆ¼ÀÌ¸§>: " + ChatColor.WHITE + "°³¹æµÈ ÆÄÆ¼¿¡ °¡ÀÔÇÕ´Ï´Ù.");
-	                p.sendMessage(ChatColor.BLUE + "/party leave: " + ChatColor.WHITE + "¼Ò¼ÓµÈ ÆÄÆ¼¿¡¼­ ¶°³³´Ï´Ù.");
-	                p.sendMessage(ChatColor.BLUE + "/party toggle: " + ChatColor.WHITE + "ÆÄÆ¼ÀÇ ¼³Á¤À» º¯°æÇÕ´Ï´Ù."); 
-					p.sendMessage(ChatColor.BLUE + "/party info: " + ChatColor.WHITE + "ÆÄÆ¼ Á¤º¸¸¦ ºÒ·¯¿É´Ï´Ù.");
-					p.sendMessage(ChatColor.BLUE + "/party list: " + ChatColor.WHITE + "Á¸ÀçÇÏ´Â ÆÄÆ¼ÀÇ ¸ñ·ÏÀ» È®ÀÎÇÕ´Ï´Ù.");
-					p.sendMessage(ChatColor.BLUE + "/party chat: " + ChatColor.WHITE + "ÆÄÆ¼Ã¤ÆÃÀ» ½ÃÀÛÇÕ´Ï´Ù. (/pc)");
+					p.sendMessage("----- " + ChatColor.AQUA + "ë¯¸ë¥´ì„œë²„ íŒŒí‹° í”ŒëŸ¬ê·¸ì¸" + ChatColor.WHITE + " -----");
+					p.sendMessage(ChatColor.BLUE + "/party create <ì´ë¦„>: " + ChatColor.WHITE + "íŒŒí‹°ë¥¼ ë§Œë“­ë‹ˆë‹¤.");
+					p.sendMessage(ChatColor.BLUE + "/party disband: " + ChatColor.WHITE + "íŒŒí‹°ë¥¼ í•´ì²´í•©ë‹ˆë‹¤.");
+					p.sendMessage(ChatColor.BLUE + "/party add <ë‹‰ë„¤ì„>: " + ChatColor.WHITE + "íŒŒí‹°ì›ì„ ì¶”ê°€í•©ë‹ˆë‹¤.");
+					p.sendMessage(ChatColor.BLUE + "/party kick <ë‹‰ë„¤ì„>: " + ChatColor.WHITE + "íŒŒí‹°ì›ì„ ì¶”ë°©í•©ë‹ˆë‹¤.");
+					p.sendMessage(ChatColor.BLUE + "/party join <íŒŒí‹°ì´ë¦„>: " + ChatColor.WHITE + "ê°œë°©ëœ íŒŒí‹°ì— ê°€ì…í•©ë‹ˆë‹¤.");
+	                p.sendMessage(ChatColor.BLUE + "/party leave: " + ChatColor.WHITE + "ì†Œì†ëœ íŒŒí‹°ì—ì„œ ë– ë‚©ë‹ˆë‹¤.");
+	                p.sendMessage(ChatColor.BLUE + "/party toggle: " + ChatColor.WHITE + "íŒŒí‹°ì˜ ì„¤ì •ì„ ë³€ê²½í•©ë‹ˆë‹¤."); 
+					p.sendMessage(ChatColor.BLUE + "/party info: " + ChatColor.WHITE + "íŒŒí‹° ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤.");
+					p.sendMessage(ChatColor.BLUE + "/party list: " + ChatColor.WHITE + "ì¡´ì¬í•˜ëŠ” íŒŒí‹°ì˜ ëª©ë¡ì„ í™•ì¸í•©ë‹ˆë‹¤.");
+					p.sendMessage(ChatColor.BLUE + "/party chat: " + ChatColor.WHITE + "íŒŒí‹°ì±„íŒ…ì„ ì‹œì‘í•©ë‹ˆë‹¤. (/pc)");
 				}
-				else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "»ç¿ë¹ı: /party ?");
+				else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì‚¬ìš©ë²•: /party ?");
 			}
-			else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "»ç¿ë¹ı: /party ?");
+			else p.sendMessage(Messager.getPrefix() + ChatColor.YELLOW + "ì‚¬ìš©ë²•: /party ?");
 		}
 		return false;
 	}
@@ -420,12 +419,12 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player p = event.getPlayer();
-		if(getParty(p.getUniqueId()) != null) for(UUID u: getParty(p.getUniqueId()).getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline() && !u.equals(p.getName())) Bukkit.getPlayer(u).sendMessage(ChatColor.YELLOW + "ÆÄÆ¼¿ø " + p.getName() + "´ÔÀÌ ¼­¹ö¿¡¼­ ÅğÀåÇÏ¼Ì½À´Ï´Ù.");
+		if(getParty(p.getUniqueId()) != null) for(UUID u: getParty(p.getUniqueId()).getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline() && !u.equals(p.getName())) Bukkit.getPlayer(u).sendMessage(ChatColor.YELLOW + "íŒŒí‹°ì› " + p.getName() + "ë‹˜ì´ ì„œë²„ì—ì„œ í‡´ì¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 	}
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
-		if(getParty(p.getUniqueId()) != null) for(UUID u: getParty(p.getUniqueId()).getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline() && !u.equals(p.getUniqueId())) Bukkit.getPlayer(u).sendMessage(ChatColor.YELLOW + "ÆÄÆ¼¿ø " + p.getName() + "´ÔÀÌ ¼­¹ö¿¡ ÀÔÀåÇÏ¼Ì½À´Ï´Ù.");
+		if(getParty(p.getUniqueId()) != null) for(UUID u: getParty(p.getUniqueId()).getPlayers()) if(Bukkit.getOfflinePlayer(u).isOnline() && !u.equals(p.getUniqueId())) Bukkit.getPlayer(u).sendMessage(ChatColor.YELLOW + "íŒŒí‹°ì› " + p.getName() + "ë‹˜ì´ ì„œë²„ì— ì…ì¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 	}
 	
 }

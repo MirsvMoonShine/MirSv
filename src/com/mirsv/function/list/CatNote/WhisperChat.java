@@ -30,7 +30,7 @@ public class WhisperChat extends AbstractFunction implements Listener, CommandEx
 	protected void onDisable() {}
 	
 	public WhisperChat() {
-		super("±Ó¼Ó¸»Ã¤ÆÃ", "1.0", "±Ó¼Ó¸» ´ë»óÀ» °íÁ¤½ÃÄÑ Ã¤ÆÃÀ» Ä¡´Â °Í ¸¸À¸·Î", "±Ó¼Ó¸»À» º¸³¾ ¼ö ÀÖ½À´Ï´Ù.");
+		super("ê·“ì†ë§ì±„íŒ…", "1.0", "ê·“ì†ë§ ëŒ€ìƒì„ ê³ ì •ì‹œì¼œ ì±„íŒ…ì„ ì¹˜ëŠ” ê²ƒ ë§Œìœ¼ë¡œ", "ê·“ì†ë§ì„ ë³´ë‚¼ ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 	}
 	
 	HashMap < UUID, UUID > Target = new HashMap < UUID, UUID > ();
@@ -39,11 +39,11 @@ public class WhisperChat extends AbstractFunction implements Listener, CommandEx
 		if(!Target.containsKey(event.getPlayer().getUniqueId())) return;
 		String[] s = event.getMessage().split(" ");
 		if(s[0].equalsIgnoreCase("/tc") || s[0].equalsIgnoreCase("/nc") || s[0].equalsIgnoreCase("/lc") || s[0].equalsIgnoreCase("/pc") || s[0].equalsIgnoreCase("/g") || s[0].equalsIgnoreCase("/admin") || s[0].equalsIgnoreCase("/mod") || s[0].equalsIgnoreCase("/a") || s[0].equalsIgnoreCase("/m") || s[0].equalsIgnoreCase("/l") || s[0].equalsIgnoreCase("/mst")) {
-			event.getPlayer().sendMessage(Messager.getPrefix() + ChatColor.WHITE + Bukkit.getOfflinePlayer(Target.get(event.getPlayer().getUniqueId())).getName() + ChatColor.AQUA + "´Ô¿¡°Ô ±Ó¼Ó¸»À» º¸³»Áö ¾Ê½À´Ï´Ù.");			
+			event.getPlayer().sendMessage(Messager.getPrefix() + ChatColor.WHITE + Bukkit.getOfflinePlayer(Target.get(event.getPlayer().getUniqueId())).getName() + ChatColor.AQUA + "ë‹˜ì—ê²Œ ê·“ì†ë§ì„ ë³´ë‚´ì§€ ì•ŠìŠµë‹ˆë‹¤.");			
 			Target.remove(event.getPlayer().getUniqueId());
 		}
 		if(s.length > 1 && s[0].equalsIgnoreCase("/party") && s[1].equalsIgnoreCase("chat")) {
-			event.getPlayer().sendMessage(Messager.getPrefix() + ChatColor.WHITE + Bukkit.getOfflinePlayer(Target.get(event.getPlayer().getUniqueId())).getName() + ChatColor.AQUA + "´Ô¿¡°Ô ±Ó¼Ó¸»À» º¸³»Áö ¾Ê½À´Ï´Ù.");			
+			event.getPlayer().sendMessage(Messager.getPrefix() + ChatColor.WHITE + Bukkit.getOfflinePlayer(Target.get(event.getPlayer().getUniqueId())).getName() + ChatColor.AQUA + "ë‹˜ì—ê²Œ ê·“ì†ë§ì„ ë³´ë‚´ì§€ ì•ŠìŠµë‹ˆë‹¤.");			
 			Target.remove(event.getPlayer().getUniqueId());
 		}
 	}
@@ -54,25 +54,25 @@ public class WhisperChat extends AbstractFunction implements Listener, CommandEx
 			Player player = (Player) sender;
 			if(args.length == 0) {
 				if(Target.containsKey(player.getUniqueId())) {
-					player.sendMessage(Messager.getPrefix() + ChatColor.WHITE + Bukkit.getOfflinePlayer(Target.get(player.getUniqueId())).getName() + ChatColor.AQUA + "´Ô¿¡°Ô ±Ó¼Ó¸»À» º¸³»Áö ¾Ê½À´Ï´Ù.");
+					player.sendMessage(Messager.getPrefix() + ChatColor.WHITE + Bukkit.getOfflinePlayer(Target.get(player.getUniqueId())).getName() + ChatColor.AQUA + "ë‹˜ì—ê²Œ ê·“ì†ë§ì„ ë³´ë‚´ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 					Target.remove(player.getUniqueId());
 				}
 				else {
-					player.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "»ç¿ë ¹æ¹ı: /wc <´Ğ³×ÀÓ>");
+					player.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "ì‚¬ìš© ë°©ë²•: /wc <ë‹‰ë„¤ì„>");
 				}
 			}
 			else {
 				if(!Bukkit.getOfflinePlayer(args[0]).isOnline()) {
-					player.sendMessage(Messager.getPrefix() + ChatColor.RED + "Á¸ÀçÇÏÁö ¾Ê´Â ÇÃ·¹ÀÌ¾îÀÔ´Ï´Ù.");
+					player.sendMessage(Messager.getPrefix() + ChatColor.RED + "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” í”Œë ˆì´ì–´ì…ë‹ˆë‹¤.");
 					return false;
 				}
 				if(player.getName().equalsIgnoreCase(args[0])) {
-					player.sendMessage(Messager.getPrefix() +  ChatColor.RED + "ÀÚ±â ÀÚ½Å°ú ±Ó¼Ó¸»ÇÒ ¼ö ¾ø½À´Ï´Ù.");
+					player.sendMessage(Messager.getPrefix() +  ChatColor.RED + "ìê¸° ìì‹ ê³¼ ê·“ì†ë§í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 					return false;
 				}
 				if(Target.containsKey(player.getUniqueId())) Target.remove(player.getUniqueId());
 				Target.put(player.getUniqueId(), Bukkit.getPlayer(args[0]).getUniqueId());
-				player.sendMessage(Messager.getPrefix() + ChatColor.WHITE + args[0] + ChatColor.AQUA + "´Ô¿¡°Ô ±Ó¼Ó¸»À» º¸³À´Ï´Ù.");
+				player.sendMessage(Messager.getPrefix() + ChatColor.WHITE + args[0] + ChatColor.AQUA + "ë‹˜ì—ê²Œ ê·“ì†ë§ì„ ë³´ëƒ…ë‹ˆë‹¤.");
 			}
 		}
 		return false;
@@ -87,7 +87,7 @@ public class WhisperChat extends AbstractFunction implements Listener, CommandEx
 				event.getRecipients().add(Bukkit.getPlayer(event.getPlayer().getUniqueId()));
 				event.getRecipients().add(Bukkit.getPlayer(Target.get(event.getPlayer().getUniqueId())));
 			}
-			else event.getPlayer().sendMessage(Messager.getPrefix() + ChatColor.RED + "±Ó¼Ó¸»À» º¸³½ »ó´ë°¡ ¿ÀÇÁ¶óÀÎÀÔ´Ï´Ù. \'/g\'¸¦ ÀÔ·ÂÇØ ±Ó¼Ó¸» Ã¤ÆÃÀ» Á¾·áÇØÁÖ¼¼¿ä.");
+			else event.getPlayer().sendMessage(Messager.getPrefix() + ChatColor.RED + "ê·“ì†ë§ì„ ë³´ë‚¸ ìƒëŒ€ê°€ ì˜¤í”„ë¼ì¸ì…ë‹ˆë‹¤. \'/g\'ë¥¼ ì…ë ¥í•´ ê·“ì†ë§ ì±„íŒ…ì„ ì¢…ë£Œí•´ì£¼ì„¸ìš”.");
 		}
 	}
 }

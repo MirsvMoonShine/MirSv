@@ -26,7 +26,7 @@ public class GlobalMute extends AbstractFunction implements Listener, CommandExe
 	boolean chat = true;
 
 	public GlobalMute() {
-		super("ÀüÃ¼¹ÂÆ®", "1.0", "mirsv.admin ±ÇÇÑ ¶Ç´Â OP ±ÇÇÑÀÌ ¾ø´Â À¯Àú ¸ğµÎ", "Ã¤ÆÃÀ» Ä¥ ¼ö ¾øµµ·Ï ¼³Á¤ÇÕ´Ï´Ù.");
+		super("ì „ì²´ë®¤íŠ¸", "1.0", "mirsv.admin ê¶Œí•œ ë˜ëŠ” OP ê¶Œí•œì´ ì—†ëŠ” ìœ ì € ëª¨ë‘", "ì±„íŒ…ì„ ì¹  ìˆ˜ ì—†ë„ë¡ ì„¤ì •í•©ë‹ˆë‹¤.");
 	}
 
 	@EventHandler
@@ -43,23 +43,23 @@ public class GlobalMute extends AbstractFunction implements Listener, CommandExe
 		if (!(sender instanceof Player)) {
 			if (chat) {
 				chat = false;
-				Bukkit.broadcastMessage(Messager.getPrefix()+"¡×aÀüÃ¼ ¹ÂÆ®.");
+				Bukkit.broadcastMessage(Messager.getPrefix()+"Â§aì „ì²´ ë®¤íŠ¸.");
 			} else {
 				chat = true;
-				Bukkit.broadcastMessage(Messager.getPrefix()+"¡×aÀüÃ¼ ¹ÂÆ® ÇØÁ¦.");
+				Bukkit.broadcastMessage(Messager.getPrefix()+"Â§aì „ì²´ ë®¤íŠ¸ í•´ì œ.");
 			}
 		} else {
 			Player p = (Player) sender;
 
 			if (!p.hasPermission("mirsv.admin")) {
-				p.sendMessage(Messager.getPrefix()+"¡×c±ÇÇÑÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+				p.sendMessage(Messager.getPrefix()+"Â§cê¶Œí•œì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 			} else {
 				if (chat) {
 					chat = false;
-					Bukkit.broadcastMessage(Messager.getPrefix()+"¡×aÀüÃ¼ ¹ÂÆ®.");
+					Bukkit.broadcastMessage(Messager.getPrefix()+"Â§aì „ì²´ ë®¤íŠ¸.");
 				} else {
 					chat = true;
-					Bukkit.broadcastMessage(Messager.getPrefix()+"¡×aÀüÃ¼ ¹ÂÆ® ÇØÁ¦.");
+					Bukkit.broadcastMessage(Messager.getPrefix()+"Â§aì „ì²´ ë®¤íŠ¸ í•´ì œ.");
 				}
 			}
 		}

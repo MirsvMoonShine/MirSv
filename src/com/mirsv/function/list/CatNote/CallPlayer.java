@@ -19,7 +19,7 @@ import com.mirsv.util.Messager;
 public class CallPlayer extends AbstractFunction implements CommandExecutor {
 
 	public CallPlayer() {
-		super("È£Ãâ", "1.0", "ÇÃ·¹ÀÌ¾î¸¦ È£ÃâÇÕ´Ï´Ù.");
+		super("í˜¸ì¶œ", "1.0", "í”Œë ˆì´ì–´ë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.");
 	}
 
 	@Override
@@ -50,9 +50,9 @@ public class CallPlayer extends AbstractFunction implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length == 0) {
-			if (!(sender instanceof Player)) Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "»ç¿ë ¹æ¹ı  |  /cl [´Ğ³×ÀÓ1] [´Ğ³×ÀÓ2] ... : [´Ğ³×ÀÓ]À» È£Ãâ");
+			if (!(sender instanceof Player)) Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "ì‚¬ìš© ë°©ë²•  |  /cl [ë‹‰ë„¤ì„1] [ë‹‰ë„¤ì„2] ... : [ë‹‰ë„¤ì„]ì„ í˜¸ì¶œ");
 			else
-				sender.sendMessage(ChatColor.RED + "»ç¿ë ¹æ¹ı  |  /cl [´Ğ³×ÀÓ1] [´Ğ³×ÀÓ2] ... : [´Ğ³×ÀÓ]À» È£Ãâ");
+				sender.sendMessage(ChatColor.RED + "ì‚¬ìš© ë°©ë²•  |  /cl [ë‹‰ë„¤ì„1] [ë‹‰ë„¤ì„2] ... : [ë‹‰ë„¤ì„]ì„ í˜¸ì¶œ");
 		} else {
 			Instant cool = getCool(sender);
 			Instant now = Instant.now();
@@ -68,7 +68,7 @@ public class CallPlayer extends AbstractFunction implements CommandExecutor {
 						if (s.equalsIgnoreCase(p.getName())) {
 							isOnline = true;
 							if (sender.getName().equalsIgnoreCase(s)) {
-								if (!CallMyself) sender.sendMessage(Messager.getPrefix() + ChatColor.DARK_RED + "ÀÚ±â ÀÚ½ÅÀº È£ÃâÇÒ ¼ö ¾ø½À´Ï´Ù!");
+								if (!CallMyself) sender.sendMessage(Messager.getPrefix() + ChatColor.DARK_RED + "ìê¸° ìì‹ ì€ í˜¸ì¶œí•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
 								CallMyself = true;
 								break;
 							}
@@ -86,11 +86,11 @@ public class CallPlayer extends AbstractFunction implements CommandExecutor {
 							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 10, 1);
 							
 							p.sendTitle(
-									ChatColor.translateAlternateColorCodes('&', "&e" + sender.getName() + "&f´ÔÀÌ ´ç½ÅÀ» È£ÃâÇÏ¼Ì½À´Ï´Ù."),
-									ChatColor.translateAlternateColorCodes('&', "&c¿øÇÏÁö ¾Ê´Â È£ÃâÀÌ °è¼ÓµÉ °æ¿ì ½Å°íÇØÁÖ¼¼¿ä."),
+									ChatColor.translateAlternateColorCodes('&', "&e" + sender.getName() + "&fë‹˜ì´ ë‹¹ì‹ ì„ í˜¸ì¶œí•˜ì…¨ìŠµë‹ˆë‹¤."),
+									ChatColor.translateAlternateColorCodes('&', "&cì›í•˜ì§€ ì•ŠëŠ” í˜¸ì¶œì´ ê³„ì†ë  ê²½ìš° ì‹ ê³ í•´ì£¼ì„¸ìš”."),
 									10, 65, 10);
-							p.sendMessage(Messager.getPrefix() + ChatColor.translateAlternateColorCodes('&', "&e" + sender.getName() + "&f´ÔÀÌ ´ç½ÅÀ» È£ÃâÇÏ¼Ì½À´Ï´Ù."));
-							p.sendMessage(Messager.getPrefix() + ChatColor.RED + "¿øÇÏÁö ¾Ê´Â È£ÃâÀÌ °è¼ÓµÉ °æ¿ì ½Å°íÇØÁÖ¼¼¿ä.");
+							p.sendMessage(Messager.getPrefix() + ChatColor.translateAlternateColorCodes('&', "&e" + sender.getName() + "&fë‹˜ì´ ë‹¹ì‹ ì„ í˜¸ì¶œí•˜ì…¨ìŠµë‹ˆë‹¤."));
+							p.sendMessage(Messager.getPrefix() + ChatColor.RED + "ì›í•˜ì§€ ì•ŠëŠ” í˜¸ì¶œì´ ê³„ì†ë  ê²½ìš° ì‹ ê³ í•´ì£¼ì„¸ìš”.");
 							break;
 						}
 					}
@@ -113,7 +113,7 @@ public class CallPlayer extends AbstractFunction implements CommandExecutor {
 						if (i >= CallList.size() - 1) continue;
 						List = List + ", ";
 					}
-					sender.sendMessage(Messager.getPrefix() + ChatColor.GREEN + List + "´ÔÀ» È£ÃâÇÏ¿´½À´Ï´Ù!");
+					sender.sendMessage(Messager.getPrefix() + ChatColor.GREEN + List + "ë‹˜ì„ í˜¸ì¶œí•˜ì˜€ìŠµë‹ˆë‹¤!");
 				}
 				if (AbsentList.size() > 0) {
 					String List = "";
@@ -122,10 +122,10 @@ public class CallPlayer extends AbstractFunction implements CommandExecutor {
 						if (i >= AbsentList.size() - 1) continue;
 						List = List + ", ";
 					}
-					sender.sendMessage(Messager.getPrefix() + ChatColor.RED + List + "´ÔÀº ¼­¹ö¿¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù!");
+					sender.sendMessage(Messager.getPrefix() + ChatColor.RED + List + "ë‹˜ì€ ì„œë²„ì— ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤!");
 				}
 			} else {
-				sender.sendMessage(Messager.getPrefix() + ChatColor.RED + "Àá½Ã ÈÄ¿¡ ½ÃµµÇØÁÖ¼¼¿ä.");
+				sender.sendMessage(Messager.getPrefix() + ChatColor.RED + "ì ì‹œ í›„ì— ì‹œë„í•´ì£¼ì„¸ìš”.");
 			}
 		}
 		return false;

@@ -25,11 +25,10 @@ import com.mirsv.util.data.FileUtil;
 public class WordProhibition extends AbstractFunction implements Listener, CommandExecutor {
 	
 	private List<String> forbidden = new ArrayList<String>();
-	private File folder = FileUtil.getFolder("ForbiddenWord");
 	private File f = FileUtil.getFile("ForbiddenWord/ForbiddenWord.yml");
 	
 	public WordProhibition() {
-		super("±İÄ¢¾î", "1.0", "±İÄ¢¾î¸¦ ¼³Á¤ÇÕ´Ï´Ù.", "±İÄ¢¾î·Î ¼³Á¤µÈ ´Ü¾î´Â Ã¤ÆÃ¿¡¼­ »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.");
+		super("ê¸ˆì¹™ì–´", "1.0", "ê¸ˆì¹™ì–´ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.", "ê¸ˆì¹™ì–´ë¡œ ì„¤ì •ëœ ë‹¨ì–´ëŠ” ì±„íŒ…ì—ì„œ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public class WordProhibition extends AbstractFunction implements Listener, Comma
 		for (String forb : forbidden){
 			if (message.contains(forb)){
 				e.setCancelled(true);
-				e.getPlayer().sendMessage(Messager.getPrefix() + "±İÄ¢¾î·Î ÁöÁ¤µÈ ´Ü¾î°¡ Æ÷ÇÔµÅÀÖ½À´Ï´Ù.");
+				e.getPlayer().sendMessage(Messager.getPrefix() + "ê¸ˆì¹™ì–´ë¡œ ì§€ì •ëœ ë‹¨ì–´ê°€ í¬í•¨ë¼ìˆìŠµë‹ˆë‹¤.");
 				break;
 			}
 		}
@@ -63,7 +62,7 @@ public class WordProhibition extends AbstractFunction implements Listener, Comma
 		
 		if (player.isOp() || player.hasPermission("mirsv.admin")) {
 			if (args.length > 0) {
-				if ((args[0].equalsIgnoreCase("add")) || (args[0].equalsIgnoreCase("Ãß°¡"))) {
+				if ((args[0].equalsIgnoreCase("add")) || (args[0].equalsIgnoreCase("ì¶”ê°€"))) {
 					if (args.length == 2){
 						if (!forbidden.contains(args[1])){
 							forbidden.add(args[1]);
@@ -75,10 +74,10 @@ public class WordProhibition extends AbstractFunction implements Listener, Comma
 								br.close();
 								bw.close();
 							} catch (IOException e) {}
-							player.sendMessage(Messager.getPrefix()+"±İÄ¢¾î¿¡ "+args[1]+ "ÀÌ(°¡) Ãß°¡µÇ¾ú½À´Ï´Ù.");
+							player.sendMessage(Messager.getPrefix()+"ê¸ˆì¹™ì–´ì— "+args[1]+ "ì´(ê°€) ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.");
 						}
 					}
-				} else if ((args[0].equalsIgnoreCase("delete")) || (args[0].equalsIgnoreCase("Á¦°Å"))) {
+				} else if ((args[0].equalsIgnoreCase("delete")) || (args[0].equalsIgnoreCase("ì œê±°"))) {
 					if (args.length == 2){
 						if (forbidden.contains(args[1])){
 							forbidden.remove(args[1]);
@@ -89,15 +88,15 @@ public class WordProhibition extends AbstractFunction implements Listener, Comma
 								for (String s : forbidden) br.write(s + "_");
 								br.close();
 							} catch (IOException e) {}
-							player.sendMessage(Messager.getPrefix()+ args[1]+ "Àº(´Â) ´õÀÌ»ó ±İÄ¢¾î°¡ ¾Æ´Õ´Ï´Ù.");
+							player.sendMessage(Messager.getPrefix()+ args[1]+ "ì€(ëŠ”) ë”ì´ìƒ ê¸ˆì¹™ì–´ê°€ ì•„ë‹™ë‹ˆë‹¤.");
 						}
 					}
-				} else if ((args[0].equalsIgnoreCase("list")) || (args[0].equalsIgnoreCase("¸ñ·Ï"))) {
+				} else if ((args[0].equalsIgnoreCase("list")) || (args[0].equalsIgnoreCase("ëª©ë¡"))) {
 					if (args.length == 1){
 						if (forbidden.size() != 0){
 							String s = forbidden.get(0);
 							for (int a = 1;a<forbidden.size();a++) s = s+", "+forbidden.get(a);
-							player.sendMessage(Messager.getPrefix()+ "±İÄ¢¾î ¸ñ·Ï");
+							player.sendMessage(Messager.getPrefix()+ "ê¸ˆì¹™ì–´ ëª©ë¡");
 							player.sendMessage(Messager.getPrefix()+ s);
 						}
 					}

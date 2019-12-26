@@ -2,9 +2,6 @@ package com.mirsv.function.list.Cokes;
 
 import java.util.Arrays;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +15,7 @@ import com.mirsv.util.Messager;
 public class BedProhibition extends AbstractFunction implements Listener {
 
 	public BedProhibition() {
-		super("Ä§´ë±İÁö", "1.0", "³×´õ¿ùµå¿Í ¿£´õ¿ùµå¿¡¼­ Ä§´ë¸¦ »ç¿ëÇÒ ¼ö ¾øµµ·Ï ¸·½À´Ï´Ù.");
+		super("ì¹¨ëŒ€ê¸ˆì§€", "1.0", "ë„¤ë”ì›”ë“œì™€ ì—”ë”ì›”ë“œì—ì„œ ì¹¨ëŒ€ë¥¼ ì‚¬ìš©í•  ìˆ˜ ì—†ë„ë¡ ë§‰ìŠµë‹ˆë‹¤.");
 	}
 
 	@Override
@@ -35,7 +32,7 @@ public class BedProhibition extends AbstractFunction implements Listener {
 		if (Arrays.asList(e.getBlock().getType().toString().split("_")).contains("BED")) {
 			if (p.getWorld().getEnvironment().equals(Environment.NETHER) || p.getWorld().getEnvironment().equals(Environment.THE_END)){
 				e.setCancelled(true);
-				Messager.sendMessage(p, Messager.getPrefix() + "Ä§´ë ¼³Ä¡°¡ ±İÁöµÈ ¿ùµåÀÔ´Ï´Ù.");
+				Messager.sendMessage(p, Messager.getPrefix() + "ì¹¨ëŒ€ ì„¤ì¹˜ê°€ ê¸ˆì§€ëœ ì›”ë“œì…ë‹ˆë‹¤.");
 			}
 		}
 	}

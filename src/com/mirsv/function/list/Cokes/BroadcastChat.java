@@ -14,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import com.mirsv.Mirsv;
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.util.Messager;
 
@@ -32,7 +31,7 @@ public class BroadcastChat extends AbstractFunction implements CommandExecutor, 
 	ArrayList<UUID> BCadmins = new ArrayList<UUID>();
 
 	public BroadcastChat() {
-		super("°øÁöÃ¤ÆÃ", "1.0", "º¸´Ù Æí¸®ÇÏ°Ô ÇÃ·¹ÀÌ¾îµé¿¡°Ô °øÁö¸¦ Àü´ŞÇÒ ¼ö ÀÖ½À´Ï´Ù.");
+		super("ê³µì§€ì±„íŒ…", "1.0", "ë³´ë‹¤ í¸ë¦¬í•˜ê²Œ í”Œë ˆì´ì–´ë“¤ì—ê²Œ ê³µì§€ë¥¼ ì „ë‹¬í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String Label, String[] args) {
@@ -41,10 +40,10 @@ public class BroadcastChat extends AbstractFunction implements CommandExecutor, 
 			if (p.hasPermission("mirsv.admin") || p.isOp()) {
 				if (!BCadmins.contains(p.getUniqueId())) {
 					BCadmins.add(p.getUniqueId());
-					p.sendMessage(Messager.getPrefix()+"°øÁöÃ¤ÆÃÀÌ È°¼ºÈ­µÇ¾ú½À´Ï´Ù.");
+					p.sendMessage(Messager.getPrefix()+"ê³µì§€ì±„íŒ…ì´ í™œì„±í™”ë˜ì—ˆìŠµë‹ˆë‹¤.");
 				} else {
 					BCadmins.remove(p.getUniqueId());
-					p.sendMessage(Messager.getPrefix()+"°øÁöÃ¤ÆÃÀÌ ºñÈ°¼ºÈ­µÇ¾ú½À´Ï´Ù.");
+					p.sendMessage(Messager.getPrefix()+"ê³µì§€ì±„íŒ…ì´ ë¹„í™œì„±í™”ë˜ì—ˆìŠµë‹ˆë‹¤.");
 				}
 			}
 		}
@@ -58,9 +57,9 @@ public class BroadcastChat extends AbstractFunction implements CommandExecutor, 
 			e.setCancelled(true);
 			Messager.sendMessage(e.getMessage());
 			
-			Messager.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c[&6°øÁö&c] &f" + e.getMessage()));
+			Messager.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c[&6ê³µì§€&c] &f" + e.getMessage()));
 			for(Player p : Bukkit.getServer().getOnlinePlayers()) {
-				p.sendTitle(ChatColor.translateAlternateColorCodes('&', "&c[&6°øÁö&c]"), ChatColor.translateAlternateColorCodes('&', e.getMessage()), 20, 60, 20);
+				p.sendTitle(ChatColor.translateAlternateColorCodes('&', "&c[&6ê³µì§€&c]"), ChatColor.translateAlternateColorCodes('&', e.getMessage()), 20, 60, 20);
 				p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 10);
 			}
 		}

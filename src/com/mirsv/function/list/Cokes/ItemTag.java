@@ -3,6 +3,7 @@ package com.mirsv.function.list.Cokes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +18,7 @@ import com.mirsv.util.Messager;
 public class ItemTag extends AbstractFunction implements CommandExecutor{
 
 	public ItemTag() {
-		super("¾ÆÀÌÅÛÅÂ±×", "1.0", "¾ÆÀÌÅÛ °ü·Ã ¿©·¯°¡Áö À¯Æ¿µéÀÔ´Ï´Ù.");
+		super("ì•„ì´í…œíƒœê·¸", "1.0", "ì•„ì´í…œ ê´€ë ¨ ì—¬ëŸ¬ê°€ì§€ ìœ í‹¸ë“¤ì…ë‹ˆë‹¤.");
 	}
 
 	@Override
@@ -41,28 +42,26 @@ public class ItemTag extends AbstractFunction implements CommandExecutor{
 						if ((args[0].equalsIgnoreCase("name")) && (args.length > 1)) {
 							String name = args[1];
 							for (int a = 2; a < args.length;a++) name += " "+args[a];
-							name = name.replaceAll("&", "¡×");
-							item.setDisplayName(name);
+							item.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
 							i.setItemMeta(item);
-							p.sendMessage(Messager.getPrefix()+"¡×a¼Õ¿¡ µé°í ÀÖ´Â ¾ÆÀÌÅÛÀÇ ÀÌ¸§À» ¹Ù²Ù¾ú½À´Ï´Ù.");
+							p.sendMessage(Messager.getPrefix()+"Â§aì†ì— ë“¤ê³  ìˆëŠ” ì•„ì´í…œì˜ ì´ë¦„ì„ ë°”ê¾¸ì—ˆìŠµë‹ˆë‹¤.");
 						} else if (args[0].equalsIgnoreCase("lore")){
 							if (args[1].equalsIgnoreCase("add")){
 								if (args.length > 2){
 									String lore = args[2];
 									for (int a = 3; a < args.length;a++) lore += " "+args[a];
-									lore = lore.replaceAll("&", "¡×");
 									List<String> lores = item.getLore();
 									if (lores == null) lores = new ArrayList<String>();
-									lores.add(lore);
+									lores.add(ChatColor.translateAlternateColorCodes('&', lore));
 									item.setLore(lores);
 									i.setItemMeta(item);
-									p.sendMessage(Messager.getPrefix()+"¡×a¼Õ¿¡ µé°í ÀÖ´Â ¾ÆÀÌÅÛÀÇ ¼³¸íÀ» Ãß°¡ÇÏ¿´½À´Ï´Ù.");
+									p.sendMessage(Messager.getPrefix()+"Â§aì†ì— ë“¤ê³  ìˆëŠ” ì•„ì´í…œì˜ ì„¤ëª…ì„ ì¶”ê°€í•˜ì˜€ìŠµë‹ˆë‹¤.");
 								}
 							} else if (args[1].equalsIgnoreCase("show")){
 								List<String> lores = item.getLore();
 								if (lores != null)
 									for (int j = 0;j < lores.size(); j++)
-										p.sendMessage(Messager.getPrefix()+"¡×a"+j+". "+lores.get(j));
+										p.sendMessage(Messager.getPrefix()+"Â§a"+j+". "+lores.get(j));
 							} else if (args[1].equalsIgnoreCase("remove")){
 								List<String> lores = item.getLore();
 								if (lores != null){
@@ -71,7 +70,7 @@ public class ItemTag extends AbstractFunction implements CommandExecutor{
 										lores.remove(size);
 										item.setLore(lores);
 										i.setItemMeta(item);
-										p.sendMessage(Messager.getPrefix()+"¡×a¼Õ¿¡ µé°í ÀÖ´Â ¾ÆÀÌÅÛÀÇ ¸¶Áö¸· ¼³¸íÀ» Á¦°ÅÇÏ¿´½À´Ï´Ù.");
+										p.sendMessage(Messager.getPrefix()+"Â§aì†ì— ë“¤ê³  ìˆëŠ” ì•„ì´í…œì˜ ë§ˆì§€ë§‰ ì„¤ëª…ì„ ì œê±°í•˜ì˜€ìŠµë‹ˆë‹¤.");
 									} else if (args.length == 3){
 										if (isNumber(args[2])){
 											int index = Integer.parseInt(args[2]);
@@ -79,7 +78,7 @@ public class ItemTag extends AbstractFunction implements CommandExecutor{
 												lores.remove(index);
 												item.setLore(lores);
 												i.setItemMeta(item);
-												p.sendMessage(Messager.getPrefix()+"¡×a¼Õ¿¡ µé°í ÀÖ´Â ¾ÆÀÌÅÛÀÇ "+index+"¹øÂ° ¼³¸íÀ» Á¦°ÅÇÏ¿´½À´Ï´Ù.");
+												p.sendMessage(Messager.getPrefix()+"Â§aì†ì— ë“¤ê³  ìˆëŠ” ì•„ì´í…œì˜ "+index+"ë²ˆì§¸ ì„¤ëª…ì„ ì œê±°í•˜ì˜€ìŠµë‹ˆë‹¤.");
 											}
 										}
 									}
@@ -87,14 +86,14 @@ public class ItemTag extends AbstractFunction implements CommandExecutor{
 							}
 						}
 					} else {
-						p.sendMessage(Messager.getPrefix()+"¡×a¾ÆÀÌÅÛ Å×±× ¸í·É¾î");
-						p.sendMessage(Messager.getPrefix()+"¡×a/itemtag name [name]: ¼Õ¿¡ µé°í ÀÖ´Â ¾ÆÀÌÅÛÀÇ ÀÌ¸§À» ¹Ù²ß´Ï´Ù.");
-						p.sendMessage(Messager.getPrefix()+"¡×a/itemtag lore add [string]: ¼Õ¿¡ µé°í ÀÖ´Â ¾ÆÀÌÅÛÀÇ ¼³¸íÀ» Ãß°¡ÇÕ´Ï´Ù.");
-						p.sendMessage(Messager.getPrefix()+"¡×a/itemtag lore show: ¼Õ¿¡ µé°í ÀÖ´Â ¾ÆÀÌÅÛÀÇ ¼³¸íÀ» º¾´Ï´Ù.");
-						p.sendMessage(Messager.getPrefix()+"¡×a/itemtag lore remove (index): ¼Õ¿¡ µé°í ÀÖ´Â ¾ÆÀÌÅÛÀÇ ¼³¸íÀ» Á¦°ÅÇÕ´Ï´Ù.");
+						p.sendMessage(Messager.getPrefix()+"Â§aì•„ì´í…œ í…Œê·¸ ëª…ë ¹ì–´");
+						p.sendMessage(Messager.getPrefix()+"Â§a/itemtag name [name]: ì†ì— ë“¤ê³  ìˆëŠ” ì•„ì´í…œì˜ ì´ë¦„ì„ ë°”ê¿‰ë‹ˆë‹¤.");
+						p.sendMessage(Messager.getPrefix()+"Â§a/itemtag lore add [string]: ì†ì— ë“¤ê³  ìˆëŠ” ì•„ì´í…œì˜ ì„¤ëª…ì„ ì¶”ê°€í•©ë‹ˆë‹¤.");
+						p.sendMessage(Messager.getPrefix()+"Â§a/itemtag lore show: ì†ì— ë“¤ê³  ìˆëŠ” ì•„ì´í…œì˜ ì„¤ëª…ì„ ë´…ë‹ˆë‹¤.");
+						p.sendMessage(Messager.getPrefix()+"Â§a/itemtag lore remove (index): ì†ì— ë“¤ê³  ìˆëŠ” ì•„ì´í…œì˜ ì„¤ëª…ì„ ì œê±°í•©ë‹ˆë‹¤.");
 					}
 				} else {
-					p.sendMessage(Messager.getPrefix()+"¡×c¾ÆÀÌÅÛÀ» µé°í ÀÖÁö ¾Ê½À´Ï´Ù.");
+					p.sendMessage(Messager.getPrefix()+"Â§cì•„ì´í…œì„ ë“¤ê³  ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
 				}
 			}
 		}
