@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,15 +16,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.util.Messager;
 
-public class ItemTag extends AbstractFunction implements CommandExecutor{
+public class ItemTag extends AbstractFunction implements CommandExecutor, TabCompleter{
 
 	public ItemTag() {
-		super("아이템태그", "1.0", "아이템 관련 여러가지 유틸들입니다.");
+		super("아이템태그", "1.1", "아이템 관련 여러가지 유틸들입니다.");
 	}
 
 	@Override
 	protected void onEnable() {
-		registerCommand("itemtag", this);
+		registerCommand("itemtag", this, this);
 	}
 
 	@Override
@@ -114,6 +115,25 @@ public class ItemTag extends AbstractFunction implements CommandExecutor{
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		if (label.equalsIgnoreCase("itemtag")) {
+			switch (args.length) {
+			case 1 :
+				List<String> sub = Messager.getStringList("name", "lore");
+				if (!args[0].isEmpty()) sub.removeIf(cc -> !cc.toLowerCase().startsWith(args[0].toLowerCase()));
+				return sub;
+			case 2 :
+				if (args[0].equalsIgnoreCase("lore")) {
+					List<String> lore = Messager.getStringList("add", "show", "remove");
+					if (!args[1].isEmpty()) lore.removeIf(cc -> !cc.toLowerCase().startsWith(args[1].toLowerCase()));
+					return lore;
+				}
+			}
+		}
+		return null;
 	}
 
 }

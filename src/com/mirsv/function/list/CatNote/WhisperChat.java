@@ -1,6 +1,7 @@
 package com.mirsv.function.list.CatNote;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -8,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,12 +19,13 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.util.Messager;
+import com.mirsv.util.PlayerCollector;
 
-public class WhisperChat extends AbstractFunction implements Listener, CommandExecutor {
+public class WhisperChat extends AbstractFunction implements Listener, CommandExecutor, TabCompleter {
 	
 	@Override
 	protected void onEnable() {
-		registerCommand("wc", this);
+		registerCommand("wc", this, this);
 		registerListener(this);
 	}
 	
@@ -30,7 +33,7 @@ public class WhisperChat extends AbstractFunction implements Listener, CommandEx
 	protected void onDisable() {}
 	
 	public WhisperChat() {
-		super("귓속말채팅", "1.0", "귓속말 대상을 고정시켜 채팅을 치는 것 만으로", "귓속말을 보낼 수 있습니다.");
+		super("귓속말채팅", "1.1", "귓속말 대상을 고정시켜 채팅을 치는 것 만으로", "귓속말을 보낼 수 있습니다.");
 	}
 	
 	HashMap < UUID, UUID > Target = new HashMap < UUID, UUID > ();
@@ -89,5 +92,25 @@ public class WhisperChat extends AbstractFunction implements Listener, CommandEx
 			}
 			else event.getPlayer().sendMessage(Messager.getPrefix() + ChatColor.RED + "귓속말을 보낸 상대가 오프라인입니다. \'/g\'를 입력해 귓속말 채팅을 종료해주세요.");
 		}
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		if (label.equalsIgnoreCase("wc")) {
+			switch (args.length) {
+			case 1:
+				List<String> player = (List<String>) PlayerCollector.getOnlinePlayersName();
+				
+				if (!args[0].isEmpty()) {
+					player.removeIf(cc -> !cc.toLowerCase().startsWith(args[0].toLowerCase()));
+				}
+				if (sender instanceof Player) {
+					player.remove(((Player) sender).getName());
+				}
+					
+				return player;
+			}
+		}
+		return null;
 	}
 }

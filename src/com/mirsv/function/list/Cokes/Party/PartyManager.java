@@ -34,7 +34,7 @@ import com.mirsv.util.data.FileUtil;
 public class PartyManager extends AbstractFunction implements CommandExecutor, Listener, AutoSave {
 
 	public PartyManager() {
-		super("파티", "1.0", "미르서버 파티 시스템입니다.");
+		super("파티", "1.1", "미르서버 파티 시스템입니다.");
 	}
 
 	private File data = FileUtil.getFile("Party/Party.dat");
@@ -65,7 +65,7 @@ public class PartyManager extends AbstractFunction implements CommandExecutor, L
 			ex.printStackTrace();
 		}
 		
-		registerCommand("party", this);
+		registerCommand("party", this, new PartyTabCompleter());
 		registerCommand("pc", this);
 		registerListener(this);
 		

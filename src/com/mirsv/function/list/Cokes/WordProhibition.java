@@ -12,6 +12,7 @@ import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,7 +23,7 @@ import com.mirsv.function.AbstractFunction;
 import com.mirsv.util.Messager;
 import com.mirsv.util.data.FileUtil;
 
-public class WordProhibition extends AbstractFunction implements Listener, CommandExecutor {
+public class WordProhibition extends AbstractFunction implements Listener, CommandExecutor, TabCompleter {
 	
 	private List<String> forbidden = new ArrayList<String>();
 	private File f = FileUtil.getFile("ForbiddenWord/ForbiddenWord.yml");
@@ -40,7 +41,7 @@ public class WordProhibition extends AbstractFunction implements Listener, Comma
 			for (String add : str) forbidden.add(add); }
 			br.close();
 		} catch (IOException e) {}
-		registerCommand("forbidden", this);
+		registerCommand("forbidden", this, this);
 		registerListener(this);
 	}
 
@@ -108,5 +109,18 @@ public class WordProhibition extends AbstractFunction implements Listener, Comma
 
 	@Override
 	protected void onDisable() {}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		if (label.equalsIgnoreCase("forbidden")) {
+			switch (args.length) {
+			case 1:
+				List<String> sub = Messager.getStringList("add", "delete", "list", "추가", "제거", "목록");
+				if(!args[0].isEmpty()) sub.removeIf(cc -> !cc.toLowerCase().startsWith(args[0].toLowerCase()));
+				return sub;
+			}
+		}
+		return null;
+	}
 	
 }

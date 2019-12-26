@@ -130,5 +130,4 @@ public class CallPlayer extends AbstractFunction implements CommandExecutor {
 		}
 		return false;
 	}
-
 }
