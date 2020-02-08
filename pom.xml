@@ -21,6 +21,11 @@
 			<version>1.14.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>DayBreak.Towny</groupId>
+			<artifactId>Towny</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<properties>

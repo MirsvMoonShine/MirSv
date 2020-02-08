@@ -26,3 +26,13 @@ commands:
     description: Party Plugin
   forbidden:
     description: ForbiddenWord Plugin
+  g:
+    description: AdvanceChat Plugin
+  tc:
+    description: AdvanceChat Plugin
+  nc:
+    description: AdvanceChat Plugin
+  a:
+    description: AdvanceChat Plugin
+  bc:
+    description: AdvanceChat Plugin

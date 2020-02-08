@@ -10,6 +10,7 @@ import com.mirsv.function.list.Cokes.HungerMaintenance;
 import com.mirsv.function.list.Cokes.ItemTag;
 import com.mirsv.function.list.Cokes.BedProhibition;
 import com.mirsv.function.list.Cokes.Party.PartyManager;
+import com.mirsv.function.list.Cokes.Chat.AdvanceChat;
 
 public enum Functions {
 	GlobalMute(new GlobalMute()),
@@ -21,7 +22,8 @@ public enum Functions {
 	WhisperChat(new WhisperChat()),
 	Party(new PartyManager()),
 	NoBedInAnotherWorld(new BedProhibition()),
-	ForbiddenWord(new WordProhibition());
+	ForbiddenWord(new WordProhibition()),
+	AdvanceChat(new AdvanceChat());
 
 	private final AbstractFunction function;
 
