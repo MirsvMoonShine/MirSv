@@ -15,10 +15,12 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.mirsv.function.AbstractFunction;
-import com.mirsv.function.list.Cokes.Party.PartyManager;
+import com.mirsv.function.list.Cokes.Party.*;
 import com.mirsv.util.MirUser;
 import com.mirsv.util.PlayerCollector;
 import com.palmergames.bukkit.towny.object.Resident;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class AdvanceChat extends AbstractFunction implements CommandExecutor, Listener {
 	HashMap<MirUser, Integer> info = new HashMap<>();
@@ -27,8 +29,8 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 	 * 0 전체 / 1 마을 / 2 국가 / 3 파티 / 4 어드민 / 5 공지
 	 */
 	
-	String[] prefix = new String[] {"", "[Towny] ", "[Nation] ", "[Party] ", "[Admin] ", "[공지] "};
-	String[] color = new String[] {"§f", "§b", "§6", "§a", "§c", ""};
+	String[] prefix = new String[] {"", "[Towny] ", "[Nation] ", "[Party] ", "[Admin] ", "§4[§a공지§4] "};
+	String[] color = new String[] {"§f", "§b", "§6", "§a", "§c", "§a"};
 	
 	public AdvanceChat() {
 		super("더나은채팅", "1.0", "더 나은 타우니 채팅을 줍니다.");
@@ -59,8 +61,12 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 		MirUser m = PlayerCollector.getMirUser(p);
 		int gets = info.getOrDefault(m, 0);
 		
-		String message = e.getMessage();
+		String message = e.getMessage().replace("%", "%%");
 		String hash = prefix[gets];
+		
+		String group = m.getGroupPrefix();
+		if (group != null) group = ChatColor.translateAlternateColorCodes('&', group);
+		else group = "";
 		
 		if (gets == 0) {
 			if (m.getTown() != null) {
@@ -96,7 +102,8 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 				t.playSound(t.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.5F);
 			}
 		}
-		e.setFormat(color[gets]+hash+"§f"+m.getNickname()+" : "+color[gets]+message);
+		
+		e.setFormat(color[gets]+hash+"§f"+group+"§f"+m.getNickname()+" §f: "+color[gets]+message);
 	}
 	
 	@EventHandler
@@ -136,24 +143,24 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 						p.sendMessage("[AdvanceChat] 전체채팅으로 전환되었습니다.");
 					}
 				} else if (label.equals("pc") && PartyManager.getParty(p.getUniqueId()) != null) {
-					if (gets != 2) {
-						info.put(m, 2);
+					if (gets != 3) {
+						info.put(m, 3);
 						p.sendMessage("[AdvanceChat] 파티채팅으로 전환되었습니다.");
 					} else {
 						info.put(m, 0);
 						p.sendMessage("[AdvanceChat] 전체채팅으로 전환되었습니다.");
 					}
 				} else if (label.equals("a") &&  p.isOp()) {
-					if (gets != 2) {
-						info.put(m, 2);
+					if (gets != 4) {
+						info.put(m, 4);
 						p.sendMessage("[AdvanceChat] 어드민채팅으로 전환되었습니다.");
 					} else {
 						info.put(m, 0);
 						p.sendMessage("[AdvanceChat] 전체채팅으로 전환되었습니다.");
 					}
 				} else if (label.equals("bc") &  p.isOp()) {
-					if (gets != 2) {
-						info.put(m, 2);
+					if (gets != 5) {
+						info.put(m, 5);
 						p.sendMessage("[AdvanceChat] 공지채팅으로 전환되었습니다.");
 					} else {
 						info.put(m, 0);

@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.function.Functions;
 import com.mirsv.util.Messager;
 import com.mirsv.util.thread.ThreadUtil;
+
+import net.luckperms.api.LuckPerms;
 
 /**
  * 미르서버 종합 플러그인
@@ -20,6 +24,9 @@ import com.mirsv.util.thread.ThreadUtil;
 public class Mirsv extends JavaPlugin {
 	
 	private static Mirsv plugin;
+	
+	RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+	LuckPerms api;
 	
 	public static Mirsv getPlugin() {
 		return plugin;
@@ -45,6 +52,11 @@ public class Mirsv extends JavaPlugin {
 		ThreadUtil.onEnable();
 		
 		Messager.sendMessage("플러그인이 활성화되었습니다.");
+		
+		provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+		if (provider != null) {
+		    api = provider.getProvider();
+		}
 	}
 	
 	@Override
@@ -67,5 +79,9 @@ public class Mirsv extends JavaPlugin {
 		}
 		
 		return list;
+	}
+	
+	public LuckPerms getPermAPI() {
+		return api;
 	}
 }

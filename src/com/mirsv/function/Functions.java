@@ -2,13 +2,7 @@ package com.mirsv.function;
 
 import com.mirsv.function.list.CatNote.CallPlayer;
 import com.mirsv.function.list.CatNote.WhisperChat;
-import com.mirsv.function.list.Cokes.BroadcastChat;
-import com.mirsv.function.list.Cokes.ClearChat;
-import com.mirsv.function.list.Cokes.WordProhibition;
-import com.mirsv.function.list.Cokes.GlobalMute;
-import com.mirsv.function.list.Cokes.HungerMaintenance;
-import com.mirsv.function.list.Cokes.ItemTag;
-import com.mirsv.function.list.Cokes.BedProhibition;
+import com.mirsv.function.list.Cokes.*;
 import com.mirsv.function.list.Cokes.Party.PartyManager;
 import com.mirsv.function.list.Cokes.Chat.AdvanceChat;
 
@@ -23,7 +17,8 @@ public enum Functions {
 	Party(new PartyManager()),
 	NoBedInAnotherWorld(new BedProhibition()),
 	ForbiddenWord(new WordProhibition()),
-	AdvanceChat(new AdvanceChat());
+	AdvanceChat(new AdvanceChat()),
+	Nickname(new NickName());
 
 	private final AbstractFunction function;
 

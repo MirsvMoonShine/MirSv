@@ -7,12 +7,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.mirsv.Mirsv;
 import com.mirsv.util.data.FileUtil;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+
+import net.luckperms.api.cacheddata.CachedMetaData;
+import net.luckperms.api.context.ContextManager;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.query.QueryOptions;
+import net.md_5.bungee.api.ChatColor;
 
 public class MirUser {
 	Player p;
@@ -56,7 +63,7 @@ public class MirUser {
 	public Nation getNation() {
 		try {
 			Town t = getTown();
-			if (t.hasNation()) {
+			if (t != null && t.hasNation()) {
 				return t.getNation();
 			}
 		} catch (NotRegisteredException e) {
@@ -68,7 +75,7 @@ public class MirUser {
 	@SuppressWarnings("deprecation")
 	public Resident getResident() {
 		try {
-			r = Towny.getPlugin().getTownyUniverse().getResident(getNickname());
+			r = Towny.getPlugin().getTownyUniverse().getResident(p.getName());
 			return r;
 		} catch (NotRegisteredException e) {
 			return null;
@@ -76,7 +83,17 @@ public class MirUser {
 	}
 	
 	public String getNickname() {
-		return config.getString("nickname", p.getName());
+		return ChatColor.translateAlternateColorCodes('&', config.getString("nickname", p.getName()));
+	}
+	
+	public void setNickname(String s) {
+		config.set("nickname", s);
+		try {
+			config.save(f);
+			config.load(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public int getDonation() {
@@ -85,5 +102,13 @@ public class MirUser {
 	
 	public Player getPlayer() {
 		return p;
+	}
+	
+	public String getGroupPrefix() {
+		User user = Mirsv.getPlugin().getPermAPI().getUserManager().getUser(p.getUniqueId());
+		ContextManager cm = Mirsv.getPlugin().getPermAPI().getContextManager();
+		QueryOptions queryOptions = cm.getQueryOptions(user).orElse(cm.getStaticQueryOptions());
+		CachedMetaData metaData = user.getCachedData().getMetaData(queryOptions);
+		return metaData.getPrefix();
 	}
 }
