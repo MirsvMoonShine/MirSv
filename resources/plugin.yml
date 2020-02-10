@@ -36,5 +36,11 @@ commands:
     description: AdvanceChat Plugin
   bc:
     description: AdvanceChat Plugin
+  spychat:
+    description: AdvanceChat Plugin
   nickname:
     description: Nickname Plugin
+  nick:
+    description: Nickname Plugin
+  prefix:
+    description: CustomPrefix Plugin

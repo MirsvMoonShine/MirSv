@@ -33,12 +33,16 @@ public class PlayerCollector {
 	}
 	
 	public static MirUser getMirUser(Player p) {
-		if (isMirUser(p)) return user.get(p);
-		return null;
+		if (!isMirUser(p)) user.put(p, new MirUser(p));
+		return user.get(p);
 	}
 	
 	public static boolean isMirUser(Player p) {
 		if (user.containsKey(p)) return true;
 		return false;
+	}
+	
+	public static Map<Player, MirUser> getUsers() {
+		return user;
 	}
 }

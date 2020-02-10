@@ -1,6 +1,9 @@
-package com.mirsv.function.list.Cokes.Chat;
+package com.mirsv.function.list.Cokes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -14,16 +17,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import com.mirsv.Mirsv;
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.function.list.Cokes.Party.*;
 import com.mirsv.util.MirUser;
 import com.mirsv.util.PlayerCollector;
-import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Town;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class AdvanceChat extends AbstractFunction implements CommandExecutor, Listener {
-	HashMap<MirUser, Integer> info = new HashMap<>();
+	Map<MirUser, Integer> info = new HashMap<>();
+	ArrayList<Player> spy = new ArrayList<>();
 	/*
 	 * info값에 따른 채팅 정보
 	 * 0 전체 / 1 마을 / 2 국가 / 3 파티 / 4 어드민 / 5 공지
@@ -45,6 +51,7 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 		registerCommand("pc", this);
 		registerCommand("a", this);
 		registerCommand("bc", this);
+		registerCommand("spychat", this);
 	}
 
 	@Override
@@ -61,39 +68,62 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 		MirUser m = PlayerCollector.getMirUser(p);
 		int gets = info.getOrDefault(m, 0);
 		
+		Town town = m.getTown();
+		Nation nation = m.getNation();
+		Party party = PartyManager.getParty(p.getUniqueId());
+		
+		if ((town == null && gets == 1) || (nation == null && gets == 2) || (party == null && gets == 3)) {
+			p.sendMessage("[AdvanceChat] 해당 소속이 아닙니다. 전체채팅으로 변경합니다.");
+			gets = 0;
+			info.put(m, 0);
+		}
+		
 		String message = e.getMessage().replace("%", "%%");
 		String hash = prefix[gets];
 		
-		String group = m.getGroupPrefix();
+		String group = getPrefix(m);
 		if (group != null) group = ChatColor.translateAlternateColorCodes('&', group);
 		else group = "";
 		
 		if (gets == 0) {
-			if (m.getTown() != null) {
-				if (m.getNation() != null) {
-					hash = "§f[§6"+m.getNation().getName()+"§f|§b"+m.getTown().getName()+"§f] ";
+			if (town != null) {
+				if (nation != null) {
+					hash = "§f[§6"+nation.getName()+"§f|§b"+town.getName()+"§f] ";
 				} else {
-					hash = "§f[§b"+m.getTown().getName()+"§f] ";
+					hash = "§f[§b"+town.getName()+"§f] ";
 				}
 			}
+			
+			e.setFormat(color[gets]+hash+"§r"+group+"§r"+m.getNickname()+" §f: "+color[gets]+message);
 		}
 		else if (gets == 1) {
 			e.getRecipients().clear();
-			for (Resident r : m.getTown().getResidents()) {
-				e.getRecipients().add(Bukkit.getPlayer(r.getName()));
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				MirUser user = PlayerCollector.getMirUser(player);
+				if (town.getResidents().contains(user.getResident()) && user.getPlayer().isOnline()) {
+					e.getRecipients().add(user.getPlayer());
+				}
 			}
+			e.setFormat(color[gets]+hash+"§f"+m.getNickname()+" §f: "+color[gets]+message);
 		} else if (gets == 2) {
 			e.getRecipients().clear();
-			for (Resident r : m.getNation().getResidents()) {
-				e.getRecipients().add(Bukkit.getPlayer(r.getName()));
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				MirUser user = PlayerCollector.getMirUser(player);
+				if (nation.getResidents().contains(user.getResident()) && user.getPlayer().isOnline()) {
+					e.getRecipients().add(user.getPlayer());
+				}
 			}
+			e.setFormat(color[gets]+hash+"§f[§b"+m.getTown().getName()+"§f] "+m.getNickname()+" §f: "+color[gets]+message);
 		} else if (gets == 3) {
 			e.getRecipients().clear();
+			e.getRecipients().add(p);
 			for (UUID r : PartyManager.getParty(p.getUniqueId()).getPlayers()) {
 				e.getRecipients().add(Bukkit.getPlayer(r));
 			}
+			e.setFormat(color[gets]+hash+"§f"+m.getNickname()+" §f: "+color[gets]+message);
 		} else if (gets == 4) {
 			e.getRecipients().clear();
+			e.getRecipients().add(p);
 			for (Player t : Bukkit.getOnlinePlayers()) {
 				if (t.isOp()) e.getRecipients().add(t);
 			}
@@ -101,9 +131,12 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 			for (Player t : Bukkit.getOnlinePlayers()) {
 				t.playSound(t.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.5F);
 			}
+			e.setFormat(color[gets]+hash+"§f"+group+"§f"+m.getNickname()+" §f: "+color[gets]+message);
 		}
 		
-		e.setFormat(color[gets]+hash+"§f"+group+"§f"+m.getNickname()+" §f: "+color[gets]+message);
+		for (Player spy: spy) {
+			e.getRecipients().add(spy);
+		}
 	}
 	
 	@EventHandler
@@ -166,13 +199,21 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 						info.put(m, 0);
 						p.sendMessage("[AdvanceChat] 전체채팅으로 전환되었습니다.");
 					}
+				} else if (label.equals("spychat")) {
+					if (spy.contains(p)) {
+						spy.remove(p);
+						p.sendMessage("[AdvanceChat] 스파이쳇을 종료합니다.");
+					} else {
+						spy.add(p);
+						p.sendMessage("[AdvanceChat] 스파이쳇을 시작합니다.");
+					}
 				} else {
 					p.sendMessage("[AdvanceChat] 이미 그 채팅이거나, 마을이 없거나 국가가 없거나 파티에 가입되어있지 않는 상태입니다.");
 				}
 			} else {
 				String Message = args[0];
 				for (int a = 1 ; a < args.length ; a++) {
-					Message = Message + " "+ args[1];
+					Message = Message + " "+ args[a];
 				}
 				
 				if (label.equals("g") && gets != 0) {
@@ -194,5 +235,27 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 			}
 		}
 		return false;
+	}
+	
+	public String getPrefix(MirUser user) {
+		if (Mirsv.getPlugin().getConfig().getBoolean("enable.CustomPrefix", true)) {
+			if (user.getConfig().getInt("CustomPrefix.Index", 0) == 0) {
+				return user.getGroupPrefix();
+			} else if (user.getConfig().getInt("CustomPrefix.Index",0) == -1) {
+				if (user.getPlayer().isOp()) {
+					return "";
+				} else {
+					user.getConfig().set("CustomPrefix.Index", 0);
+					user.reloadConfig();
+					return getPrefix(user);
+				}
+			} else {
+				List<String> prefix = user.getConfig().getStringList("CustomPrefix.List");
+				int index = user.getConfig().getInt("CustomPrefix.Index", 0)-1;
+				if (index >= prefix.size()) return user.getGroupPrefix();
+				else return prefix.get(index);
+			}
+		}
+		return user.getGroupPrefix();
 	}
 }

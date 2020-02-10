@@ -4,7 +4,7 @@ import com.mirsv.function.list.CatNote.CallPlayer;
 import com.mirsv.function.list.CatNote.WhisperChat;
 import com.mirsv.function.list.Cokes.*;
 import com.mirsv.function.list.Cokes.Party.PartyManager;
-import com.mirsv.function.list.Cokes.Chat.AdvanceChat;
+import com.mirsv.function.list.Cokes.CustomPrefix.CustomPrefix;
 
 public enum Functions {
 	GlobalMute(new GlobalMute()),
@@ -18,7 +18,8 @@ public enum Functions {
 	NoBedInAnotherWorld(new BedProhibition()),
 	ForbiddenWord(new WordProhibition()),
 	AdvanceChat(new AdvanceChat()),
-	Nickname(new NickName());
+	Nickname(new NickName()),
+	CustomPrefix(new CustomPrefix());
 
 	private final AbstractFunction function;
 

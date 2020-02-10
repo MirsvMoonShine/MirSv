@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 
 import com.mirsv.Mirsv;
 import com.mirsv.util.data.FileUtil;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownyUniverse;
 
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.context.ContextManager;
@@ -22,27 +22,27 @@ import net.luckperms.api.query.QueryOptions;
 import net.md_5.bungee.api.ChatColor;
 
 public class MirUser {
-	Player p;
-	YamlConfiguration config;
-	File f;
-	MirUser m;
-	Resident r;
+	private final Player p;
+	private YamlConfiguration config;
+	private final File f;
 	
 	public MirUser(Player p) {
 		this.p = p;
+		FileUtil.getFolder("UserData");
+		f = FileUtil.getFile("UserData/"+p.getUniqueId()+".dat");
 		loadConfiguration();
 	}
 	
 	public MirUser(UUID u) {
 		this.p = Bukkit.getPlayer(u);
+		FileUtil.getFolder("UserData");
+		f = FileUtil.getFile("UserData/"+p.getUniqueId()+".dat");
 		loadConfiguration();
 	}
 	
 	void loadConfiguration() {
-		FileUtil.getFolder("UserData");
-		f = FileUtil.getFile("UserData/"+p.getUniqueId()+".dat");
 		config = YamlConfiguration.loadConfiguration(f);
-		if (config.getString("nickname") != null) {
+		if (config.getString("nickname") == null) {
 			config.set("nickname", p.getName());
 		}
 	}
@@ -62,9 +62,8 @@ public class MirUser {
 	
 	public Nation getNation() {
 		try {
-			Town t = getTown();
-			if (t != null && t.hasNation()) {
-				return t.getNation();
+			if (getTown() != null && getTown().hasNation()) {
+				return getTown().getNation();
 			}
 		} catch (NotRegisteredException e) {
 			return null;
@@ -72,11 +71,13 @@ public class MirUser {
 		return null;
 	}
 	
-	@SuppressWarnings("deprecation")
+	public YamlConfiguration getConfig() {
+		return config;
+	}
+	
 	public Resident getResident() {
 		try {
-			r = Towny.getPlugin().getTownyUniverse().getResident(p.getName());
-			return r;
+			return TownyUniverse.getDataSource().getResident(p.getName());
 		} catch (NotRegisteredException e) {
 			return null;
 		}
@@ -88,12 +89,7 @@ public class MirUser {
 	
 	public void setNickname(String s) {
 		config.set("nickname", s);
-		try {
-			config.save(f);
-			config.load(f);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		reloadConfig();
 	}
 	
 	public int getDonation() {
@@ -110,5 +106,14 @@ public class MirUser {
 		QueryOptions queryOptions = cm.getQueryOptions(user).orElse(cm.getStaticQueryOptions());
 		CachedMetaData metaData = user.getCachedData().getMetaData(queryOptions);
 		return metaData.getPrefix();
+	}
+	
+	public void reloadConfig() {
+		try {
+			config.save(f);
+			config = YamlConfiguration.loadConfiguration(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

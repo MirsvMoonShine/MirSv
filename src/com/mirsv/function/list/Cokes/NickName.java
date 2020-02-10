@@ -36,7 +36,7 @@ public class NickName extends AbstractFunction implements CommandExecutor {
 					}
 				}
 			} else {
-				player.sendMessage("§c사용법: /nickname [player] [reset|nickname]");
+				player.sendMessage("§c사용법: /nickname [player] [reset|nickname] | /nick [player] [reset|nickname]");
 			}
 		}
 		return false;
@@ -45,6 +45,7 @@ public class NickName extends AbstractFunction implements CommandExecutor {
 	@Override
 	protected void onEnable() {
 		registerCommand("nickname", this);
+		registerCommand("nick", this);
 	}
 
 	@Override
