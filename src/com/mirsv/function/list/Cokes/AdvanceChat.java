@@ -94,7 +94,7 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 				}
 			}
 			
-			e.setFormat(color[gets]+hash+"§r"+group+"§r"+m.getNickname()+" §f: "+color[gets]+message);
+			e.setFormat(color[gets]+hash+"§r"+group+"§r"+m.getNickname()+"§f: "+color[gets]+message);
 		}
 		else if (gets == 1) {
 			e.getRecipients().clear();
@@ -104,7 +104,7 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 					e.getRecipients().add(user.getPlayer());
 				}
 			}
-			e.setFormat(color[gets]+hash+"§f"+m.getNickname()+" §f: "+color[gets]+message);
+			e.setFormat(color[gets]+hash+"§f"+m.getNickname()+"§f: "+color[gets]+message);
 		} else if (gets == 2) {
 			e.getRecipients().clear();
 			for (Player player : Bukkit.getOnlinePlayers()) {
@@ -113,25 +113,26 @@ public class AdvanceChat extends AbstractFunction implements CommandExecutor, Li
 					e.getRecipients().add(user.getPlayer());
 				}
 			}
-			e.setFormat(color[gets]+hash+"§f[§b"+m.getTown().getName()+"§f] "+m.getNickname()+" §f: "+color[gets]+message);
+			e.setFormat(color[gets]+hash+"§f[§b"+m.getTown().getName()+"§f] "+m.getNickname()+"§f: "+color[gets]+message);
 		} else if (gets == 3) {
 			e.getRecipients().clear();
 			e.getRecipients().add(p);
 			for (UUID r : PartyManager.getParty(p.getUniqueId()).getPlayers()) {
 				e.getRecipients().add(Bukkit.getPlayer(r));
 			}
-			e.setFormat(color[gets]+hash+"§f"+m.getNickname()+" §f: "+color[gets]+message);
+			e.setFormat(color[gets]+hash+"§f"+m.getNickname()+"§f: "+color[gets]+message);
 		} else if (gets == 4) {
 			e.getRecipients().clear();
 			e.getRecipients().add(p);
 			for (Player t : Bukkit.getOnlinePlayers()) {
 				if (t.isOp()) e.getRecipients().add(t);
 			}
+			e.setFormat(color[gets]+hash+"§f"+m.getNickname()+"§f: "+color[gets]+message);
 		} else if (gets == 5) {
 			for (Player t : Bukkit.getOnlinePlayers()) {
 				t.playSound(t.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.5F);
 			}
-			e.setFormat(color[gets]+hash+"§f"+group+"§f"+m.getNickname()+" §f: "+color[gets]+message);
+			e.setFormat(color[gets]+hash+"§f"+group+"§f"+m.getNickname()+"§f: "+color[gets]+message);
 		}
 		
 		for (Player spy: spy) {

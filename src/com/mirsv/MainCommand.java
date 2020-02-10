@@ -70,7 +70,25 @@ public class MainCommand implements CommandExecutor {
 								p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "존재하지 않는 기능입니다.");
 							}
 						}
-					} else if (args[0].equalsIgnoreCase("info")) {
+					} if (args[0].equalsIgnoreCase("enable")) {
+						if ((args.length == 2)) {
+							Functions f = Functions.getFunction(args[1]);
+							if(f != null) {
+								if (!Mirsv.getPlugin().getConfig().getBoolean("enable." + f.toString())) {
+									AbstractFunction function = f.getFunction();
+									Mirsv.getPlugin().getConfig().set("enable." + f.toString(), true);
+									Mirsv.getPlugin().saveConfig();
+									function.Enable();
+									p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + function.getName() + " 기능을 활성화했습니다.");
+								} else {
+									p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "이미 활성화돼있습니다.");
+								}
+							} else {
+								p.sendMessage(Messager.getPrefix() + ChatColor.AQUA + "존재하지 않는 기능입니다.");
+							}
+						}
+					}
+					else if (args[0].equalsIgnoreCase("info")) {
 						if ((args.length == 2)) {
 							Functions f = Functions.getFunction(args[1]);
 							if(f != null) {

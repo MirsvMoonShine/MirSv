@@ -83,7 +83,7 @@ public class CallPlayer extends AbstractFunction implements CommandExecutor {
 								continue;
 							}
 							CallList.add(s);
-							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 10, 1);
+							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_HARP, 10, 1);
 							
 							p.sendTitle(
 									ChatColor.translateAlternateColorCodes('&', "&e" + sender.getName() + "&f님이 당신을 호출하셨습니다."),
