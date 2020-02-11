@@ -8,15 +8,11 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
-import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.context.ContextManager;
-import net.luckperms.api.query.QueryOptions;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;

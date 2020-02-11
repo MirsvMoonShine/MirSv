@@ -124,7 +124,7 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&c공지 &f| " + getPrefix(user) + user.getNickname() + "&f: " + message));
 				break;
 			default:
-				e.setFormat(ChatColor.translateAlternateColorCodes('&', (user.hasTown() ? (user.hasNation() ? "&f[&6" + user.getNation().getName() + "&f|&b" + user.getTown().getName() + "&f]" : "&f[&b" + user.getTown().getName() + "&f] ") : "") + getPrefix(user) + user.getNickname() + "&f: " + message));
+				e.setFormat(ChatColor.translateAlternateColorCodes('&', (user.hasTown() ? (user.hasNation() ? "&f[&6" + user.getNation().getName() + "&f|&b" + user.getTown().getName() + "&f]" : "&f[&b" + user.getTown().getName() + "&f]") : "") + getPrefix(user) + user.getNickname() + "&f: " + message));
 				break;
 		}
 
@@ -239,10 +239,10 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 						break;
 					case "spychat":
 						if (spying.add(player)) {
-							player.sendMessage(prefix + "이제 채팅을 엿듣지 않습니다.");
+							player.sendMessage(prefix + "지금부터 모든 채팅을 엿듣습니다.");
 						} else {
 							spying.remove(player);
-							player.sendMessage(prefix + "지금부터 모든 채팅을 엿듣습니다.");
+							player.sendMessage(prefix + "이제 채팅을 엿듣지 않습니다.");
 						}
 						break;
 				}
