@@ -128,7 +128,16 @@ public class User {
 	}
 
 	public enum Channel {
-		GLOBAL_CHAT, TOWN_CHAT, NATION_CHAT, LOCAL_CHAT, PARTY_CHAT, MODERATOR_CHAT, ADMIN_CHAT, NOTICE_CHAT
+		GLOBAL_CHAT, TOWN_CHAT, NATION_CHAT, LOCAL_CHAT, PARTY_CHAT, MODERATOR_CHAT, ADMIN_CHAT, NOTICE_CHAT;
+		
+		public static boolean isChannel(String name) {
+			for (Channel channel : Channel.values()) {
+				if (channel.name().equals(name)) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 
 }

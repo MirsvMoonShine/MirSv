@@ -43,6 +43,8 @@ commands:
     description: AdvancedChat 기본 명령어
   spychat:
     description: AdvancedChat 기본 명령어
+  ac:
+    description: AdvancedChat 기본 명령어
   nickname:
     description: Nickname Plugin
   nick:

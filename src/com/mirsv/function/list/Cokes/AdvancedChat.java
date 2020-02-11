@@ -3,6 +3,7 @@ package com.mirsv.function.list.Cokes;
 import com.mirsv.Mirsv;
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.function.list.Cokes.party.Party;
+import com.mirsv.util.Messager;
 import com.mirsv.util.users.User;
 import com.mirsv.util.users.User.Channel;
 import com.mirsv.util.users.UserManager;
@@ -45,6 +46,7 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 		registerCommand("a", this);
 		registerCommand("bc", this);
 		registerCommand("spychat", this);
+		registerCommand("ac", this);
 	}
 
 	@Override
@@ -245,6 +247,29 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 							player.sendMessage(prefix + "이제 채팅을 엿듣지 않습니다.");
 						}
 						break;
+					case "ac":
+						int arg = args.length;
+						if(arg == 0) {
+							player.sendMessage(Messager.formatTitle(ChatColor.AQUA, ChatColor.WHITE, "채팅 명령어"));
+							player.sendMessage(prefix+Messager.formatCommand("ac", "set <player> <mode>", "해당 플레이어의 채팅을 그 기능으로 바꿉니다.", true));
+							player.sendMessage(prefix+"<mode> : global, local, town, nation, party");
+						} else {
+							if (arg == 3) {
+								if (args[0].equalsIgnoreCase("set") && Bukkit.getPlayerExact(args[1]) != null) {
+									Player target = Bukkit.getPlayerExact(args[1]);
+									User tuser = UserManager.getUser(target);
+									String mode = args[2].toUpperCase();
+									if (Channel.isChannel(mode+"_CHAT")) {
+										Channel channel = Channel.valueOf(mode+"_CHAT");
+										tuser.setChatChannel(channel);
+										target.sendMessage(prefix+"당신의 채팅모드가 바뀌었습니다.");
+										player.sendMessage(prefix+args[1]+"님의 채팅모드를 바꾸었습니다.");
+									} else {
+										player.sendMessage(prefix+ChatColor.RED + "해당 채널로 변경하실 수 없습니다.");
+									}
+								}
+							}
+						}
 				}
 			}/* else {
 				String Message = args[0];
