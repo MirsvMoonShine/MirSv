@@ -7,8 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mirsv.function.AbstractFunction;
-import com.mirsv.util.MirUser;
-import com.mirsv.util.PlayerCollector;
+import com.mirsv.util.users.User;
+import com.mirsv.util.users.UserManager;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -24,7 +24,7 @@ public class NickName extends AbstractFunction implements CommandExecutor {
 			Player player = (Player) sender;
 			if (args.length == 2) {
 				if (Bukkit.getPlayer(args[0]) != null) {
-					MirUser user = PlayerCollector.getMirUser(Bukkit.getPlayer(args[0]));
+					User user = UserManager.getUser(Bukkit.getPlayer(args[0]));
 					if (args[1].equalsIgnoreCase("reset")) {
 						user.setNickname(args[0]);
 						player.sendMessage(args[0]+"님의 닉네임을 원래대로 돌려놓았습니다.");

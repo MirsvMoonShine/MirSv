@@ -1,17 +1,21 @@
-package com.mirsv.function.list.Cokes.Party;
+package com.mirsv.function.list.Cokes.party;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import com.mirsv.util.Messager;
-import com.mirsv.util.PlayerCollector;
+import com.mirsv.util.users.UserManager;
+
+import static com.mirsv.function.list.Cokes.party.Party.getParty;
+import static com.mirsv.function.list.Cokes.party.Party.hasParty;
 
 public class PartyTabCompleter implements TabCompleter {
 
@@ -25,15 +29,15 @@ public class PartyTabCompleter implements TabCompleter {
 				return sub;
 			case 2:
 				if (args[0].equalsIgnoreCase("add")) {
-					List<String> adds = (List<String>) PlayerCollector.getOnlinePlayersName();
+					List<String> adds = UserManager.getOnlinePlayersName();
 					if (sender instanceof Player) {
 						Player p = (Player) sender;
 						adds.remove(p.getName());
-						if (PartyManager.getParty(p.getUniqueId()) != null) {
-							Party party = PartyManager.getParty(p.getUniqueId());
+						if (hasParty(p)) {
+							Party party = getParty(p);
 							if (party.getOwner().equals(p.getUniqueId())) {
-								for (UUID joiner : party.getPlayers()) {
-									adds.remove(Bukkit.getPlayer(joiner).getName());
+								for (OfflinePlayer offlinePlayer : party.getPlayers()) {
+									adds.remove(offlinePlayer.getName());
 								}
 								if (!args[1].isEmpty()) adds.removeIf(cc -> !cc.toLowerCase().startsWith(args[1].toLowerCase()));
 								return adds;
@@ -46,11 +50,11 @@ public class PartyTabCompleter implements TabCompleter {
 					List<String> kickers = new ArrayList<>();
 					if (sender instanceof Player) {
 						Player p = (Player) sender;
-						if (PartyManager.getParty(p.getUniqueId()) != null) {
-							Party party = PartyManager.getParty(p.getUniqueId());
+						if (hasParty(p)) {
+							Party party = getParty(p);
 							if (party.getOwner().equals(p.getUniqueId())) {
-								for (UUID joiner : party.getPlayers()) {
-									kickers.add(Bukkit.getPlayer(joiner).getName());
+								for (OfflinePlayer offlinePlayer : party.getPlayers()) {
+									kickers.add(offlinePlayer.getName());
 								}
 								kickers.remove(p.getName());
 								if (!args[1].isEmpty()) kickers.removeIf(cc -> !cc.toLowerCase().startsWith(args[1].toLowerCase()));
@@ -64,8 +68,8 @@ public class PartyTabCompleter implements TabCompleter {
 					List<String> toggles = Messager.getStringList("pvp", "open");
 					if (sender instanceof Player) {
 						Player p = (Player) sender;
-						if (PartyManager.getParty(p.getUniqueId()) != null) {
-							Party party = PartyManager.getParty(p.getUniqueId());
+						if (hasParty(p)) {
+							Party party = getParty(p);
 							if (party.getOwner().equals(p.getUniqueId())) {
 								if (!args[1].isEmpty()) toggles.removeIf(cc -> !cc.toLowerCase().startsWith(args[1].toLowerCase()));
 								return toggles;

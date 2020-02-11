@@ -14,8 +14,6 @@ commands:
     aliases: [chatclear, cc]
   itemtag:
     description: ItemTag Plugin
-  bc:
-    description: BroadCast Plugin
   cl:
     description: CallPlayer Plugin
   wc:
@@ -27,17 +25,24 @@ commands:
   forbidden:
     description: ForbiddenWord Plugin
   g:
-    description: AdvanceChat Plugin
+    description: AdvancedChat 기본 명령어
   tc:
-    description: AdvanceChat Plugin
+    description: AdvancedChat 기본 명령어
+  lc:
+    description: AdvancedChat 기본 명령어
+    aliases: [l]
   nc:
-    description: AdvanceChat Plugin
-  a:
-    description: AdvanceChat Plugin
+    description: AdvancedChat 기본 명령어
+  mod:
+    description: AdvancedChat 기본 명령어
+    aliases: [m]
+  admin:
+    description: AdvancedChat 기본 명령어
+    aliases: [a]
   bc:
-    description: AdvanceChat Plugin
+    description: AdvancedChat 기본 명령어
   spychat:
-    description: AdvanceChat Plugin
+    description: AdvancedChat 기본 명령어
   nickname:
     description: Nickname Plugin
   nick:

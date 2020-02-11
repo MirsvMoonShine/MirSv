@@ -26,7 +26,7 @@ import com.mirsv.util.data.FileUtil;
 public class WordProhibition extends AbstractFunction implements Listener, CommandExecutor, TabCompleter {
 	
 	private List<String> forbidden = new ArrayList<String>();
-	private File f = FileUtil.getFile("ForbiddenWord/ForbiddenWord.yml");
+	private File f = FileUtil.newFile("ForbiddenWord/ForbiddenWord.yml");
 	
 	public WordProhibition() {
 		super("금칙어", "1.0", "금칙어를 설정합니다.", "금칙어로 설정된 단어는 채팅에서 사용할 수 없습니다.");

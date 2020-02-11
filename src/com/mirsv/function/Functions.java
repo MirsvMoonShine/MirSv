@@ -3,7 +3,7 @@ package com.mirsv.function;
 import com.mirsv.function.list.CatNote.CallPlayer;
 import com.mirsv.function.list.CatNote.WhisperChat;
 import com.mirsv.function.list.Cokes.*;
-import com.mirsv.function.list.Cokes.Party.PartyManager;
+import com.mirsv.function.list.Cokes.party.PartyManager;
 import com.mirsv.function.list.Cokes.CustomPrefix.CustomPrefix;
 
 public enum Functions {
@@ -17,7 +17,7 @@ public enum Functions {
 	Party(new PartyManager()),
 	NoBedInAnotherWorld(new BedProhibition()),
 	ForbiddenWord(new WordProhibition()),
-	AdvanceChat(new AdvanceChat()),
+	AdvanceChat(new AdvancedChat()),
 	Nickname(new NickName()),
 	CustomPrefix(new CustomPrefix());
 

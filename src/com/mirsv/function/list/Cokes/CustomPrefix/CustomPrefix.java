@@ -19,8 +19,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.mirsv.Mirsv;
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.util.Messager;
-import com.mirsv.util.MirUser;
-import com.mirsv.util.PlayerCollector;
+import com.mirsv.util.users.User;
+import com.mirsv.util.users.UserManager;
 
 public class CustomPrefix extends AbstractFunction implements CommandExecutor, Listener {
 
@@ -35,7 +35,7 @@ public class CustomPrefix extends AbstractFunction implements CommandExecutor, L
 			if (args.length == 3 && args[0].equalsIgnoreCase("add") && player.isOp()) {
 				if (args[1].equals("@a")) {
 					for (Player target : Bukkit.getOnlinePlayers()) {
-						MirUser user = PlayerCollector.getMirUser(target);
+						User user = UserManager.getUser(target);
 						ArrayList<String> prefix = (ArrayList<String>) getPrefix(user);
 						String add= args[2];
 						prefix.add(add);
@@ -46,7 +46,7 @@ public class CustomPrefix extends AbstractFunction implements CommandExecutor, L
 					player.sendMessage("칭호 추가 완료");
 				} else if (Bukkit.getPlayer(args[1]) != null) {
 					Player target = Bukkit.getPlayer(args[2]);
-					MirUser user = PlayerCollector.getMirUser(target);
+					User user = UserManager.getUser(target);
 					ArrayList<String> prefix = (ArrayList<String>) getPrefix(user);
 					String add;
 					add = args[2];
@@ -105,7 +105,7 @@ public class CustomPrefix extends AbstractFunction implements CommandExecutor, L
 		return book;
 	}
 	
-	public static List<String> getPrefix(MirUser user) {
+	public static List<String> getPrefix(User user) {
 		List<String> result = user.getConfig().getStringList("CustomPrefix.List");
 		if (result == null) {
 			result = new ArrayList<String>();
@@ -117,7 +117,7 @@ public class CustomPrefix extends AbstractFunction implements CommandExecutor, L
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		Player player = e.getPlayer();
-		MirUser user = PlayerCollector.getMirUser(player);
+		User user = UserManager.getUser(player);
 		ItemStack main = player.getInventory().getItemInMainHand();
 		if (main.getType().equals(Material.BOOK) && main.hasItemMeta() && main.getItemMeta().getDisplayName().equals("§b칭호 교환권")) {
 			List<String> lore = main.getItemMeta().getLore();
