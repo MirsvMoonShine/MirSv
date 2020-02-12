@@ -1,8 +1,13 @@
 package com.mirsv.function.list.Cokes.CustomPrefix;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.mirsv.Mirsv;
+import com.mirsv.function.AbstractFunction;
+import com.mirsv.util.Messager;
+import com.mirsv.util.users.User;
+import com.mirsv.util.users.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,11 +21,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.mirsv.Mirsv;
-import com.mirsv.function.AbstractFunction;
-import com.mirsv.util.Messager;
-import com.mirsv.util.users.User;
-import com.mirsv.util.users.UserManager;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomPrefix extends AbstractFunction implements CommandExecutor, Listener {
 
@@ -36,25 +38,29 @@ public class CustomPrefix extends AbstractFunction implements CommandExecutor, L
 				if (args[1].equals("@a")) {
 					for (Player target : Bukkit.getOnlinePlayers()) {
 						User user = UserManager.getUser(target);
-						ArrayList<String> prefix = (ArrayList<String>) getPrefix(user);
-						String add= args[2];
+						JsonArray prefix = getPrefix(user);
+						String add = args[2];
 						prefix.add(add);
-						user.getConfig().set("CustomPrefix.List", prefix);
-						user.reloadConfig();
-						target.sendMessage(ChatColor.translateAlternateColorCodes('&', "칭호 "+add+"&f이(가) 추가되었습니다."));
+						JsonObject json = user.getConfig().getJson();
+						if (!json.has("prefix")) json.add("prefix", new JsonObject());
+						json = json.get("prefix").getAsJsonObject();
+						json.add("list", prefix);
+						target.sendMessage(ChatColor.translateAlternateColorCodes('&', "칭호 " + add + "&f이(가) 추가되었습니다."));
 					}
 					player.sendMessage("칭호 추가 완료");
 				} else if (Bukkit.getPlayer(args[1]) != null) {
 					Player target = Bukkit.getPlayer(args[2]);
 					User user = UserManager.getUser(target);
-					ArrayList<String> prefix = (ArrayList<String>) getPrefix(user);
+					JsonArray prefix = getPrefix(user);
 					String add;
 					add = args[2];
 					prefix.add(add);
-					user.getConfig().set("CustomPrefix.List", prefix);
-					user.reloadConfig();
+					JsonObject json = user.getConfig().getJson();
+					if (!json.has("prefix")) json.add("prefix", new JsonObject());
+					json = json.get("prefix").getAsJsonObject();
+					json.add("list", prefix);
 					player.sendMessage("칭호 추가 완료");
-					target.sendMessage(ChatColor.translateAlternateColorCodes('&', "칭호 "+add+"&f이(가) 추가되었습니다."));
+					target.sendMessage(ChatColor.translateAlternateColorCodes('&', "칭호 " + add + "&f이(가) 추가되었습니다."));
 				} else {
 					player.sendMessage("§c해당 플레이어는 존재하지 않습니다.");
 					player.sendMessage("§c사용법: /prefix add [@a|name] [prefix]");
@@ -85,35 +91,34 @@ public class CustomPrefix extends AbstractFunction implements CommandExecutor, L
 			Bukkit.broadcastMessage("AdvanceChat을 지원하지 않습니다. 해당 기능을 종료합니다.");
 			Disable();
 		}
-		
+
 		registerCommand("prefix", this);
 		registerListener(this);
 	}
 
 	@Override
 	protected void onDisable() {
-		
+
 	}
 
 	public ItemStack getPrefixBook(String prefix) {
 		ItemStack book = new ItemStack(Material.BOOK, 1);
 		ItemMeta meta = book.getItemMeta();
 		meta.setDisplayName("§b칭호 교환권");
-		List<String> lore = Messager.getStringList("§a>> §f칭호: "+ChatColor.translateAlternateColorCodes('&', prefix), "§a>> §f해당 칭호를 등록하실려면 들고 우클릭하시오.");
+		List<String> lore = Messager.getStringList("§a>> §f칭호: " + ChatColor.translateAlternateColorCodes('&', prefix), "§a>> §f해당 칭호를 등록하실려면 들고 우클릭하시오.");
 		meta.setLore(lore);
 		book.setItemMeta(meta);
 		return book;
 	}
-	
-	public static List<String> getPrefix(User user) {
-		List<String> result = user.getConfig().getStringList("CustomPrefix.List");
-		if (result == null) {
-			result = new ArrayList<String>();
-			user.getConfig().set("CustomPrefix.List", result);
-		}
-		return result;
+
+	public static JsonArray getPrefix(User user) {
+		JsonObject json = user.getConfig().getJson();
+		if (!json.has("prefix")) json.add("prefix", new JsonObject());
+		json = json.get("prefix").getAsJsonObject();
+		if (!json.has("list")) json.add("list", new JsonArray());
+		return json.get("list").getAsJsonArray();
 	}
-	
+
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		Player player = e.getPlayer();
@@ -123,13 +128,15 @@ public class CustomPrefix extends AbstractFunction implements CommandExecutor, L
 			List<String> lore = main.getItemMeta().getLore();
 			if (lore.get(0).startsWith("§a>> §f칭호: ")) {
 				String prefix = lore.get(0).replaceAll("§a>> §f칭호: ", "");
-				ArrayList<String> prefixes = (ArrayList<String>) getPrefix(user);
-				if (!prefixes.contains(prefix)) {
+				JsonArray prefixes = getPrefix(user);
+				if (!prefixes.contains(new JsonPrimitive(prefix))) {
 					prefixes.add(prefix);
-					user.getConfig().set("CustomPrefix.List", prefixes);
-					user.reloadConfig();
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', "칭호 "+prefix+"&f이(가) 추가되었습니다."));
-					if (main.getAmount() > 1) main.setAmount(main.getAmount()-1);
+					JsonObject json = user.getConfig().getJson();
+					if (!json.has("prefix")) json.add("prefix", new JsonObject());
+					json = json.get("prefix").getAsJsonObject();
+					json.add("list", prefixes);
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', "칭호 " + prefix + "&f이(가) 추가되었습니다."));
+					if (main.getAmount() > 1) main.setAmount(main.getAmount() - 1);
 					else player.getInventory().setItemInMainHand(null);
 				} else {
 					player.sendMessage("§c해당 칭호를 이미 보유하고 있습니다.");

@@ -16,15 +16,7 @@ import java.util.UUID;
 public class Party {
 
 	private static final String prefix = ChatColor.DARK_PURPLE + "파티 " + ChatColor.WHITE + "| ";
-	public static Map<UUID, Party> partyMap = new HashMap<UUID, Party>() {
-		@Override
-		public Party put(UUID k, Party v) {
-			if (k == null) {
-				Bukkit.broadcastMessage("null 들어옴");
-			}
-			return super.put(k, v);
-		}
-	};
+	public static Map<UUID, Party> partyMap = new HashMap<>();
 	public static Map<String, Party> parties = new HashMap<>();
 
 	public static boolean hasParty(String name) {
@@ -104,7 +96,7 @@ public class Party {
 			partyMap.remove(player.getUniqueId());
 			if (player.isOnline()) player.getPlayer().sendMessage(prefix + "귀하가 소속된 파티가 해체되었습니다.");
 		}
-		parties.remove(this);
+		parties.remove(this.getName());
 	}
 
 	public void sendMessage(String msg) {

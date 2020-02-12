@@ -21,7 +21,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.mirsv.function.AbstractFunction;
 import com.mirsv.util.Messager;
-import com.mirsv.util.data.FileUtil;
+import com.mirsv.util.database.FileUtil;
 
 public class WordProhibition extends AbstractFunction implements Listener, CommandExecutor, TabCompleter {
 	

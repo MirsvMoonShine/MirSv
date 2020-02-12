@@ -1,8 +1,11 @@
 package com.mirsv.util.users;
 
 import com.google.common.base.Preconditions;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mirsv.Mirsv;
-import com.mirsv.util.data.FileUtil;
+import com.mirsv.util.database.FileUtil;
+import com.mirsv.util.database.JsonConfiguration;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -13,7 +16,11 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,20 +28,23 @@ import java.util.logging.Logger;
 public class User {
 
 	private static final Logger logger = Logger.getLogger(User.class.getName());
+	private static final JsonParser parser = new JsonParser();
 
 	private final OfflinePlayer player;
 	private final Resident townyResident;
 	private final File configFile;
-	private final YamlConfiguration config;
+	private final JsonConfiguration config;
+	private final JsonObject configJson;
 	private int flag = 0x0;
 	private Channel chatChannel = Channel.GLOBAL_CHAT;
 
 	public User(OfflinePlayer player) throws NotRegisteredException {
 		this.player = player;
 		this.townyResident = TownyUniverse.getDataSource().getResident(player.getName());
-		this.configFile = FileUtil.newFile(FileUtil.newDirectory("userdata"), player.getUniqueId() + ".yml");
-		this.config = YamlConfiguration.loadConfiguration(configFile);
-		if (!config.contains("nickname")) config.set("nickname", player.getName());
+		this.configFile = FileUtil.newFile(FileUtil.newDirectory("userdata"), player.getUniqueId() + ".json");
+		this.config = new JsonConfiguration(configFile);
+		this.configJson = config.getJson();
+		if (!configJson.has("nickname")) configJson.addProperty("nickname", player.getName());
 	}
 
 	public Resident getResident() {
@@ -67,21 +77,22 @@ public class User {
 		return null;
 	}
 
-	public YamlConfiguration getConfig() {
+	public JsonConfiguration getConfig() {
 		return config;
 	}
 
 	public String getNickname() {
-		return ChatColor.translateAlternateColorCodes('&', config.getString("nickname", player.getName()));
+		if (!configJson.has("nickname")) configJson.addProperty("nickname", player.getName());
+		return ChatColor.translateAlternateColorCodes('&', configJson.get("nickname").getAsString());
 	}
 
 	public void setNickname(String nickname) {
-		config.set("nickname", nickname);
-		reloadConfig();
+		configJson.addProperty("nickname", nickname);
 	}
 
 	public int getDonation() {
-		return config.getInt("donation", 0);
+		if (!configJson.has("donation")) configJson.addProperty("donation", 0);
+		return configJson.get("donation").getAsInt();
 	}
 
 	public OfflinePlayer getPlayer() {
@@ -92,15 +103,6 @@ public class User {
 		net.luckperms.api.model.user.User user = Mirsv.getPlugin().getPermAPI().getUserManager().getUser(player.getUniqueId());
 		ContextManager contextManager = Mirsv.getPlugin().getPermAPI().getContextManager();
 		return user.getCachedData().getMetaData(contextManager.getQueryOptions(user).orElse(contextManager.getStaticQueryOptions())).getPrefix();
-	}
-
-	public void reloadConfig() {
-		try {
-			config.save(configFile);
-			config.load(configFile);
-		} catch (IOException | InvalidConfigurationException e) {
-			logger.log(Level.SEVERE, player.getName() + "님의 유저 데이터를 다시 저장하는 도중 오류가 발생하였습니다.", e);
-		}
 	}
 
 	public void addFlag(int flag) {
@@ -129,15 +131,6 @@ public class User {
 
 	public enum Channel {
 		GLOBAL_CHAT, TOWN_CHAT, NATION_CHAT, LOCAL_CHAT, PARTY_CHAT, MODERATOR_CHAT, ADMIN_CHAT, NOTICE_CHAT;
-		
-		public static boolean isChannel(String name) {
-			for (Channel channel : Channel.values()) {
-				if (channel.name().equals(name)) {
-					return true;
-				}
-			}
-			return false;
-		}
 	}
 
 }

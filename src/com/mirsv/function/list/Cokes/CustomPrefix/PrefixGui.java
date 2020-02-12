@@ -1,5 +1,8 @@
 package com.mirsv.function.list.Cokes.CustomPrefix;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mirsv.util.users.User;
 import com.mirsv.util.users.UserManager;
 import org.bukkit.Bukkit;
@@ -24,7 +27,7 @@ public class PrefixGui implements Listener {
 	private final Player opener;
 	private final User user;
 	private final ArrayList<String> values;
-	private int PlayerPage;
+	private int playerPage;
 	private Inventory GUI;
 	private boolean admin;
 
@@ -32,11 +35,13 @@ public class PrefixGui implements Listener {
 		this.target = opener;
 		this.opener = opener;
 		Bukkit.getPluginManager().registerEvents(this, Plugin);
-		ArrayList<String> a = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<>();
 		this.user = UserManager.getUser(target);
-		a.add(user.getGroupPrefix());
-		a.addAll(CustomPrefix.getPrefix(user));
-		values = a;
+		list.add(user.getGroupPrefix());
+		for (JsonElement element : CustomPrefix.getPrefix(user)) {
+			list.add(element.getAsString());
+		}
+		values = list;
 		admin = opener.isOp();
 	}
 
@@ -44,11 +49,13 @@ public class PrefixGui implements Listener {
 		this.target = target;
 		this.opener = opener;
 		Bukkit.getPluginManager().registerEvents(this, Plugin);
-		ArrayList<String> a = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<>();
 		this.user = UserManager.getUser(target);
-		a.add(user.getGroupPrefix());
-		a.addAll(CustomPrefix.getPrefix(user));
-		values = a;
+		list.add(user.getGroupPrefix());
+		for (JsonElement element : CustomPrefix.getPrefix(user)) {
+			list.add(element.getAsString());
+		}
+		values = list;
 		admin = opener.isOp();
 	}
 
@@ -60,7 +67,7 @@ public class PrefixGui implements Listener {
 			page = 1;
 		this.GUI = Bukkit.createInventory(null, 54,
 				ChatColor.translateAlternateColorCodes('&', "&e" + target.getName() + "§f의 칭호 목록"));
-		this.PlayerPage = page;
+		this.playerPage = page;
 		int Count = 0;
 
 		for (String name : this.values) {
@@ -69,7 +76,7 @@ public class PrefixGui implements Listener {
 			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&r" + name));
 			ArrayList<String> lore = new ArrayList<>();
 			lore.add(ChatColor.translateAlternateColorCodes('&', "&2>> &f이 칭호를 적용하려면 클릭하세요."));
-			if (PlayerPage == 1 && Count == 0) {
+			if (playerPage == 1 && Count == 0) {
 				lore.add("§2>> §f해당 칭호는 그룹 칭호입니다.");
 			} else if (admin) {
 				lore.add(ChatColor.translateAlternateColorCodes('&', "&2>> &c이 칭호를 목록에서 삭제하려면 우클릭하세요."));
@@ -136,18 +143,20 @@ public class PrefixGui implements Listener {
 					&& e.getCurrentItem().getItemMeta().hasDisplayName()) {
 				if (e.getCurrentItem().getItemMeta().getDisplayName()
 						.equals(ChatColor.translateAlternateColorCodes('&', "&b이전 페이지"))) {
-					openGUI(this.PlayerPage - 1);
+					openGUI(this.playerPage - 1);
 				} else if (e.getCurrentItem().getItemMeta().getDisplayName()
 						.equals(ChatColor.translateAlternateColorCodes('&', "&b다음 페이지"))) {
-					openGUI(this.PlayerPage + 1);
+					openGUI(this.playerPage + 1);
 				}
 			}
 
 			if (e.getCurrentItem() != null && e.getCurrentItem().getType().equals(Material.BOOK)
 					&& e.getCurrentItem().hasItemMeta() && e.getCurrentItem().getItemMeta().hasDisplayName()) {
 				if (e.getRawSlot() == 51) {
-					user.getConfig().set("CustomPrefix.Index", -1);
-					user.reloadConfig();
+					JsonObject json = user.getConfig().getJson();
+					if (!json.has("prefix")) json.add("prefix", new JsonObject());
+					json = json.get("prefix").getAsJsonObject();
+					json.addProperty("index", -1);
 					p.sendMessage("§f당신은 더이상 칭호를 사용하지 않습니다.");
 					p.sendMessage("설정 완료!");
 				} else {
@@ -155,28 +164,34 @@ public class PrefixGui implements Listener {
 
 					if (admin) {
 						if (e.getClick().equals(ClickType.RIGHT)) {
-							if ((PlayerPage - 1) * 36 + e.getRawSlot() == 0) {
+							if ((playerPage - 1) * 36 + e.getRawSlot() == 0) {
 								p.sendMessage("해당 칭호는 삭제할 수 없습니다.");
 							} else {
-								ArrayList<String> prefixes = (ArrayList<String>) CustomPrefix.getPrefix(user);
-								prefixes.remove((PlayerPage - 1) * 36 + e.getRawSlot() - 1);
-								user.getConfig().set("CustomPrefix.List", prefixes);
-								user.getConfig().set("CustomPrefix.Index", -1);
-								user.reloadConfig();
+								JsonObject json = user.getConfig().getJson();
+								if (!json.has("prefix")) json.add("prefix", new JsonObject());
+								json = json.get("prefix").getAsJsonObject();
+								JsonArray prefixes = CustomPrefix.getPrefix(user);
+								prefixes.remove((playerPage - 1) * 36 + e.getRawSlot() - 1);
+								json.add("list", prefixes);
+								json.addProperty("index", -1);
 								if (user.getPlayer().isOnline())
 									user.getPlayer().getPlayer().sendMessage("§f당신의 칭호 " + prefix + "§f이(가) 삭제되었습니다.");
 								p.sendMessage("처리 완료!");
 							}
 						} else {
-							user.getConfig().set("CustomPrefix.Index", (PlayerPage - 1) * 36 + e.getRawSlot());
-							user.reloadConfig();
+							JsonObject json = user.getConfig().getJson();
+							if (!json.has("prefix")) json.add("prefix", new JsonObject());
+							json = json.get("prefix").getAsJsonObject();
+							json.addProperty("index", (playerPage - 1) * 36 + e.getRawSlot());
 							if (user.getPlayer().isOnline())
 								user.getPlayer().getPlayer().sendMessage("§f당신의 칭호가 " + prefix + "§f으로 설정되었습니다.");
 							p.sendMessage("설정 완료!");
 						}
 					} else {
-						user.getConfig().set("CustomPrefix.Index", (PlayerPage - 1) * 36 + e.getRawSlot());
-						user.reloadConfig();
+						JsonObject json = user.getConfig().getJson();
+						if (!json.has("prefix")) json.add("prefix", new JsonObject());
+						json = json.get("prefix").getAsJsonObject();
+						json.addProperty("index", (playerPage - 1) * 36 + e.getRawSlot());
 						if (user.getPlayer().isOnline())
 							user.getPlayer().getPlayer().sendMessage("§f당신의 칭호가 " + prefix + "§f으로 설정되었습니다.");
 						p.sendMessage("설정 완료!");

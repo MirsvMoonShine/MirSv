@@ -51,3 +51,5 @@ commands:
     description: Nickname Plugin
   prefix:
     description: CustomPrefix Plugin
+  과제:
+    description: 과제 GUI 확인

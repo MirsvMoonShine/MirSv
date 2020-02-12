@@ -5,7 +5,7 @@ import com.mirsv.function.autosave.AutoSave;
 import com.mirsv.function.autosave.AutoSaveManager;
 import com.mirsv.function.list.Cokes.party.Party.Flag;
 import com.mirsv.util.Messager;
-import com.mirsv.util.data.FileUtil;
+import com.mirsv.util.database.FileUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;

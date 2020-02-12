@@ -107,22 +107,22 @@ public class CallPlayer extends AbstractFunction implements CommandExecutor {
 					}
 				}
 				if (CallList.size() > 0) {
-					String List = "";
+					StringBuilder sb = new StringBuilder();
 					for (int i = 0; i < CallList.size(); i++) {
-						List = List + (String) CallList.get(i);
+						sb.append(CallList.get(i));
 						if (i >= CallList.size() - 1) continue;
-						List = List + ", ";
+						sb.append(", ");
 					}
-					sender.sendMessage(Messager.getPrefix() + ChatColor.GREEN + List + "님을 호출하였습니다!");
+					sender.sendMessage(Messager.getPrefix() + ChatColor.GREEN + sb.toString() + "님을 호출하였습니다!");
 				}
 				if (AbsentList.size() > 0) {
-					String List = "";
+					StringBuilder sb = new StringBuilder();
 					for (int i = 0; i < AbsentList.size(); i++) {
-						List = List + (String) AbsentList.get(i);
+						sb.append(AbsentList.get(i));
 						if (i >= AbsentList.size() - 1) continue;
-						List = List + ", ";
+						sb.append(", ");
 					}
-					sender.sendMessage(Messager.getPrefix() + ChatColor.RED + List + "님은 서버에 존재하지 않습니다!");
+					sender.sendMessage(Messager.getPrefix() + ChatColor.RED + sb.toString() + "님은 서버에 존재하지 않습니다!");
 				}
 			} else {
 				sender.sendMessage(Messager.getPrefix() + ChatColor.RED + "잠시 후에 시도해주세요.");

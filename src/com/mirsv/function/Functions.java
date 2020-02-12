@@ -1,10 +1,15 @@
 package com.mirsv.function;
 
+import com.google.common.base.Enums;
 import com.mirsv.function.list.CatNote.CallPlayer;
 import com.mirsv.function.list.CatNote.WhisperChat;
 import com.mirsv.function.list.Cokes.*;
 import com.mirsv.function.list.Cokes.party.PartyManager;
 import com.mirsv.function.list.Cokes.CustomPrefix.CustomPrefix;
+import com.mirsv.function.list.daybreak.NoHungerAtNight;
+import com.mirsv.function.list.daybreak.achievements.AchievementManager;
+import com.mirsv.function.list.daybreak.firework.NoFireworkDamage;
+import com.mirsv.function.list.daybreak.skill.SkillManager;
 
 public enum Functions {
 	GlobalMute(new GlobalMute()),
@@ -19,11 +24,15 @@ public enum Functions {
 	ForbiddenWord(new WordProhibition()),
 	AdvanceChat(new AdvancedChat()),
 	Nickname(new NickName()),
-	CustomPrefix(new CustomPrefix());
+	CustomPrefix(new CustomPrefix()),
+	NoFireworkDamage(new NoFireworkDamage()),
+	Achievements(new AchievementManager()),
+	NoHungerAtNight(new NoHungerAtNight()),
+	SkillManager(new SkillManager());
 
 	private final AbstractFunction function;
 
-	private Functions(AbstractFunction function) {
+	Functions(AbstractFunction function) {
 		this.function = function;
 	}
 
@@ -32,13 +41,7 @@ public enum Functions {
 	}
 	
 	public static Functions getFunction(String name) {
-		for(Functions f : Functions.values()) {
-			if(f.toString().equalsIgnoreCase(name)) {
-				return f;
-			}
-		}
-		
-		return null;
+		return Enums.getIfPresent(Functions.class, name).orNull();
 	}
 	
 }
