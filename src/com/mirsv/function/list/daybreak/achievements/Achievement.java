@@ -68,7 +68,7 @@ public abstract class Achievement {
 
 	public final void reward(Player player) {
 		JsonObject json = getJson(player);
-		if (!isRewarded(json)) {
+		if (hasAchieved(json) && !isRewarded(json)) {
 			setRewarded(json, true);
 			for (Reward reward : rewards) {
 				reward.reward(player);

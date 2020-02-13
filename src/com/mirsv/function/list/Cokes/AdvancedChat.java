@@ -26,7 +26,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringJoiner;
 
 public class AdvancedChat extends AbstractFunction implements CommandExecutor, Listener {
 
@@ -63,6 +65,9 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 		User user = UserManager.getUser(player);
 
 		String message = e.getMessage().replace("%", "%%");
+		if (player.hasPermission("mirsv.chatcolor")) {
+			message = ChatColor.translateAlternateColorCodes('&', message);
+		}
 
 		Set<Player> recipients = e.getRecipients();
 		switch (user.getChatChannel()) {
@@ -139,7 +144,7 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 				break;
 			default:
 				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(false);
-				e.setFormat(ChatColor.translateAlternateColorCodes('&', (user.hasTown() ? (user.hasNation() ? "&f[&6" + user.getNation().getName() + "&f|&b" + user.getTown().getName() + "&f]" : "&f[&b" + user.getTown().getName() + "&f]") : "") + getPrefix(user) + user.getNickname() + "&f: " + message));
+				e.setFormat(ChatColor.translateAlternateColorCodes('&', (user.hasTown() ? (user.hasNation() ? "&f[&6" + user.getNation().getName() + "&f|&b" + user.getTown().getName() + "&f]" : "&f[&b" + user.getTown().getName() + "&f]") : "") + getPrefix(user) + user.getNickname() + "&f: ") + message);
 				break;
 		}
 
@@ -359,45 +364,53 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 					}
 					break;
 				case "spychat":
-					if (spying.add(player)) {
-						player.sendMessage(prefix + "지금부터 모든 채팅을 엿듣습니다.");
+					if (player.hasPermission("mirsv.chat.moderator")) {
+						if (spying.add(player)) {
+							player.sendMessage(prefix + "지금부터 모든 채팅을 엿듣습니다.");
+						} else {
+							spying.remove(player);
+							player.sendMessage(prefix + "이제 채팅을 엿듣지 않습니다.");
+						}
 					} else {
-						spying.remove(player);
-						player.sendMessage(prefix + "이제 채팅을 엿듣지 않습니다.");
+						player.sendMessage(ChatColor.RED + "권한이 부족합니다.");
 					}
 					break;
 				case "ac":
-					int arg = args.length;
-					if (arg == 0) {
-						player.sendMessage(Messager.formatTitle(ChatColor.AQUA, ChatColor.WHITE, "채팅 명령어"));
-						player.sendMessage(prefix + Messager.formatCommand("ac", "set <대상> <채널>", "대상 플레이어의 채팅 채널을 강제로 변경합니다.", true));
-						player.sendMessage(prefix + "채널 : GLOBAL, LOCAL, TOWN, NATION, PARTY, MODERATOR, ADMIN");
-					} else {
-						if (arg == 3) {
-							if (args[0].equalsIgnoreCase("set")) {
-								Player target = Bukkit.getPlayerExact(args[1]);
-								if (target != null) {
-									User tuser = UserManager.getUser(target);
-									String mode = args[2].toUpperCase();
-									Optional<Channel> optional = Enums.getIfPresent(Channel.class, mode.toUpperCase().concat("_CHAT"));
-									if (optional.isPresent()) {
-										Channel channel = optional.get();
-										tuser.setChatChannel(channel);
-										target.sendMessage(prefix + "귀하의 채팅 채널이 " + channel.name() + "(으)로 변경되었습니다.");
-										player.sendMessage(prefix + args[1] + "님의 채팅 채널을 변경했습니다.");
+					if (player.isOp()) {
+						int arg = args.length;
+						if (arg == 0) {
+							player.sendMessage(Messager.formatTitle(ChatColor.AQUA, ChatColor.WHITE, "채팅 명령어"));
+							player.sendMessage(prefix + Messager.formatCommand("ac", "set <대상> <채널>", "대상 플레이어의 채팅 채널을 강제로 변경합니다.", true));
+							player.sendMessage(prefix + "채널 : GLOBAL, LOCAL, TOWN, NATION, PARTY, MODERATOR, ADMIN");
+						} else {
+							if (arg == 3) {
+								if (args[0].equalsIgnoreCase("set")) {
+									Player target = Bukkit.getPlayerExact(args[1]);
+									if (target != null) {
+										User tuser = UserManager.getUser(target);
+										String mode = args[2].toUpperCase();
+										Optional<Channel> optional = Enums.getIfPresent(Channel.class, mode.toUpperCase().concat("_CHAT"));
+										if (optional.isPresent()) {
+											Channel channel = optional.get();
+											tuser.setChatChannel(channel);
+											target.sendMessage(prefix + "귀하의 채팅 채널이 " + channel.name() + "(으)로 변경되었습니다.");
+											player.sendMessage(prefix + args[1] + "님의 채팅 채널을 변경했습니다.");
+										} else {
+											player.sendMessage(prefix + "존재하지 않는 채널입니다.");
+										}
 									} else {
-										player.sendMessage(prefix + "존재하지 않는 채널입니다.");
+										player.sendMessage(prefix + args[1] + "은(는) 존재하지 않는 플레이어입니다.");
 									}
-								} else {
-									player.sendMessage(prefix + args[1] + "은(는) 존재하지 않는 플레이어입니다.");
 								}
 							}
 						}
+					} else {
+						player.sendMessage(ChatColor.RED + "권한이 부족합니다.");
 					}
 					break;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public String getPrefix(User user) {

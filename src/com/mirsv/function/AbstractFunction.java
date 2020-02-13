@@ -78,7 +78,7 @@ abstract public class AbstractFunction {
 
 	abstract protected void onDisable();
 
-	private List<Listener> listeners = new ArrayList<Listener>();
+	private List<Listener> listeners = new ArrayList<>();
 
 	/**
 	 * 기능에 Listener를 추가합니다.

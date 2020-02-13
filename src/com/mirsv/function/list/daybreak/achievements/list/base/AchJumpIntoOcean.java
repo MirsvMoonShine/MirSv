@@ -18,10 +18,12 @@ public class AchJumpIntoOcean extends Achievement implements Listener {
 
 	@EventHandler
 	private void onMove(PlayerMoveEvent e) {
-		Material type = e.getTo().getBlock().getType();
-		Biome biome = e.getTo().getBlock().getBiome();
-		if (type == Material.WATER || type == Material.STATIONARY_WATER && (biome == Biome.OCEAN || biome == Biome.DEEP_OCEAN || biome == Biome.FROZEN_OCEAN)) {
-			achieve(e.getPlayer());
+		if (!hasAchieved(getJson(e.getPlayer()))) {
+			Material type = e.getTo().getBlock().getType();
+			Biome biome = e.getTo().getBlock().getBiome();
+			if (type == Material.WATER || type == Material.STATIONARY_WATER && (biome == Biome.OCEAN || biome == Biome.DEEP_OCEAN || biome == Biome.FROZEN_OCEAN)) {
+				achieve(e.getPlayer());
+			}
 		}
 	}
 

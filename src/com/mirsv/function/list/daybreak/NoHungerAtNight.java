@@ -1,12 +1,9 @@
 package com.mirsv.function.list.daybreak;
 
-import com.mirsv.Mirsv;
 import com.mirsv.function.AbstractFunction;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Calendar;
 
@@ -18,7 +15,7 @@ public class NoHungerAtNight extends AbstractFunction implements Listener {
 
 	@Override
 	protected void onEnable() {
-		Bukkit.getPluginManager().registerEvents(this, Mirsv.getPlugin());
+		registerListener(this);
 	}
 
 	@Override

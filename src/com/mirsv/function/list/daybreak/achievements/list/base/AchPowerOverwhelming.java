@@ -7,6 +7,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 public class AchPowerOverwhelming extends Achievement implements Listener {
@@ -21,7 +23,10 @@ public class AchPowerOverwhelming extends Achievement implements Listener {
 	private void onEntityDeath(EntityDeathEvent e) {
 		LivingEntity entity = e.getEntity();
 		if (entity instanceof Zombie && entity.getKiller() != null && entity.getLastDamage() >= entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
-			achieve(entity.getKiller());
+			EntityDamageEvent event = entity.getLastDamageCause();
+			if (event instanceof EntityDamageByEntityEvent && entity.getKiller().equals(((EntityDamageByEntityEvent) event).getDamager())) {
+				achieve(entity.getKiller());
+			}
 		}
 	}
 

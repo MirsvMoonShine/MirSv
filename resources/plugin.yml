@@ -53,3 +53,9 @@ commands:
     description: CustomPrefix Plugin
   과제:
     description: 과제 GUI 확인
+  아침:
+    description: 편의 플러그인
+  저녁:
+    description: 편의 플러그인
+  사탕수수:
+    description: 편의 플러그인

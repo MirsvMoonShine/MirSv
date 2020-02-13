@@ -42,6 +42,27 @@ public class Mirsv extends JavaPlugin {
 
 		getCommand("Mirsv").setExecutor(new MainCommand());
 
+		if (Bukkit.getServicesManager().isProvidedFor(LuckPerms.class)) {
+			luckPerms = Bukkit.getServicesManager().getRegistration(LuckPerms.class).getProvider();
+		} else {
+			Bukkit.getPluginManager().disablePlugin(this);
+			return;
+		}
+
+		if (Bukkit.getServicesManager().isProvidedFor(Economy.class)) {
+			economy = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
+		} else {
+			Bukkit.getPluginManager().disablePlugin(this);
+			return;
+		}
+
+		if (Bukkit.getPluginManager().getPlugin("dynmap") != null) {
+			dynMap = (DynmapAPI) Bukkit.getPluginManager().getPlugin("dynmap");
+		} else {
+			Bukkit.getPluginManager().disablePlugin(this);
+			return;
+		}
+
 		StringJoiner joiner = new StringJoiner(ChatColor.translateAlternateColorCodes('&', ", "));
 		for (AbstractFunction f : initFunctions()) joiner.add(f.getName());
 
@@ -54,22 +75,6 @@ public class Mirsv extends JavaPlugin {
 		ThreadUtil.onEnable();
 
 		Messager.sendMessage("플러그인이 활성화되었습니다.");
-
-		if (Bukkit.getServicesManager().isProvidedFor(LuckPerms.class)) {
-			luckPerms = Bukkit.getServicesManager().getRegistration(LuckPerms.class).getProvider();
-		} else {
-			Bukkit.getPluginManager().disablePlugin(this);
-		}
-
-		if (Bukkit.getServicesManager().isProvidedFor(Economy.class)) {
-			economy = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
-		} else {
-			Bukkit.getPluginManager().disablePlugin(this);
-		}
-
-		if (Bukkit.getPluginManager().getPlugin("dynmap") != null) {
-			dynMap = (DynmapAPI) Bukkit.getPluginManager().getPlugin("dynmap");
-		}
 	}
 
 	@Override
@@ -97,6 +102,7 @@ public class Mirsv extends JavaPlugin {
 	public LuckPerms getPermAPI() {
 		return luckPerms;
 	}
+
 	public Economy getEconomy() {
 		return economy;
 	}
@@ -104,4 +110,5 @@ public class Mirsv extends JavaPlugin {
 	public DynmapAPI getDynmapAPI() {
 		return dynMap;
 	}
+
 }

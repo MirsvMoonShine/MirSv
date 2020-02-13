@@ -2,6 +2,7 @@ package com.mirsv.function.list.daybreak.achievements;
 
 import com.google.gson.JsonObject;
 import com.mirsv.function.list.daybreak.achievements.list.base.BaseAchievements;
+import com.mirsv.function.list.daybreak.achievements.list.event.EventAchievements;
 import com.mirsv.function.list.daybreak.achievements.reward.Reward;
 import com.mirsv.function.list.daybreak.item.ItemBuilder;
 import com.mirsv.util.users.User;
@@ -46,7 +47,12 @@ public class AchievementGUI implements Listener {
 			.displayName(ChatColor.translateAlternateColorCodes('&', "&b일반"))
 			.build();
 
-	private enum Type { MAIN_MENU, BASE }
+	private static final ItemStack EVENT_ACHIEVEMENTS = new ItemBuilder()
+			.type(Material.DIAMOND)
+			.displayName(ChatColor.translateAlternateColorCodes('&', "&d이벤트"))
+			.build();
+
+	private enum Type { MAIN_MENU, BASE, EVENT }
 	private enum SortType { NAME }
 
 	private final Player player;
@@ -68,11 +74,15 @@ public class AchievementGUI implements Listener {
 		if (information == null) {
 			switch (type) {
 				case MAIN_MENU:
-					gui = Bukkit.createInventory(null, InventoryType.HOPPER, ChatColor.translateAlternateColorCodes('&', "&0과제"));
+				{
+					gui = Bukkit.createInventory(null, InventoryType.HOPPER, ChatColor.BLACK + "과제");
 					gui.setItem(2, BASE_ACHIEVEMENTS);
+					gui.setItem(1, EVENT_ACHIEVEMENTS);
 					player.openInventory(gui);
 					break;
+				}
 				case BASE:
+				{
 					final List<Achievement> achievements;
 					switch (sortType) {
 						case NAME:
@@ -85,7 +95,7 @@ public class AchievementGUI implements Listener {
 					int maxPage = ((achievements.size() - 1) / 36) + 1;
 					if (maxPage < page) page = 1;
 					if (page < 1) page = 1;
-					gui = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('&', "&0과제 목록"));
+					gui = Bukkit.createInventory(null, 54, ChatColor.BLACK + "과제 목록");
 					currentPage = page;
 					int count = 0;
 
@@ -136,9 +146,76 @@ public class AchievementGUI implements Listener {
 
 					player.openInventory(gui);
 					break;
+				}
+				case EVENT:
+				{
+					final List<Achievement> achievements;
+					switch (sortType) {
+						case NAME:
+							achievements = EventAchievements.nameBased;
+							break;
+						default:
+							achievements = EventAchievements.nameBased;
+
+					}
+					int maxPage = ((achievements.size() - 1) / 36) + 1;
+					if (maxPage < page) page = 1;
+					if (page < 1) page = 1;
+					gui = Bukkit.createInventory(null, 54, ChatColor.BLACK + "과제 목록");
+					currentPage = page;
+					int count = 0;
+
+					final ItemBuilder builder = new ItemBuilder();
+
+					for (Achievement achievement : achievements) {
+						if (count / 36 == page - 1) {
+							JsonObject json = achievement.getJson(user);
+							if (achievement.hasAchieved(json)) {
+								if (achievement.isRewarded(json)) {
+									builder.type(Material.BOOK).lore(
+											"",
+											ChatColor.AQUA + "▶ " + ChatColor.WHITE + "과제 정보를 확인하려면 우클릭하세요."
+									);
+								} else {
+									builder.type(Material.ENCHANTED_BOOK).lore(
+											"",
+											ChatColor.DARK_GREEN + "▶ " + ChatColor.GREEN + "보상을 수령하려면 좌클릭하세요.",
+											ChatColor.AQUA + "▶ " + ChatColor.WHITE + "과제 정보를 확인하려면 우클릭하세요."
+									);
+								}
+							} else {
+								builder.type(Material.BOOK_AND_QUILL).lore(
+										"",
+										ChatColor.DARK_RED + "▶ " + ChatColor.RED + "아직 달성하지 않았습니다.",
+										ChatColor.AQUA + "▶ " + ChatColor.WHITE + "과제 정보를 확인하려면 우클릭하세요."
+								);
+							}
+							gui.setItem(count % 36, builder.displayName(ChatColor.AQUA + achievement.getName()).build());
+						}
+						count++;
+					}
+
+					if (page > 1) {
+						gui.setItem(48, PREVIOUS_PAGE);
+					}
+
+					if (page != maxPage) {
+						gui.setItem(50, NEXT_PAGE);
+					}
+
+					gui.setItem(52, QUIT);
+
+					gui.setItem(49, builder
+							.type(Material.PAPER)
+							.displayName(ChatColor.translateAlternateColorCodes('&', "&6페이지 &e" + page + " &6/ &e" + maxPage))
+							.lore().build());
+
+					player.openInventory(gui);
+					break;
+				}
 			}
 		} else {
-			gui = Bukkit.createInventory(null, InventoryType.HOPPER, ChatColor.AQUA + information.getName());
+			gui = Bukkit.createInventory(null, InventoryType.HOPPER, ChatColor.BLACK + information.getName());
 			final ItemBuilder builder = new ItemBuilder();
 			gui.setItem(0, builder.type(Material.BOOK).displayName(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + " 이름 " + ChatColor.DARK_AQUA + "]").lore(ChatColor.WHITE + information.getName()).build());
 			List<String> lore = new ArrayList<>();
@@ -175,6 +252,10 @@ public class AchievementGUI implements Listener {
 					switch (clickedSlot) {
 						case 2:
 							this.type = Type.BASE;
+							openGUI(1);
+							break;
+						case 1:
+							this.type = Type.EVENT;
 							openGUI(1);
 							break;
 					}

@@ -6,6 +6,7 @@ import com.mirsv.function.list.CatNote.WhisperChat;
 import com.mirsv.function.list.Cokes.*;
 import com.mirsv.function.list.Cokes.party.PartyManager;
 import com.mirsv.function.list.Cokes.CustomPrefix.CustomPrefix;
+import com.mirsv.function.list.daybreak.Convenience;
 import com.mirsv.function.list.daybreak.NoHungerAtNight;
 import com.mirsv.function.list.daybreak.achievements.AchievementManager;
 import com.mirsv.function.list.daybreak.firework.NoFireworkDamage;
@@ -28,7 +29,8 @@ public enum Functions {
 	NoFireworkDamage(new NoFireworkDamage()),
 	Achievements(new AchievementManager()),
 	NoHungerAtNight(new NoHungerAtNight()),
-	SkillManager(new SkillManager());
+	SkillManager(new SkillManager()),
+	Convenience(new Convenience());
 
 	private final AbstractFunction function;
 

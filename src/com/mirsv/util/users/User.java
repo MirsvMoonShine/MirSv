@@ -14,15 +14,8 @@ import com.palmergames.bukkit.towny.object.TownyUniverse;
 import net.luckperms.api.context.ContextManager;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class User {
@@ -113,11 +106,17 @@ public class User {
 		this.flag &= ~flag;
 	}
 
+	public void toggleFlag(int flag) {
+		this.flag ^= flag;
+	}
+
 	public boolean hasFlag(int flag) {
 		return (this.flag & flag) == flag;
 	}
 
 	public static class Flag {
+
+		public static final int SUGAR_CANE_MODE = 0x1;
 
 	}
 
