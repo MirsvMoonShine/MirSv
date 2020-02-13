@@ -20,6 +20,10 @@
             <id>dynmap-repo</id>
             <url>http://repo.mikeprimm.com/</url>
         </repository>
+        <repository>
+            <id>github-Towny</id>
+            <url>https://maven.pkg.github.com/TownyAdvanced/Towny</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -32,7 +36,8 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>Towny</artifactId>
-            <version>0.93.1.0</version>
+            <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.luckperms</groupId>

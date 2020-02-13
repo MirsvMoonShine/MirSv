@@ -9,6 +9,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.dynmap.DynmapAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ public class Mirsv extends JavaPlugin {
 
 	private LuckPerms luckPerms;
 	private Economy economy;
+
+	private DynmapAPI dynMap = null;
 
 	public static Mirsv getPlugin() {
 		return plugin;
@@ -63,6 +66,10 @@ public class Mirsv extends JavaPlugin {
 		} else {
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
+
+		if (Bukkit.getPluginManager().getPlugin("dynmap") != null) {
+			dynMap = (DynmapAPI) Bukkit.getPluginManager().getPlugin("dynmap");
+		}
 	}
 
 	@Override
@@ -94,4 +101,7 @@ public class Mirsv extends JavaPlugin {
 		return economy;
 	}
 
+	public DynmapAPI getDynmapAPI() {
+		return dynMap;
+	}
 }
