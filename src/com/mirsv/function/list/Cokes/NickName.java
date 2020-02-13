@@ -22,7 +22,7 @@ public class NickName extends AbstractFunction implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
-			if (args.length == 2) {
+			if (args.length == 2 && player.isOp()) {
 				if (Bukkit.getPlayer(args[0]) != null) {
 					User user = UserManager.getUser(Bukkit.getPlayer(args[0]));
 					if (args[1].equalsIgnoreCase("reset")) {
@@ -35,8 +35,12 @@ public class NickName extends AbstractFunction implements CommandExecutor {
 						Bukkit.getPlayer(args[0]).sendMessage("당신의 닉네임이 "+ChatColor.translateAlternateColorCodes('&', args[1])+"§f가 되었습니다.");
 					}
 				}
+			} else if (args.length == 1 && player.hasPermission("mirsv.nickname")) {
+				User user = UserManager.getUser(player);
+				user.setNickname(args[0]);
+				player.sendMessage("당신의 닉네임이 "+ChatColor.translateAlternateColorCodes('&', args[0])+"§f가 되었습니다.");
 			} else {
-				player.sendMessage("§c사용법: /nickname [player] [reset|nickname] | /nick [player] [reset|nickname]");
+				player.sendMessage("§c사용법: /nick [nickname] (유저) | /nick [player] [reset|nickname] (관리자)");
 			}
 		}
 		return false;

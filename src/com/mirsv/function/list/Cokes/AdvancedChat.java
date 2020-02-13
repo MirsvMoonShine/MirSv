@@ -27,10 +27,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class AdvancedChat extends AbstractFunction implements CommandExecutor, Listener {
 
@@ -154,87 +151,191 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 			User user = UserManager.getUser(player);
 			switch (label.toLowerCase()) {
 				case "g":
-					user.setChatChannel(Channel.GLOBAL_CHAT);
-					player.sendMessage(prefix + "모드: 전체 채팅");
-					break;
-				case "tc":
-					if (user.getChatChannel() != Channel.TOWN_CHAT) {
-						if (user.hasTown()) {
-							user.setChatChannel(Channel.TOWN_CHAT);
-							player.sendMessage(prefix + "모드: 마을 채팅");
-						} else {
-							user.setChatChannel(Channel.GLOBAL_CHAT);
-							player.sendMessage(prefix + "귀하는 마을에 소속되지 않았습니다.");
-						}
-					} else {
+					if (args.length == 0) {
 						user.setChatChannel(Channel.GLOBAL_CHAT);
 						player.sendMessage(prefix + "모드: 전체 채팅");
+					} else {
+					StringJoiner message = new StringJoiner(" ");
+					for (int a = 0; a < args.length ; a++) {
+						message.add(args[a]);
+					}
+
+					Channel channel = user.getChatChannel();
+					user.setChatChannel(Channel.GLOBAL_CHAT);
+					player.chat(message.toString());
+					user.setChatChannel(channel);
+				}
+					break;
+				case "tc":
+					if (args.length == 0) {
+						if (user.getChatChannel() != Channel.TOWN_CHAT) {
+							if (user.hasTown()) {
+								user.setChatChannel(Channel.TOWN_CHAT);
+								player.sendMessage(prefix + "모드: 마을 채팅");
+							} else {
+								user.setChatChannel(Channel.GLOBAL_CHAT);
+								player.sendMessage(prefix + "귀하는 마을에 소속되지 않았습니다.");
+							}
+						} else {
+							user.setChatChannel(Channel.GLOBAL_CHAT);
+							player.sendMessage(prefix + "모드: 전체 채팅");
+						}
+					} else {
+						if (user.hasTown()) {
+							StringJoiner message = new StringJoiner(" ");
+							for (int a = 0; a < args.length ; a++) {
+								message.add(args[a]);
+							}
+
+							Channel channel = user.getChatChannel();
+							user.setChatChannel(Channel.TOWN_CHAT);
+							player.chat(message.toString());
+							user.setChatChannel(channel);
+						} else {
+							player.sendMessage(prefix + "귀하는 마을에 소속되지 않았습니다.");
+						}
 					}
 					break;
 				case "nc":
-					if (user.getChatChannel() != Channel.NATION_CHAT) {
-						if (user.hasNation()) {
-							user.setChatChannel(Channel.NATION_CHAT);
-							player.sendMessage(prefix + "모드: 국가 채팅");
+					if (args.length == 0) {
+						if (user.getChatChannel() != Channel.NATION_CHAT) {
+							if (user.hasNation()) {
+								user.setChatChannel(Channel.NATION_CHAT);
+								player.sendMessage(prefix + "모드: 국가 채팅");
+							} else {
+								user.setChatChannel(Channel.GLOBAL_CHAT);
+								player.sendMessage(prefix + "귀하는 국가에 소속되지 않았습니다.");
+							}
 						} else {
 							user.setChatChannel(Channel.GLOBAL_CHAT);
-							player.sendMessage(prefix + "귀하는 국가에 소속되지 않았습니다.");
+							player.sendMessage(prefix + "모드: 전체 채팅");
 						}
 					} else {
-						user.setChatChannel(Channel.GLOBAL_CHAT);
-						player.sendMessage(prefix + "모드: 전체 채팅");
+						if (user.hasNation()) {
+							StringJoiner message = new StringJoiner(" ");
+							for (int a = 0; a < args.length ; a++) {
+								message.add(args[a]);
+							}
+
+							Channel channel = user.getChatChannel();
+							user.setChatChannel(Channel.NATION_CHAT);
+							player.chat(message.toString());
+							user.setChatChannel(channel);
+						} else {
+							player.sendMessage(prefix + "귀하는 국가에 소속되지 않았습니다.");
+						}
 					}
 					break;
 				case "lc":
 				case "l":
-					if (user.getChatChannel() != Channel.LOCAL_CHAT) {
-						user.setChatChannel(Channel.LOCAL_CHAT);
-						player.sendMessage(prefix + "모드: 지역 채팅");
+					if (args.length == 0) {
+						if (user.getChatChannel() != Channel.LOCAL_CHAT) {
+							user.setChatChannel(Channel.LOCAL_CHAT);
+							player.sendMessage(prefix + "모드: 지역 채팅");
+						} else {
+							user.setChatChannel(Channel.GLOBAL_CHAT);
+							player.sendMessage(prefix + "모드: 전체 채팅");
+						}
 					} else {
-						user.setChatChannel(Channel.GLOBAL_CHAT);
-						player.sendMessage(prefix + "모드: 전체 채팅");
+						StringJoiner message = new StringJoiner(" ");
+						for (int a = 0; a < args.length ; a++) {
+							message.add(args[a]);
+						}
+
+						Channel channel = user.getChatChannel();
+						user.setChatChannel(Channel.LOCAL_CHAT);
+						player.chat(message.toString());
+						user.setChatChannel(channel);
 					}
 					break;
 				case "pc":
-					if (user.getChatChannel() != Channel.PARTY_CHAT) {
-						if (Party.hasParty(player)) {
-							user.setChatChannel(Channel.PARTY_CHAT);
-							player.sendMessage(prefix + "모드: 파티 채팅");
+					if (args.length == 0) {
+						if (user.getChatChannel() != Channel.PARTY_CHAT) {
+							if (Party.hasParty(player)) {
+								user.setChatChannel(Channel.PARTY_CHAT);
+								player.sendMessage(prefix + "모드: 파티 채팅");
+							} else {
+								user.setChatChannel(Channel.GLOBAL_CHAT);
+								player.sendMessage(prefix + "귀하는 파티에 소속되지 않았습니다.");
+							}
 						} else {
 							user.setChatChannel(Channel.GLOBAL_CHAT);
-							player.sendMessage(prefix + "귀하는 파티에 소속되지 않았습니다.");
+							player.sendMessage(prefix + "모드: 전체 채팅");
 						}
 					} else {
-						user.setChatChannel(Channel.GLOBAL_CHAT);
-						player.sendMessage(prefix + "모드: 전체 채팅");
+						if (Party.hasParty(player)) {
+							StringJoiner message = new StringJoiner(" ");
+							for (int a = 0; a < args.length ; a++) {
+								message.add(args[a]);
+							}
+
+							Channel channel = user.getChatChannel();
+							user.setChatChannel(Channel.PARTY_CHAT);
+							player.chat(message.toString());
+							user.setChatChannel(channel);
+						} else {
+							player.sendMessage(prefix + "귀하는 파티에 소속되지 않았습니다.");
+						}
 					}
 					break;
 				case "mod":
 				case "m":
-					if (user.getChatChannel() != Channel.MODERATOR_CHAT) {
+					if (args.length == 0) {
+						if (user.getChatChannel() != Channel.MODERATOR_CHAT) {
+							if (player.hasPermission("mirsv.chat.moderator")) {
+								user.setChatChannel(Channel.MODERATOR_CHAT);
+								player.sendMessage(prefix + "모드: 모더레이터 채팅");
+							} else {
+								player.sendMessage(ChatColor.RED + "권한이 부족합니다.");
+							}
+						} else {
+							user.setChatChannel(Channel.GLOBAL_CHAT);
+							player.sendMessage(prefix + "모드: 전체 채팅");
+						}
+					} else {
 						if (player.hasPermission("mirsv.chat.moderator")) {
+							StringJoiner message = new StringJoiner(" ");
+							for (int a = 0; a < args.length ; a++) {
+								message.add(args[a]);
+							}
+
+							Channel channel = user.getChatChannel();
 							user.setChatChannel(Channel.MODERATOR_CHAT);
-							player.sendMessage(prefix + "모드: 모더레이터 채팅");
+							player.chat(message.toString());
+							user.setChatChannel(channel);
 						} else {
 							player.sendMessage(ChatColor.RED + "권한이 부족합니다.");
 						}
-					} else {
-						user.setChatChannel(Channel.GLOBAL_CHAT);
-						player.sendMessage(prefix + "모드: 전체 채팅");
 					}
 					break;
 				case "admin":
 				case "a":
-					if (user.getChatChannel() != Channel.ADMIN_CHAT) {
+					if (args.length == 0) {
+						if (user.getChatChannel() != Channel.ADMIN_CHAT) {
+							if (player.isOp()) {
+								user.setChatChannel(Channel.ADMIN_CHAT);
+								player.sendMessage(prefix + "모드: 관리자 채팅");
+							} else {
+								player.sendMessage(ChatColor.RED + "권한이 부족합니다.");
+							}
+						} else {
+							user.setChatChannel(Channel.GLOBAL_CHAT);
+							player.sendMessage(prefix + "모드: 전체 채팅");
+						}
+					} else {
 						if (player.isOp()) {
+							StringJoiner message = new StringJoiner(" ");
+							for (int a = 0; a < args.length ; a++) {
+								message.add(args[a]);
+							}
+
+							Channel channel = user.getChatChannel();
 							user.setChatChannel(Channel.ADMIN_CHAT);
-							player.sendMessage(prefix + "모드: 관리자 채팅");
+							player.chat(message.toString());
+							user.setChatChannel(channel);
 						} else {
 							player.sendMessage(ChatColor.RED + "권한이 부족합니다.");
 						}
-					} else {
-						user.setChatChannel(Channel.GLOBAL_CHAT);
-						player.sendMessage(prefix + "모드: 전체 채팅");
 					}
 					break;
 				case "bc":
