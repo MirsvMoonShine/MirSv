@@ -1,12 +1,12 @@
 package com.mirsv.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Messager {
 	
@@ -124,11 +124,11 @@ public class Messager {
 	/**
 	 * 제목을 구성합니다.
 	 */
-	public static String formatTitle(ChatColor First, ChatColor Second, String title) {
+	public static String formatTitle(ChatColor outter, ChatColor textColor, String title) {
 		String Base = "___________________________________________________________________";
 		int Pivot = Base.length() / 2;
-		String Center = ChatColor.translateAlternateColorCodes('&', "[ " + Second + title + First + " ]&m&l");
-		String Return = ChatColor.translateAlternateColorCodes('&', First + "&m&l" + Base.substring(0, Math.max(0, (Pivot - Center.length() / 2))) + "&r" + First);
+		String Center = ChatColor.translateAlternateColorCodes('&', "[ " + textColor + title + outter + " ]&m&l");
+		String Return = ChatColor.translateAlternateColorCodes('&', outter + "&m&l" + Base.substring(0, Math.max(0, (Pivot - Center.length() / 2))) + "&r" + outter);
 		Return += Center + Base.substring(Pivot + Center.length() / 2);
 		return Return;
 	}
@@ -136,11 +136,11 @@ public class Messager {
 	/**
 	 * 짧은 제목을 구성합니다.
 	 */
-	public static String formatShortTitle(ChatColor First, ChatColor Second, String title) {
+	public static String formatShortTitle(ChatColor outter, ChatColor textColor, String title) {
 		String Base = "_____________________________________";
 		int Pivot = Base.length() / 2;
-		String Center = ChatColor.translateAlternateColorCodes('&', "[ " + Second + title + First + " ]&m&l");
-		String Return = ChatColor.translateAlternateColorCodes('&', First + "&m&l" + Base.substring(0, Math.max(0, (Pivot - Center.length() / 2))) + "&r" + First);
+		String Center = ChatColor.translateAlternateColorCodes('&', "[ " + textColor + title + outter + " ]&m&l");
+		String Return = ChatColor.translateAlternateColorCodes('&', outter + "&m&l" + Base.substring(0, Math.max(0, (Pivot - Center.length() / 2))) + "&r" + outter);
 		Return += Center + Base.substring(Pivot + Center.length() / 2);
 		return Return;
 	}

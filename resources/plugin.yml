@@ -14,8 +14,6 @@ commands:
     aliases: [chatclear, cc]
   itemtag:
     description: ItemTag Plugin
-  cl:
-    description: CallPlayer Plugin
   wc:
     description: WhisperChat Plugin
   party:
@@ -59,3 +57,11 @@ commands:
     description: 편의 플러그인
   사탕수수:
     description: 편의 플러그인
+  경고:
+    description: 경고
+  경고관리:
+    description: 경고 관리자
+  cl:
+    description: Call Player
+  튜토리얼:
+    description: Tutorial

@@ -1,8 +1,8 @@
 package com.mirsv.util.users;
 
 import com.google.common.base.Preconditions;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.mirsv.Mirsv;
 import com.mirsv.util.database.FileUtil;
 import com.mirsv.util.database.JsonConfiguration;
@@ -16,12 +16,14 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class User {
 
 	private static final Logger logger = Logger.getLogger(User.class.getName());
-	private static final JsonParser parser = new JsonParser();
 
 	private final OfflinePlayer player;
 	private final Resident townyResident;
@@ -30,6 +32,7 @@ public class User {
 	private final JsonObject configJson;
 	private int flag = 0x0;
 	private Channel chatChannel = Channel.GLOBAL_CHAT;
+	private final Map<String, Cooldown> cooldownMap = new HashMap<>();
 
 	public User(OfflinePlayer player) throws NotRegisteredException {
 		this.player = player;
@@ -38,6 +41,7 @@ public class User {
 		this.config = new JsonConfiguration(configFile);
 		this.configJson = config.getJson();
 		if (!configJson.has("nickname")) configJson.addProperty("nickname", player.getName());
+		if (!configJson.has("warnings")) configJson.add("warnings", new JsonArray());
 	}
 
 	public Resident getResident() {
@@ -83,11 +87,6 @@ public class User {
 		configJson.addProperty("nickname", nickname);
 	}
 
-	public int getDonation() {
-		if (!configJson.has("donation")) configJson.addProperty("donation", 0);
-		return configJson.get("donation").getAsInt();
-	}
-
 	public OfflinePlayer getPlayer() {
 		return player;
 	}
@@ -130,6 +129,35 @@ public class User {
 
 	public enum Channel {
 		GLOBAL_CHAT, TOWN_CHAT, NATION_CHAT, LOCAL_CHAT, PARTY_CHAT, MODERATOR_CHAT, ADMIN_CHAT, NOTICE_CHAT;
+	}
+
+	public final Cooldown CALL_PLAYER = new Cooldown(60);
+
+	public static class Cooldown {
+
+		private final int cooldown;
+		protected long lastAction = 0L;
+
+		public Cooldown(int cooldown) {
+			this.cooldown = cooldown;
+		}
+
+		public boolean action() {
+			if (!isCooldown()) {
+				this.lastAction = System.currentTimeMillis();
+				return true;
+			}
+			return false;
+		}
+
+		public boolean isCooldown() {
+			return TimeUnit.SECONDS.convert(System.currentTimeMillis() - lastAction, TimeUnit.MILLISECONDS) < cooldown;
+		}
+
+		public long getLeftCooldown() {
+			return cooldown - TimeUnit.SECONDS.convert(System.currentTimeMillis() - lastAction, TimeUnit.MILLISECONDS);
+		}
+
 	}
 
 }
