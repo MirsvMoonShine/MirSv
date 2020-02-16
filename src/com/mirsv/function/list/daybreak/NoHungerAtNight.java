@@ -26,7 +26,7 @@ public class NoHungerAtNight extends AbstractFunction implements Listener {
 	@EventHandler
 	private void onFoodLevelChange(FoodLevelChangeEvent e) {
 		calendar.setTimeInMillis(System.currentTimeMillis());
-		if (calendar.get(Calendar.HOUR_OF_DAY) < 7) {
+		if (calendar.get(Calendar.HOUR_OF_DAY) < 8) {
 			if (e.getFoodLevel() < 19) e.setFoodLevel(19);
 		}
 	}

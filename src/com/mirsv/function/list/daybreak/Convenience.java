@@ -110,7 +110,7 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 							sender.sendMessage(ChatColor.WHITE + TimeUtil.toString(user.CALL_PLAYER.getLeftCooldown()) + ChatColor.RED + " 뒤에 시도해주세요.");
 						}
 					} else {
-
+						callPlayer(sender, args[0]);
 					}
 				}
 				break;

@@ -8,6 +8,7 @@ import org.bukkit.entity.Wither;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class AchIsThisPossible extends Achievement implements Listener {
 
@@ -20,8 +21,11 @@ public class AchIsThisPossible extends Achievement implements Listener {
 	@EventHandler
 	private void onEntityDeathEvent(EntityDeathEvent e) {
 		LivingEntity entity = e.getEntity();
-		if (entity instanceof Wither && entity.getKiller() != null && entity.getKiller().getInventory().getItemInMainHand().getType() == Material.WOOD_SWORD) {
-			achieve(entity.getKiller());
+		if (entity instanceof Wither && entity.getKiller() != null) {
+			ItemStack stack = entity.getKiller().getInventory().getItemInMainHand();
+			if (stack != null && stack.getType() == Material.WOOD_SWORD) {
+				achieve(entity.getKiller());
+			}
 		}
 	}
 

@@ -3,9 +3,11 @@ package com.mirsv.function;
 import com.google.common.base.Enums;
 import com.mirsv.function.list.CatNote.WhisperChat;
 import com.mirsv.function.list.Cokes.*;
+import com.mirsv.function.list.Cokes.ballantines.BallantinesDay;
 import com.mirsv.function.list.Cokes.party.PartyManager;
 import com.mirsv.function.list.Cokes.CustomPrefix.CustomPrefix;
 import com.mirsv.function.list.daybreak.Convenience;
+import com.mirsv.function.list.daybreak.DisableCommands;
 import com.mirsv.function.list.daybreak.NoHungerAtNight;
 import com.mirsv.function.list.daybreak.achievements.AchievementManager;
 import com.mirsv.function.list.daybreak.firework.NoFireworkDamage;
@@ -32,7 +34,9 @@ public enum Functions {
 	SkillManager(new SkillManager()),
 	Convenience(new Convenience()),
 	WarningManager(new WarningManager()),
-	TutorialManager(new TutorialManager());
+	TutorialManager(new TutorialManager()),
+	BallantinesDay(new BallantinesDay()),
+	DisableCommands(new DisableCommands());
 
 	private final AbstractFunction function;
 

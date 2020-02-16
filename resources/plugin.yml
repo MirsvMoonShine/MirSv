@@ -11,7 +11,7 @@ commands:
     aliases: [gmute]
   clearchat:
     description: 채팅을 청소할 때 사용됩니다.
-    aliases: [chatclear, cc]
+    aliases: [chatclear]
   itemtag:
     description: ItemTag Plugin
   wc:
@@ -65,3 +65,5 @@ commands:
     description: Call Player
   튜토리얼:
     description: Tutorial
+  발렌타인:
+    description: event command
