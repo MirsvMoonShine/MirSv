@@ -2,10 +2,19 @@ package com.mirsv.function;
 
 import com.google.common.base.Enums;
 import com.mirsv.function.list.CatNote.WhisperChat;
-import com.mirsv.function.list.Cokes.*;
+import com.mirsv.function.list.Cokes.AdvancedChat;
+import com.mirsv.function.list.Cokes.BedProhibition;
+import com.mirsv.function.list.Cokes.BroadcastChat;
+import com.mirsv.function.list.Cokes.ClearChat;
+import com.mirsv.function.list.Cokes.CustomPrefix.CustomPrefix;
+import com.mirsv.function.list.Cokes.GlobalMute;
+import com.mirsv.function.list.Cokes.HungerMaintenance;
+import com.mirsv.function.list.Cokes.ItemTag;
+import com.mirsv.function.list.Cokes.NickName;
+import com.mirsv.function.list.Cokes.WordProhibition;
 import com.mirsv.function.list.Cokes.ballantines.BallantinesDay;
 import com.mirsv.function.list.Cokes.party.PartyManager;
-import com.mirsv.function.list.Cokes.CustomPrefix.CustomPrefix;
+import com.mirsv.function.list.daybreak.CombatManager;
 import com.mirsv.function.list.daybreak.Convenience;
 import com.mirsv.function.list.daybreak.DisableCommands;
 import com.mirsv.function.list.daybreak.NoHungerAtNight;
@@ -36,7 +45,8 @@ public enum Functions {
 	WarningManager(new WarningManager()),
 	TutorialManager(new TutorialManager()),
 	BallantinesDay(new BallantinesDay()),
-	DisableCommands(new DisableCommands());
+	DisableCommands(new DisableCommands()),
+	CombatManager(new CombatManager());
 
 	private final AbstractFunction function;
 

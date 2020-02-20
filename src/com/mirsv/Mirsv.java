@@ -80,6 +80,7 @@ public class Mirsv extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		ThreadUtil.onDisable();
+		for (Functions functions : Functions.values()) functions.getFunction().Disable();
 	}
 
 	private List<AbstractFunction> initFunctions() {

@@ -67,3 +67,5 @@ commands:
     description: Tutorial
   발렌타인:
     description: event command
+  주식:
+    description: Stock

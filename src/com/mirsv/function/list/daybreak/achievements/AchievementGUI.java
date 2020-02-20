@@ -1,6 +1,7 @@
 package com.mirsv.function.list.daybreak.achievements;
 
 import com.google.gson.JsonObject;
+import com.mirsv.Mirsv;
 import com.mirsv.function.list.daybreak.achievements.list.base.BaseAchievements;
 import com.mirsv.function.list.daybreak.achievements.list.event.EventAchievements;
 import com.mirsv.function.list.daybreak.achievements.reward.Reward;
@@ -18,6 +19,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -237,6 +239,17 @@ public class AchievementGUI implements Listener {
 	private void onInventoryClose(InventoryCloseEvent e) {
 		if (e.getInventory().equals(this.gui)) {
 			HandlerList.unregisterAll(this);
+		}
+	}
+
+	@EventHandler
+	private void onPluginDisable(PluginDisableEvent e) {
+		if (e.getPlugin() instanceof Mirsv) {
+			if (gui.equals(player.getInventory())) {
+				player.closeInventory();
+			} else {
+				HandlerList.unregisterAll(this);
+			}
 		}
 	}
 
