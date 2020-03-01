@@ -14,15 +14,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
-public class JsonConfiguration {
+public class JsonDatabase {
 
-	private static final Gson gson = new Gson();
 	private static final JsonParser parser = new JsonParser();
 
+	private final Gson gson;
 	private final File file;
 	private final JsonObject json;
 
-	public JsonConfiguration(File file) {
+	public JsonDatabase(File file, Gson gson) {
+		this.gson = gson;
 		this.file = file;
 		JsonObject json;
 		try {
@@ -31,6 +32,10 @@ public class JsonConfiguration {
 			json = new JsonObject();
 		}
 		this.json = json.isJsonNull() ? new JsonObject() : json;
+	}
+
+	public JsonDatabase(File file) {
+		this(file, new Gson());
 	}
 
 	public JsonObject getJson() {

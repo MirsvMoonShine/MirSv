@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mirsv.Mirsv;
 import com.mirsv.util.database.FileUtil;
-import com.mirsv.util.database.JsonConfiguration;
+import com.mirsv.util.database.JsonDatabase;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -28,9 +28,9 @@ public class User {
 	private final OfflinePlayer player;
 	private final Resident townyResident;
 	private final File configFile;
-	private final JsonConfiguration config;
+	private final JsonDatabase config;
 	private final JsonObject configJson;
-	private int flag = 0x0;
+	private int flag;
 	private Channel chatChannel = Channel.GLOBAL_CHAT;
 	private final Map<String, Cooldown> cooldownMap = new HashMap<>();
 
@@ -38,10 +38,12 @@ public class User {
 		this.player = player;
 		this.townyResident = TownyUniverse.getDataSource().getResident(player.getName());
 		this.configFile = FileUtil.newFile(FileUtil.newDirectory("userdata"), player.getUniqueId() + ".json");
-		this.config = new JsonConfiguration(configFile);
+		this.config = new JsonDatabase(configFile);
 		this.configJson = config.getJson();
 		if (!configJson.has("nickname")) configJson.addProperty("nickname", player.getName());
 		if (!configJson.has("warnings")) configJson.add("warnings", new JsonArray());
+		if (!configJson.has("flag")) configJson.addProperty("flag", 0x0);
+		this.flag = configJson.get("flag").getAsInt();
 	}
 
 	public Resident getResident() {
@@ -74,7 +76,7 @@ public class User {
 		return null;
 	}
 
-	public JsonConfiguration getConfig() {
+	public JsonDatabase getConfig() {
 		return config;
 	}
 
@@ -92,9 +94,12 @@ public class User {
 	}
 
 	public String getGroupPrefix() {
-		net.luckperms.api.model.user.User user = Mirsv.getPlugin().getPermAPI().getUserManager().getUser(player.getUniqueId());
-		ContextManager contextManager = Mirsv.getPlugin().getPermAPI().getContextManager();
-		return user.getCachedData().getMetaData(contextManager.getQueryOptions(user).orElse(contextManager.getStaticQueryOptions())).getPrefix();
+		if (Mirsv.getPlugin().getPermAPI() != null) {
+			net.luckperms.api.model.user.User user = Mirsv.getPlugin().getPermAPI().getUserManager().getUser(player.getUniqueId());
+			ContextManager contextManager = Mirsv.getPlugin().getPermAPI().getContextManager();
+			return user.getCachedData().getMetaData(contextManager.getQueryOptions(user).orElse(contextManager.getStaticQueryOptions())).getPrefix();
+		}
+		return "";
 	}
 
 	public void addFlag(int flag) {
@@ -116,6 +121,7 @@ public class User {
 	public static class Flag {
 
 		public static final int SUGAR_CANE_MODE = 0x1;
+		public static final int QUIET_MODE = 0x2;
 
 	}
 
@@ -128,10 +134,22 @@ public class User {
 	}
 
 	public enum Channel {
-		GLOBAL_CHAT, TOWN_CHAT, NATION_CHAT, LOCAL_CHAT, PARTY_CHAT, MODERATOR_CHAT, ADMIN_CHAT, NOTICE_CHAT;
+		GLOBAL_CHAT(true), TOWN_CHAT(true), NATION_CHAT(true), LOCAL_CHAT(true), PARTY_CHAT(true), MODERATOR_CHAT(false), ADMIN_CHAT(false), NOTICE_CHAT(true);
+
+		private final boolean canSpy;
+
+		Channel(boolean canSpy) {
+			this.canSpy = canSpy;
+		}
+
+		public boolean canSpy() {
+			return canSpy;
+		}
+
 	}
 
 	public final Cooldown CALL_PLAYER = new Cooldown(60);
+	public final Cooldown PLAYTIME = new Cooldown(30);
 
 	public static class Cooldown {
 

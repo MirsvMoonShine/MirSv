@@ -2,6 +2,7 @@
 main: com.mirsv.Mirsv
 version: ${project.version}
 author: Cokes_86, DayBreak, CatNote
+softdepend: [Towny, LuckPerms, Vault, dynmap]
 
 commands:
   mirsv:
@@ -57,15 +58,21 @@ commands:
     description: 편의 플러그인
   사탕수수:
     description: 편의 플러그인
+  조용히:
+    description: 편의 플러그인
   경고:
     description: 경고
   경고관리:
     description: 경고 관리자
   cl:
     description: Call Player
-  튜토리얼:
-    description: Tutorial
   발렌타인:
     description: event command
   주식:
     description: Stock
+  보관함:
+    description: Delivery Service
+  시세상점:
+    description: Market Manager
+  playtime:
+    description: PlayTime

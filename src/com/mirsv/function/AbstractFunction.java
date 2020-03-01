@@ -70,8 +70,8 @@ abstract public class AbstractFunction {
 			}
 
 			for (String label : commands) {
-				Bukkit.getPluginCommand(label).setExecutor(new DisabledCommand());
-				Bukkit.getPluginCommand(label).setTabCompleter(new DisabledTabCompleter());
+				Bukkit.getPluginCommand(label).setExecutor(DisabledCommand.instance);
+				Bukkit.getPluginCommand(label).setTabCompleter(DisabledTabCompleter.instance);
 			}
 		}
 	}
@@ -124,6 +124,8 @@ abstract public class AbstractFunction {
 
 	private static class DisabledCommand implements CommandExecutor {
 
+		private static final DisabledCommand instance = new DisabledCommand();
+
 		@Override
 		public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 			return false;
@@ -132,6 +134,8 @@ abstract public class AbstractFunction {
 	}
 
 	private static class DisabledTabCompleter implements TabCompleter {
+
+		private static final DisabledTabCompleter instance = new DisabledTabCompleter();
 
 		@Override
 		public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {

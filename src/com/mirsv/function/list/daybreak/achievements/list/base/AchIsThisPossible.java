@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class AchIsThisPossible extends Achievement implements Listener {
 
-	public AchIsThisPossible() {
+	AchIsThisPossible() {
 		super("isthispossible", "이게 돼?", Type.CHALLENGE, new String[]{
 				"위더를 나무 검으로 죽이세요."
 		}, new MoneyReward(5000));

@@ -11,7 +11,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 public class AchNoLimit extends Achievement implements Listener {
 
-	public AchNoLimit() {
+	AchNoLimit() {
 		super("nolimit", "한계 돌파", Type.CHALLENGE, new String[]{
 				"겉날개를 이용해 y 좌표 2000을 돌파하세요."
 		}, new MoneyReward(450), new ExperienceReward(ExperienceReward.Type.LEVEL, 3));

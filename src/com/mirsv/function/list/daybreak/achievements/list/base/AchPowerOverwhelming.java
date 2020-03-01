@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 
 public class AchPowerOverwhelming extends Achievement implements Listener {
 
-	public AchPowerOverwhelming() {
+	AchPowerOverwhelming() {
 		super("poweroverwhelming", "압도적인 힘으로", Type.CHALLENGE, new String[]{
 				"좀비를 단 한 방에 때려눕히세요."
 		}, new MoneyReward(400));

@@ -5,7 +5,6 @@ import com.mirsv.function.list.daybreak.achievements.reward.Reward;
 import com.mirsv.util.users.User;
 import com.mirsv.util.users.UserManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public abstract class Achievement {
@@ -98,13 +97,13 @@ public abstract class Achievement {
 		ADVANCE(new Noticer() {
 			@Override
 			public void notice(Player player, Achievement achievement) {
-				Bukkit.broadcastMessage(player.getName() + "이(가) " + ChatColor.AQUA + "[" + achievement.getName() + "]" + ChatColor.WHITE + " 발전 과제를 달성했습니다");
+				Bukkit.broadcastMessage("§c>§6>§a>§b> §e" + player.getName() + "§f님이 §b" + achievement.getName() + " §f발전 과제를 달성했습니다 §b<§a<§6<§c<");
 			}
 		}),
 		CHALLENGE(new Noticer() {
 			@Override
 			public void notice(Player player, Achievement achievement) {
-				Bukkit.broadcastMessage(player.getName() + "이(가) " + ChatColor.YELLOW + "[" + achievement.getName() + "]" + ChatColor.WHITE + " 도전 과제를 달성했습니다");
+				Bukkit.broadcastMessage("§c>§6>§a>§b> §e" + player.getName() + "§f님이 §b" + achievement.getName() + " §f도전 과제를 달성했습니다 §b<§a<§6<§c<");
 			}
 		});
 

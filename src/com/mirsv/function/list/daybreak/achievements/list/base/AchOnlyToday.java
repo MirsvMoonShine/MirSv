@@ -13,7 +13,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 public class AchOnlyToday extends Achievement implements Listener {
 
-	public AchOnlyToday() {
+	AchOnlyToday() {
 		super("onlytoday", "오늘만 사는 사람", Type.CHALLENGE, new String[]{
 				"무장하지 않은 상태로 엔더맨을 도발하세요."
 		}, new MoneyReward(35));

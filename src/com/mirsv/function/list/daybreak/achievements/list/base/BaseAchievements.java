@@ -9,6 +9,7 @@ import java.util.List;
 public class BaseAchievements {
 
 	public static final Achievement[] values = {
+			AchStartOfJourney.instance,
 			new AchJumpIntoOcean(),
 			new AchTowerOfBabel(),
 			new AchPowerOverwhelming(),

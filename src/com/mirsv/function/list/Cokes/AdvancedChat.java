@@ -10,6 +10,7 @@ import com.mirsv.function.list.Cokes.party.Party;
 import com.mirsv.util.Messager;
 import com.mirsv.util.users.User;
 import com.mirsv.util.users.User.Channel;
+import com.mirsv.util.users.User.Flag;
 import com.mirsv.util.users.UserManager;
 import com.palmergames.bukkit.towny.object.Resident;
 import org.bukkit.Bukkit;
@@ -29,6 +30,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.function.Predicate;
 
 public class AdvancedChat extends AbstractFunction implements CommandExecutor, Listener {
 
@@ -70,7 +72,8 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 		}
 
 		Set<Player> recipients = e.getRecipients();
-		switch (user.getChatChannel()) {
+		Channel chatChannel = user.getChatChannel();
+		switch (chatChannel) {
 			case TOWN_CHAT:
 				if (!user.hasTown()) {
 					user.setChatChannel(Channel.GLOBAL_CHAT);
@@ -81,7 +84,7 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 				recipients.clear();
 				for (Resident resident : user.getTown().getResidents()) {
 					Player recipient = Bukkit.getPlayerExact(resident.getName());
-					if (!resident.isNPC() && recipient != null) recipients.add(recipient);
+					if (!resident.isNPC() && recipient != null && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE)) recipients.add(recipient);
 				}
 				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&b마을 &f| " + getPrefix(user) + user.getNickname() + "&f: &b") + message);
@@ -96,7 +99,7 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 				recipients.clear();
 				for (Resident resident : user.getNation().getResidents()) {
 					Player recipient = Bukkit.getPlayerExact(resident.getName());
-					if (!resident.isNPC() && recipient != null) recipients.add(recipient);
+					if (!resident.isNPC() && recipient != null && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE)) recipients.add(recipient);
 				}
 				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&6국가 &f| " + getPrefix(user) + user.getNickname() + "&f: &6") + message);
@@ -105,7 +108,10 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 				recipients.clear();
 				for (Entity recipient : player.getNearbyEntities(30, 30, 30)) {
 					if (recipient instanceof Player) {
-						recipients.add((Player) recipient);
+						Player recipientPlayer = (Player) recipient;
+						if (!recipientPlayer.hasMetadata("NPC") && !UserManager.getUser(recipientPlayer).hasFlag(Flag.QUIET_MODE)) {
+							recipients.add(recipientPlayer);
+						}
 					}
 				}
 				recipients.add(player);
@@ -130,7 +136,7 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 			case PARTY_CHAT:
 				recipients.clear();
 				for (OfflinePlayer recipient : Party.getParty(player).getPlayers()) {
-					if (recipient.isOnline()) recipients.add(recipient.getPlayer());
+					if (recipient.isOnline() && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE)) recipients.add(recipient.getPlayer());
 				}
 				recipients.add(player);
 				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
@@ -145,16 +151,25 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 			default:
 				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(false);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', (user.hasTown() ? (user.hasNation() ? "&f[&6" + user.getNation().getName() + "&f|&b" + user.getTown().getName() + "&f]" : "&f[&b" + user.getTown().getName() + "&f]") : "") + getPrefix(user) + user.getNickname() + "&f: ") + message);
+				e.getRecipients().removeIf(isQuiet);
 				break;
 		}
 
-		for (OfflinePlayer spy : spying) {
-			if (spy.isOnline()) {
-				recipients.add(spy.getPlayer());
+		if (chatChannel.canSpy()) {
+			for (OfflinePlayer spy : spying) {
+				if (spy.isOnline()) {
+					recipients.add(spy.getPlayer());
+				}
 			}
 		}
-
 	}
+
+	private static final Predicate<Player> isQuiet = new Predicate<Player>() {
+		@Override
+		public boolean test(Player p) {
+			return UserManager.getUser(p).hasFlag(Flag.QUIET_MODE);
+		}
+	};
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

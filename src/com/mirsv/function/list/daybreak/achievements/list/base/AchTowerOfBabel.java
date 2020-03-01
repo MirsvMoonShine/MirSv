@@ -2,10 +2,7 @@ package com.mirsv.function.list.daybreak.achievements.list.base;
 
 import com.mirsv.function.list.daybreak.achievements.Achievement;
 import com.mirsv.function.list.daybreak.achievements.reward.ExperienceReward;
-import com.mirsv.function.list.daybreak.achievements.reward.ExperienceReward.Type;
 import com.mirsv.function.list.daybreak.achievements.reward.MoneyReward;
-import com.mirsv.function.list.daybreak.achievements.reward.Reward;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -19,7 +16,7 @@ import java.util.UUID;
 
 public class AchTowerOfBabel extends Achievement implements Listener {
 
-	public AchTowerOfBabel() {
+	AchTowerOfBabel() {
 		super("towerofbabel", "바벨탑", Type.CHALLENGE, new String[] {
 				"50개 이상의 블록을 쌓아 세계의 가장 높은 위치에 도달하세요."
 		}, new MoneyReward(250), new ExperienceReward(ExperienceReward.Type.LEVEL, 3));

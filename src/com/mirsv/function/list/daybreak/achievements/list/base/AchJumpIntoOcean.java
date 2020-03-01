@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class AchJumpIntoOcean extends Achievement implements Listener {
 
-	public AchJumpIntoOcean() {
+	AchJumpIntoOcean() {
 		super("jumpintoocean", "물결 속으로", Type.CHALLENGE, new String[]{
 				"출렁이는 바닷물 속으로 뛰어드세요."
 		}, new MoneyReward(100));

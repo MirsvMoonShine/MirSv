@@ -40,6 +40,7 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 		registerCommand("아침", this);
 		registerCommand("저녁", this);
 		registerCommand("사탕수수", this);
+		registerCommand("조용히", this);
 		registerCommand("cl", this);
 		registerListener(this);
 	}
@@ -93,6 +94,20 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 						player.sendMessage(ChatColor.DARK_GREEN + "사탕수수 " + ChatColor.WHITE + "수확 모드를 " + ChatColor.GREEN + "활성화했습니다.");
 					} else {
 						player.sendMessage(ChatColor.DARK_GREEN + "사탕수수 " + ChatColor.WHITE + "수확 모드를 " + ChatColor.RED + "비활성화했습니다.");
+					}
+				} else {
+					sender.sendMessage(ChatColor.RED + "콘솔에서 사용할 수 없는 명령어입니다.");
+				}
+				break;
+			case "조용히":
+				if (sender instanceof Player) {
+					Player player = (Player) sender;
+					User user = UserManager.getUser(player);
+					user.toggleFlag(Flag.QUIET_MODE);
+					if (user.hasFlag(Flag.QUIET_MODE)) {
+						player.sendMessage("§c공지사항§f을 제외한 §a모든 채팅§f을 무시합니다.");
+					} else {
+						player.sendMessage("§c채팅§f을 더이상 무시하지 않습니다.");
 					}
 				} else {
 					sender.sendMessage(ChatColor.RED + "콘솔에서 사용할 수 없는 명령어입니다.");
