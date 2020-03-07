@@ -7,7 +7,6 @@ import com.mirsv.util.Messager;
 import com.mirsv.util.TimeUtil;
 import com.mirsv.util.users.User;
 import com.mirsv.util.users.UserManager;
-import org.apache.commons.io.FilenameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -132,7 +131,7 @@ public class PlayTime extends AbstractFunction implements CommandExecutor {
 	public static List<UUID> getPlayersOver(int ticks) throws IOException, ExecutionException, InterruptedException {
 		final List<UUID> players = new LinkedList<>();
 		for (File file : new File("world/stats").listFiles()) {
-			if (parser.parse(new BufferedReader(new FileReader(file))).getAsJsonObject().get("stat.playOneMinute").getAsInt() >= ticks) players.add(UUID.fromString(FilenameUtils.removeExtension(file.getName())));
+			if (parser.parse(new BufferedReader(new FileReader(file))).getAsJsonObject().get("stat.playOneMinute").getAsInt() >= ticks) players.add(UUID.fromString(file.getName().replace(".json", "")));
 		}
 		return players;
 	}

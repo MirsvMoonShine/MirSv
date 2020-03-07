@@ -20,12 +20,12 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -84,7 +84,8 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 				recipients.clear();
 				for (Resident resident : user.getTown().getResidents()) {
 					Player recipient = Bukkit.getPlayerExact(resident.getName());
-					if (!resident.isNPC() && recipient != null && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE)) recipients.add(recipient);
+					if (!resident.isNPC() && recipient != null && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE))
+						recipients.add(recipient);
 				}
 				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&b마을 &f| " + getPrefix(user) + user.getNickname() + "&f: &b") + message);
@@ -99,24 +100,27 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 				recipients.clear();
 				for (Resident resident : user.getNation().getResidents()) {
 					Player recipient = Bukkit.getPlayerExact(resident.getName());
-					if (!resident.isNPC() && recipient != null && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE)) recipients.add(recipient);
+					if (!resident.isNPC() && recipient != null && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE))
+						recipients.add(recipient);
 				}
 				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&6국가 &f| " + getPrefix(user) + user.getNickname() + "&f: &6") + message);
 				break;
 			case LOCAL_CHAT:
-				recipients.clear();
-				for (Entity recipient : player.getNearbyEntities(30, 30, 30)) {
-					if (recipient instanceof Player) {
-						Player recipientPlayer = (Player) recipient;
-						if (!recipientPlayer.hasMetadata("NPC") && !UserManager.getUser(recipientPlayer).hasFlag(Flag.QUIET_MODE)) {
-							recipients.add(recipientPlayer);
+				String format = ChatColor.translateAlternateColorCodes('&', "&a지역 &f| " + getPrefix(user) + user.getNickname() + "&f: &a") + message;
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						for (Player recipient : player.getWorld().getNearbyPlayers(player.getLocation(), 30, 30, 30)) {
+							if (!recipient.hasMetadata("NPC") && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE)) {
+								recipient.sendMessage(format);
+							}
 						}
 					}
-				}
-				recipients.add(player);
+				}.runTask(Mirsv.getPlugin());
 				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
-				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&a지역 &f| " + getPrefix(user) + user.getNickname() + "&f: &a") + message);
+				e.setFormat(format);
+				e.getRecipients().clear();
 				break;
 			case MODERATOR_CHAT:
 				recipients.clear();
@@ -136,7 +140,8 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 			case PARTY_CHAT:
 				recipients.clear();
 				for (OfflinePlayer recipient : Party.getParty(player).getPlayers()) {
-					if (recipient.isOnline() && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE)) recipients.add(recipient.getPlayer());
+					if (recipient.isOnline() && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE))
+						recipients.add(recipient.getPlayer());
 				}
 				recipients.add(player);
 				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
@@ -182,16 +187,16 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 						user.setChatChannel(Channel.GLOBAL_CHAT);
 						player.sendMessage(prefix + "모드: 전체 채팅");
 					} else {
-					StringJoiner message = new StringJoiner(" ");
-					for (String arg : args) {
-						message.add(arg);
-					}
+						StringJoiner message = new StringJoiner(" ");
+						for (String arg : args) {
+							message.add(arg);
+						}
 
-					Channel channel = user.getChatChannel();
-					user.setChatChannel(Channel.GLOBAL_CHAT);
-					player.chat(message.toString());
-					user.setChatChannel(channel);
-				}
+						Channel channel = user.getChatChannel();
+						user.setChatChannel(Channel.GLOBAL_CHAT);
+						player.chat(message.toString());
+						user.setChatChannel(channel);
+					}
 					break;
 				case "tc":
 					if (args.length == 0) {

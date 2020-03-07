@@ -38,7 +38,7 @@ public class AchievementGUI implements Listener {
 			.build();
 
 	private static final ItemStack QUIT = new ItemBuilder()
-			.type(Material.SPRUCE_DOOR_ITEM)
+			.type(Material.SPRUCE_DOOR)
 			.displayName(ChatColor.translateAlternateColorCodes('&', "&b돌아가기"))
 			.build();
 
@@ -118,7 +118,7 @@ public class AchievementGUI implements Listener {
 									);
 								}
 							} else {
-								builder.type(Material.BOOK_AND_QUILL).lore(
+								builder.type(Material.WRITABLE_BOOK).lore(
 										"",
 										ChatColor.DARK_RED + "▶ " + ChatColor.RED + "아직 달성하지 않았습니다.",
 										ChatColor.AQUA + "▶ " + ChatColor.WHITE + "과제 정보를 확인하려면 우클릭하세요."
@@ -184,7 +184,7 @@ public class AchievementGUI implements Listener {
 									);
 								}
 							} else {
-								builder.type(Material.BOOK_AND_QUILL).lore(
+								builder.type(Material.WRITABLE_BOOK).lore(
 										"",
 										ChatColor.DARK_RED + "▶ " + ChatColor.RED + "아직 달성하지 않았습니다.",
 										ChatColor.AQUA + "▶ " + ChatColor.WHITE + "과제 정보를 확인하려면 우클릭하세요."
@@ -227,7 +227,7 @@ public class AchievementGUI implements Listener {
 			for (Reward reward : information.getRewards()) {
 				lore.add(reward.toString());
 			}
-			gui.setItem(2, builder.type(Material.DOUBLE_PLANT).displayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + " 보상 " + ChatColor.GOLD + "]").lore(lore).build());
+			gui.setItem(2, builder.type(Material.SUNFLOWER).displayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + " 보상 " + ChatColor.GOLD + "]").lore(lore).build());
 			gui.setItem(4, QUIT);
 			player.openInventory(gui);
 		}

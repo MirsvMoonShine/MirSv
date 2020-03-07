@@ -23,7 +23,7 @@ public class AchIsThisPossible extends Achievement implements Listener {
 		LivingEntity entity = e.getEntity();
 		if (entity instanceof Wither && entity.getKiller() != null) {
 			ItemStack stack = entity.getKiller().getInventory().getItemInMainHand();
-			if (stack != null && stack.getType() == Material.WOOD_SWORD) {
+			if (stack.getType() == Material.WOODEN_SWORD) {
 				achieve(entity.getKiller());
 			}
 		}

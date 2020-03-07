@@ -1,6 +1,7 @@
 ﻿name: Mirsv
 main: com.mirsv.Mirsv
 version: ${project.version}
+api-version: 1.15
 author: Cokes_86, DayBreak, CatNote
 softdepend: [Towny, LuckPerms, Vault, dynmap]
 
@@ -66,8 +67,6 @@ commands:
     description: 경고 관리자
   cl:
     description: Call Player
-  발렌타인:
-    description: event command
   주식:
     description: Stock
   보관함:
@@ -75,4 +74,6 @@ commands:
   시세상점:
     description: Market Manager
   playtime:
+    description: PlayTime
+  forcetp:
     description: PlayTime

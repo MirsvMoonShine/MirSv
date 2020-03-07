@@ -10,6 +10,7 @@ import com.mirsv.util.users.UserManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -42,6 +43,7 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 		registerCommand("사탕수수", this);
 		registerCommand("조용히", this);
 		registerCommand("cl", this);
+		registerCommand("forcetp", this);
 		registerListener(this);
 	}
 
@@ -129,6 +131,31 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 					}
 				}
 				break;
+			case "forcetp":
+				if (sender.isOp()) {
+					if (args.length < 4) {
+						sender.sendMessage(ChatColor.RED + "사용 방법" + ChatColor.WHITE + "  |  " + ChatColor.RED + "/" + label + " <대상> <x> <y> <z>");
+					} else {
+						Player player = Bukkit.getPlayerExact(args[0]);
+						if (player != null) {
+							try {
+								double x = Double.parseDouble(args[1]), y = Double.parseDouble(args[2]), z = Double.parseDouble(args[3]);
+								try {
+									player.teleport(new Location(player.getWorld(), x, y, z));
+								} catch (Exception e) {
+									sender.sendMessage(e.getClass().getName() + ": " + e.getMessage());
+								}
+							} catch (NumberFormatException e) {
+								sender.sendMessage(ChatColor.RED + "좌표는 수로 입력되어야 합니다.");
+							}
+						} else {
+							sender.sendMessage(ChatColor.RED + "존재하지 않는 플레이어입니다.");
+						}
+					}
+				} else {
+					sender.sendMessage(ChatColor.RED  + "권한이 부족합니다.");
+				}
+				break;
 		}
 		return true;
 	}
@@ -151,7 +178,7 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 		Player player = Bukkit.getPlayerExact(name);
 		if (player != null) {
 			if (!player.equals(sender)) {
-				player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 10, 1);
+				player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 10, 1);
 
 				player.sendTitle(
 						ChatColor.YELLOW + sender.getName() + ChatColor.WHITE + "님이 당신을 호출했습니다.",
@@ -173,7 +200,7 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 	@EventHandler(priority = EventPriority.NORMAL)
 	private void onBlockBreak(BlockBreakEvent e) {
 		User user = UserManager.getUser(e.getPlayer());
-		if (user.hasFlag(Flag.SUGAR_CANE_MODE) && e.getBlock().getType() == Material.SUGAR_CANE_BLOCK && e.getBlock().getRelative(BlockFace.DOWN).getType() != Material.SUGAR_CANE_BLOCK) {
+		if (user.hasFlag(Flag.SUGAR_CANE_MODE) && e.getBlock().getType() == Material.SUGAR_CANE && e.getBlock().getRelative(BlockFace.DOWN).getType() != Material.SUGAR_CANE) {
 			e.setCancelled(true);
 		}
 	}

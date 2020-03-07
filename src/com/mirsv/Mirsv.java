@@ -67,6 +67,7 @@ public class Mirsv extends JavaPlugin {
 		ThreadUtil.onEnable();
 
 		Messager.sendMessage("플러그인이 활성화되었습니다.");
+		Bukkit.broadcastMessage(Messager.getPrefix() + "미르서버 플러그인이 활성화되었습니다.");
 
 		AutoSaveManager.registerAutoSave(new AutoSave() {
 			@Override
@@ -78,7 +79,7 @@ public class Mirsv extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		Bukkit.broadcastMessage(Messager.getPrefix() + "미르서버 플러그인이 언로드 되었습니다.");
+		Bukkit.broadcastMessage(Messager.getPrefix() + "미르서버 플러그인이 비활성화되었습니다.");
 		Bukkit.broadcastMessage(Messager.getPrefix() + "채팅 채널이 해제되고 사용중이던 인벤토리, GUI가 닫힐 수 있습니다.");
 		for (Player player : Bukkit.getOnlinePlayers()) player.closeInventory();
 		ThreadUtil.onDisable();

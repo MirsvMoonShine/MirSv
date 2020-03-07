@@ -34,7 +34,7 @@ public class CombatManager extends AbstractFunction implements Listener {
 	private void onMove(PlayerMoveEvent e) {
 		if (colosseum.isInCuboid(e.getTo())) {
 			Material type = e.getTo().getBlock().getType();
-			if (type == Material.LAVA || type == Material.STATIONARY_LAVA) {
+			if (type == Material.LAVA) {
 				Player player = e.getPlayer();
 				if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE)
 				e.getPlayer().setHealth(0);

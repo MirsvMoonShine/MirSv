@@ -12,7 +12,6 @@ import com.mirsv.function.list.Cokes.HungerMaintenance;
 import com.mirsv.function.list.Cokes.ItemTag;
 import com.mirsv.function.list.Cokes.NickName;
 import com.mirsv.function.list.Cokes.WordProhibition;
-import com.mirsv.function.list.Cokes.ballantines.BallantinesDay;
 import com.mirsv.function.list.Cokes.party.PartyManager;
 import com.mirsv.function.list.daybreak.CombatManager;
 import com.mirsv.function.list.daybreak.Convenience;
@@ -46,6 +45,11 @@ public enum Functions {
 		public boolean getAsBoolean() {
 			return Bukkit.getPluginManager().isPluginEnabled("Towny");
 		}
+	}, new BooleanSupplier() {
+		@Override
+		public boolean getAsBoolean() {
+			return Mirsv.getPlugin().getDynmapAPI() != null;
+		}
 	}),
 	Nickname(new NickName()),
 	CustomPrefix(new CustomPrefix()),
@@ -70,7 +74,6 @@ public enum Functions {
 		}
 	}),
 	WarningManager(new WarningManager()),
-	BallantinesDay(new BallantinesDay()),
 	DisableCommands(new NoTown(), new BooleanSupplier() {
 		@Override
 		public boolean getAsBoolean() {
