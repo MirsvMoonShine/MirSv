@@ -61,7 +61,7 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 
 	private final Set<OfflinePlayer> spying = new HashSet<>();
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onChat(AsyncPlayerChatEvent e) {
 		Player player = e.getPlayer();
 		User user = UserManager.getUser(player);
@@ -87,7 +87,6 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 					if (!resident.isNPC() && recipient != null && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE))
 						recipients.add(recipient);
 				}
-				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&b마을 &f| " + getPrefix(user) + user.getNickname() + "&f: &b") + message);
 				break;
 			case NATION_CHAT:
@@ -103,7 +102,6 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 					if (!resident.isNPC() && recipient != null && !UserManager.getUser(recipient).hasFlag(Flag.QUIET_MODE))
 						recipients.add(recipient);
 				}
-				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&6국가 &f| " + getPrefix(user) + user.getNickname() + "&f: &6") + message);
 				break;
 			case LOCAL_CHAT:
@@ -118,7 +116,6 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 						}
 					}
 				}.runTask(Mirsv.getPlugin());
-				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(format);
 				e.getRecipients().clear();
 				break;
@@ -127,14 +124,12 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 				for (Player recipient : Bukkit.getOnlinePlayers())
 					if (recipient.hasPermission("mirsv.chat.moderator")) recipients.add(recipient);
 				recipients.add(player);
-				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&5MOD &f| " + getPrefix(user) + user.getNickname() + "&f: &d" + message));
 				break;
 			case ADMIN_CHAT:
 				recipients.clear();
 				for (Player recipient : Bukkit.getOnlinePlayers()) if (recipient.isOp()) recipients.add(recipient);
 				recipients.add(player);
-				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&4관리자 &f| " + getPrefix(user) + user.getNickname() + "&f: &c" + message));
 				break;
 			case PARTY_CHAT:
@@ -144,17 +139,14 @@ public class AdvancedChat extends AbstractFunction implements CommandExecutor, L
 						recipients.add(recipient.getPlayer());
 				}
 				recipients.add(player);
-				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&5파티 &f| " + getPrefix(user) + user.getNickname() + "&f: &d") + message);
 				break;
 			case NOTICE_CHAT:
 				for (Player target : Bukkit.getOnlinePlayers())
 					target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.5F);
-				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(true);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', "&c공지 &f| " + getPrefix(user) + user.getNickname() + "&f: " + message));
 				break;
 			default:
-				Mirsv.getPlugin().getDynmapAPI().setDisableChatToWebProcessing(false);
 				e.setFormat(ChatColor.translateAlternateColorCodes('&', (user.hasTown() ? (user.hasNation() ? "&f[&6" + user.getNation().getName() + "&f|&b" + user.getTown().getName() + "&f]" : "&f[&b" + user.getTown().getName() + "&f]") : "") + getPrefix(user) + user.getNickname() + "&f: ") + message);
 				e.getRecipients().removeIf(isQuiet);
 				break;

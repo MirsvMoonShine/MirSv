@@ -57,6 +57,10 @@ commands:
     description: 편의 플러그인
   저녁:
     description: 편의 플러그인
+  비켜기:
+    description: 편의 플러그인
+  비끄기:
+    description: 편의 플러그인
   사탕수수:
     description: 편의 플러그인
   조용히:
@@ -77,3 +81,5 @@ commands:
     description: PlayTime
   forcetp:
     description: PlayTime
+  bungeejump:
+    description: Bungee Manager

@@ -13,6 +13,7 @@ import com.mirsv.function.list.Cokes.ItemTag;
 import com.mirsv.function.list.Cokes.NickName;
 import com.mirsv.function.list.Cokes.WordProhibition;
 import com.mirsv.function.list.Cokes.party.PartyManager;
+import com.mirsv.function.list.daybreak.BungeeManager;
 import com.mirsv.function.list.daybreak.CombatManager;
 import com.mirsv.function.list.daybreak.Convenience;
 import com.mirsv.function.list.daybreak.DeliveryService;
@@ -44,11 +45,6 @@ public enum Functions {
 		@Override
 		public boolean getAsBoolean() {
 			return Bukkit.getPluginManager().isPluginEnabled("Towny");
-		}
-	}, new BooleanSupplier() {
-		@Override
-		public boolean getAsBoolean() {
-			return Mirsv.getPlugin().getDynmapAPI() != null;
 		}
 	}),
 	Nickname(new NickName()),
@@ -110,7 +106,8 @@ public enum Functions {
 		public boolean getAsBoolean() {
 			return Bukkit.getPluginManager().isPluginEnabled("Towny");
 		}
-	});
+	}),
+	BungeeManager(new BungeeManager());
 
 	private final AbstractFunction function;
 	private final BooleanSupplier[] conditions;

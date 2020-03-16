@@ -40,6 +40,8 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 		this.economy = Mirsv.getPlugin().getEconomy();
 		registerCommand("아침", this);
 		registerCommand("저녁", this);
+		registerCommand("비켜기", this);
+		registerCommand("비끄기", this);
 		registerCommand("사탕수수", this);
 		registerCommand("조용히", this);
 		registerCommand("cl", this);
@@ -53,19 +55,19 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		switch (label) {
 			case "아침":
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
-					if (economy.has(player, 250)) {
-						economy.withdrawPlayer(player, 250);
+					if (economy.has(player, 750)) {
+						economy.withdrawPlayer(player, 750);
 						updateTime(player.getWorld(), 0);
 						for (Player target : player.getWorld().getPlayers()) {
 							target.sendMessage(ChatColor.YELLOW + player.getName() + ChatColor.WHITE + "님이 월드 시간을 " + ChatColor.AQUA + "아침" + ChatColor.WHITE + "으로 변경했습니다.");
 						}
 					} else {
-						player.sendMessage(ChatColor.RED + "250원이 필요합니다.");
+						player.sendMessage(ChatColor.RED + "750원이 필요합니다.");
 					}
 				} else {
 					sender.sendMessage(ChatColor.RED + "콘솔에서 사용할 수 없는 명령어입니다.");
@@ -74,14 +76,46 @@ public class Convenience extends AbstractFunction implements CommandExecutor, Li
 			case "저녁":
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
-					if (economy.has(player, 250)) {
-						economy.withdrawPlayer(player, 250);
+					if (economy.has(player, 750)) {
+						economy.withdrawPlayer(player, 750);
 						updateTime(player.getWorld(), 14000);
 						for (Player target : player.getWorld().getPlayers()) {
 							target.sendMessage(ChatColor.YELLOW + player.getName() + ChatColor.WHITE + "님이 월드 시간을 " + ChatColor.DARK_PURPLE + "저녁" + ChatColor.WHITE + "으로 변경했습니다.");
 						}
 					} else {
-						player.sendMessage(ChatColor.RED + "250원이 필요합니다.");
+						player.sendMessage(ChatColor.RED + "750원이 필요합니다.");
+					}
+				} else {
+					sender.sendMessage(ChatColor.RED + "콘솔에서 사용할 수 없는 명령어입니다.");
+				}
+				break;
+			case "비켜기":
+				if (sender instanceof Player) {
+					Player player = (Player) sender;
+					if (economy.has(player, 750)) {
+						economy.withdrawPlayer(player, 750);
+						player.getWorld().setStorm(true);
+						for (Player target : player.getWorld().getPlayers()) {
+							target.sendMessage(ChatColor.AQUA + player.getName() + ChatColor.WHITE + "님이 월드 날씨를 " + ChatColor.DARK_AQUA + "폭우" + ChatColor.WHITE + "로 변경했습니다.");
+						}
+					} else {
+						player.sendMessage(ChatColor.RED + "750원이 필요합니다.");
+					}
+				} else {
+					sender.sendMessage(ChatColor.RED + "콘솔에서 사용할 수 없는 명령어입니다.");
+				}
+				break;
+			case "비끄기":
+				if (sender instanceof Player) {
+					Player player = (Player) sender;
+					if (economy.has(player, 750)) {
+						economy.withdrawPlayer(player, 750);
+						player.getWorld().setStorm(false);
+						for (Player target : player.getWorld().getPlayers()) {
+							target.sendMessage(ChatColor.AQUA + player.getName() + ChatColor.WHITE + "님이 월드 날씨를 " + ChatColor.DARK_AQUA + "맑음" + ChatColor.WHITE + "으로 변경했습니다.");
+						}
+					} else {
+						player.sendMessage(ChatColor.RED + "750원이 필요합니다.");
 					}
 				} else {
 					sender.sendMessage(ChatColor.RED + "콘솔에서 사용할 수 없는 명령어입니다.");

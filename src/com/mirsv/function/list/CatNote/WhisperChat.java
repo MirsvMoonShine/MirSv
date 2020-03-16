@@ -81,11 +81,12 @@ public class WhisperChat extends AbstractFunction implements Listener, CommandEx
 		return false;
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.NORMAL)
 	public void onChat(AsyncPlayerChatEvent event) {
 		if (targets.containsKey(event.getPlayer())) {
 			Player player = event.getPlayer();
 			event.setMessage(event.getMessage().replaceAll("%", "%%"));
+			event.setCancelled(true);
 			OfflinePlayer target = targets.get(player);
 			if (target.isOnline()) {
 				event.setCancelled(true);

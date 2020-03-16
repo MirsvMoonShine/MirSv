@@ -15,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.dynmap.DynmapAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +34,6 @@ public class Mirsv extends JavaPlugin {
 	private LuckPerms luckPerms;
 	private Economy economy;
 
-	private DynmapAPI dynMap = null;
-
 	public static Mirsv getPlugin() {
 		return plugin;
 	}
@@ -51,9 +48,8 @@ public class Mirsv extends JavaPlugin {
 
 		if (Bukkit.getPluginManager().getPlugin("LuckPerms") != null) this.luckPerms = getProvider(LuckPerms.class);
 		if (Bukkit.getPluginManager().getPlugin("Vault") != null)this.economy = getProvider(Economy.class);
-		if (Bukkit.getPluginManager().getPlugin("dynmap") != null) {
-			dynMap = (DynmapAPI) Bukkit.getPluginManager().getPlugin("dynmap");
-		}
+
+		this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
 		StringJoiner joiner = new StringJoiner(ChatColor.translateAlternateColorCodes('&', ", "));
 		for (AbstractFunction abstractFunction : initFunctions()) joiner.add(abstractFunction.getName());
@@ -108,10 +104,6 @@ public class Mirsv extends JavaPlugin {
 
 	public Economy getEconomy() {
 		return economy;
-	}
-
-	public DynmapAPI getDynmapAPI() {
-		return dynMap;
 	}
 
 	private static <T> T getProvider(Class<T> clazz) {
