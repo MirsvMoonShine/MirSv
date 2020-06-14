@@ -1,5 +1,12 @@
 package com.mirsv.util.users;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
+import org.bukkit.OfflinePlayer;
+
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -11,15 +18,9 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
+
 import net.luckperms.api.context.ContextManager;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.OfflinePlayer;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 public class User {
 
@@ -81,8 +82,11 @@ public class User {
 	}
 
 	public String getNickname() {
-		if (!configJson.has("nickname")) configJson.addProperty("nickname", player.getName());
-		return ChatColor.translateAlternateColorCodes('&', configJson.get("nickname").getAsString());
+		if (!configJson.has("nickname")) configJson.addProperty("nickname", "");
+		if (configJson.get("nickname").getAsString().equals(player.getName())) {
+			configJson.addProperty("nickname", "");
+		}
+		return configJson.get("nickname").getAsString().equalsIgnoreCase("") ? player.getName() : ChatColor.translateAlternateColorCodes('&', configJson.get("nickname").getAsString());
 	}
 
 	public void setNickname(String nickname) {

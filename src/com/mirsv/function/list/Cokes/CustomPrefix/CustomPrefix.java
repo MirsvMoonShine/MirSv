@@ -48,7 +48,7 @@ public class CustomPrefix extends AbstractFunction implements CommandExecutor, L
 					}
 					player.sendMessage("칭호 추가 완료");
 				} else if (Bukkit.getPlayer(args[1]) != null) {
-					Player target = Bukkit.getPlayer(args[2]);
+					Player target = Bukkit.getPlayer(args[1]);
 					User user = UserManager.getUser(target);
 					JsonArray prefix = getPrefix(user);
 					String add;
